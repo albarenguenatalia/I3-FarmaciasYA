@@ -31,56 +31,58 @@
             };
         </script>
         <script src="assets/js/pace.min.js"></script>
-        
+
         <ui:insert name="endHead">ENDHEAD</ui:insert>
     </h:head>
-    
+
     <h:body>
-        <div class="modal signUpContent fade" id="ModalLogin" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                        <h3 class="modal-title-site text-center"> Iniciar sesion </h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group login-username">
-                            <div>
-                                <input name="log" id="login-user" class="form-control input" size="20" placeholder="Email" type="text"/>
-                            </div>
+        <h:form>
+            <div class="modal signUpContent fade" id="ModalLogin" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                            <h3 class="modal-title-site text-center"> Iniciar sesion</h3>
                         </div>
-                        <div class="form-group login-password">
-                            <div>
-                                <input name="Password" id="login-password" class="form-control input" size="20" placeholder="Contraseña" type="password"/>
+                        <div class="modal-body">
+                            <div class="form-group login-username">
+                                <div>
+                                    <h:inputText value="#{LoginViewBean.username}" class="form-control input" p:placeholder="Email"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
+                            <div class="form-group login-password">
+                                <div>
+                                    <h:inputSecret value="#{LoginViewBean.password}" class="form-control input" p:placeholder="Contraseña"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <div class="checkbox login-remember">
+                                        <label>
+                                            <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
+                                            Recordar usuario </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
-                                <div class="checkbox login-remember">
-                                    <label>
-                                        <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                        Recordar usuario </label>
+                                <div>
+                                    <h:commandButton value="LOGIN" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{LoginViewBean.IniciarSesion}" />
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN" type="submit"/>
-                            </div>
+                        <div class="modal-footer">
+                            <p class="text-center"> ¿No está registrado?
+                                <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup"> Registrarse. </a>
+                                <br/>
+                                <a href="forgot-password.html"> ¿Olvidaste la contraseña? </a>
+                            </p>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <p class="text-center"> ¿No está registrado?
-                            <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup"> Registrarse. </a>
-                            <br/>
-                            <a href="forgot-password.html"> ¿Olvidaste la contraseña? </a>
-                        </p>
                     </div>
                 </div>
 
             </div>
+        </h:form>
 
-        </div>
         <div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -127,7 +129,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
             <div class="navbar-top">
                 <div class="container">
@@ -243,7 +245,7 @@
                                         <li> <a class="newProductMenuBlock" href="product-details.html">
                                                 <img class="img-responsive" src="images/categories/suplementos.jpg" alt="product"/>
                                                 <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
-                                                Suplementos</span> </a> </li>
+                                                    Suplementos</span> </a> </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -303,7 +305,7 @@
 
                         <i class="fa fa-search"> </i> </button>
                 </div>
-        
+
             </div>
 
         </div>
@@ -328,25 +330,25 @@
                                                 soporte@farmaciaya.com
                                             </span>
                                             <script data-cfhash='f9e31' type="text/javascript">
-                /* <![CDATA[ */!function () {
-                    try {
-                        var t = "currentScript"in document ? document.currentScript : function () {
-                            for (var t = document.getElementsByTagName("script"), e = t.length; e--; )
-                                if (t[e].getAttribute("data-cfhash"))
-                                    return t[e]
-                        }();
-                        if (t && t.previousSibling) {
-                            var e, r, n, i, c = t.previousSibling, a = c.getAttribute("data-cfemail");
-                            if (a) {
-                                for (e = "", r = parseInt(a.substr(0, 2), 16), n = 2; a.length - n; n += 2)
-                                    i = parseInt(a.substr(n, 2), 16) ^ r, e += String.fromCharCode(i);
-                                e = document.createTextNode(e), c.parentNode.replaceChild(e, c)
-                            }
-                            t.parentNode.removeChild(t);
+            /* <![CDATA[ */!function () {
+                try {
+                    var t = "currentScript"in document ? document.currentScript : function () {
+                        for (var t = document.getElementsByTagName("script"), e = t.length; e--; )
+                            if (t[e].getAttribute("data-cfhash"))
+                                return t[e]
+                    }();
+                    if (t && t.previousSibling) {
+                        var e, r, n, i, c = t.previousSibling, a = c.getAttribute("data-cfemail");
+                        if (a) {
+                            for (e = "", r = parseInt(a.substr(0, 2), 16), n = 2; a.length - n; n += 2)
+                                i = parseInt(a.substr(n, 2), 16) ^ r, e += String.fromCharCode(i);
+                            e = document.createTextNode(e), c.parentNode.replaceChild(e, c)
                         }
-                    } catch (u) {
+                        t.parentNode.removeChild(t);
                     }
-                }()/* ]]> */</script> </a> </h4>
+                } catch (u) {
+                }
+            }()/* ]]> */</script> </a> </h4>
                                 </li>
                             </ul>
                         </div>
@@ -416,7 +418,7 @@
                 </div>
             </div> 
         </footer>
-        
+
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"/>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/jquery.parallax-1.1.js"></script>
@@ -428,7 +430,7 @@
         <script src="assets/js/jquery.minimalect.min.js"></script>
         <script src="assets/js/bootstrap.touchspin.js"></script>
         <script src="assets/js/script.js"></script>
-       
+
         <ui:insert name="endBody">ENDBODY</ui:insert>
     </h:body>
 </html>
