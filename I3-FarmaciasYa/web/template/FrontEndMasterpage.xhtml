@@ -6,6 +6,7 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
@@ -126,10 +127,9 @@
                         </p>
                     </div>
                 </div>
-
             </div>
-
         </div>
+        
         <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
             <div class="navbar-top">
                 <div class="container">
@@ -262,7 +262,8 @@
 
                         <div class="miniCartFooter  miniCartFooterInMobile text-right">
                             <h3 class="text-right subtotal"> Subtotal: $210 </h3>
-                            <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart"> </i> VIEW CART </a> <a class="btn btn-sm btn-primary"> CHECKOUT </a> </div>
+                            <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart">
+                                </i> VIEW CART </a> <a class="btn btn-sm btn-primary"> CHECKOUT </a> </div>
 
                     </div>
 
@@ -271,35 +272,37 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"> <a href="#"> Home </a> </li>
-                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> New Products <b class="caret"> </b> </a>
+                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                Productos<b class="caret"> </b> </a>
                             <ul class="dropdown-menu">
                                 <li class="megamenu-content ">
                                     <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
-                                        <li class="no-border">
-                                            <p class="promo-1"> <strong> NEW COLLECTION </strong> </p>
-                                        </li>
-                                        <li> <a href="category.html"> ALL NEW PRODUCTS </a> </li>
-                                        <li> <a href="category.html"> NEW TOPS </a> </li>
-                                        <li> <a href="category.html"> NEW SHOES </a> </li>
-                                        <li> <a href="category.html"> NEW TSHIRT </a> </li>
-                                        <li> <a href="category.html"> NEW TSHOP </a> </li>
+                                        <li> <a href="category.html"> Todos los productos </a> </li>
+                                        <li> <a href="category.html"> Costéticos </a> </li>
+                                        <li> <a href="category.html"> Perfumería </a> </li>
+                                        <li> <a href="category.html"> Óptica </a> </li>
+                                        <li> <a href="category.html"> Suplementos </a> </li>
+                                        <li> <a href="category.html"> Medicamentos </a> </li>
+                                    </ul>
+                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
+                                        <li> <a class="newProductMenuBlock" href="product-details.html">
+                                                <img class="img-responsive" src="images/categories/lentes.jpg" alt="product"/> 
+                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                    Lentes </span> </a> </li>
                                     </ul>
                                     <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
                                         <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="images/site/promo1.jpg" alt="product"/>
+                                                <img class="img-responsive" src="images/categories/perfumes.jpg" alt="product"/>
 
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> JEANS
+                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                    Perfumes
                                                 </span> </a> </li>
                                     </ul>
                                     <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
                                         <li> <a class="newProductMenuBlock" href="product-details.html">
-                                                <img class="img-responsive" src="images/site/promo2.jpg" alt="product"/> 
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> PARTY DRESS </span> </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html">
-                                                <img class="img-responsive" src="images/site/promo3.jpg" alt="product"/>
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> SHOES </span> </a> </li>
+                                                <img class="img-responsive" src="images/categories/suplementos.jpg" alt="product"/>
+                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                Suplementos</span> </a> </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -564,6 +567,7 @@
 
                         <i class="fa fa-search"> </i> </button>
                 </div>
+        
             </div>
 
         </div>
