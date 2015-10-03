@@ -1,23 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./FrontEndMasterpage.xhtml"
-                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="endHead">
-        <style>
-            .clase{ color: blue;}
-        </style>
-    </ui:define>
+    <body>
+        <ui:composition template="./FrontEndMasterpage.xhtml">
 
-    <ui:define name="mainContainer">
-        TEMPLATE TEMPLATE
-    </ui:define>
+            <ui:define name="endHead"></ui:define>
 
-    <ui:define name="endBody">
-        <script>
-            var x = 0;
-        </script>
-    </ui:define>
+            <ui:define name="mainContainer">mainContainer</ui:define>
 
-</ui:composition>
+            <ui:define name="endBody"></ui:define>
+        </ui:composition>
+    </body>
+</html>
