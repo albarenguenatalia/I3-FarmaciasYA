@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"    
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
-    <body>
+    <h:body>
 
         <ui:composition template="./FrontEndMasterpage.xhtml">
 
@@ -16,35 +18,50 @@
                         <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Registro / Iniciar sesión</span></h1>
                         <div class="row userInfo">
                             <div class="col-xs-12 col-sm-6">
-                                <h2 class="block-title-2"> Crear cuenta </h2>
-                                <form role="form" class="regForm" novalidate="novalidate">
+                                <h2 class="block-title-2"> "#{CreateAccountMenu}" </h2>
+                                <h:form role="form" class="regForm" p:novalidate="novalidate">
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input title="Please enter your username (at least 3 characters)" type="text" class="form-control" placeholder="Nombre" required="" minlength="3" aria-required="true"/>
+                                        <h:inputText value="#{userController.current.name}" title="Please enter your username (at least 3 characters)" p:type="text" class="form-control"  p:placeholder="Nombre" p:required="true" p:minlength="3" p:aria-required="true"/>
+                                     </div>
+                                    <div class="form-group">
+                                        <label>Apellido</label>
+                                        <h:inputText value="#{userController.current.lastname}" title="Please enter your lastname (at least 3 characters)" p:type="text" class="form-control"  p:placeholder="Apellido" p:required="true" p:minlength="3" p:aria-required="true"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Domicilio</label>
+                                         <h:inputText value="#{userController.current.address}" required="" p:minlength="5" title="Domicilio" p:type="text" class="form-control" p:placeholder="Domicilio" p:aria-required="true"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Dirección de correo</label>
-                                        <input title="Please enter valid email" type="email" class="form-control" placeholder="Mail" required="" aria-required="true"/>
-                                    </div>
+                                        <h:inputText value="#{userController.current.username}" title="Please enter valid email" p:type="email" class="form-control" p:placeholder="Mail" p:required="true" p:aria-required="true"/>
+                                   </div>
                                     <div class="form-group">
                                         <label>Contraseña</label>
-                                        <input required="" minlength="5" title="Contraseña" type="password" class="form-control" placeholder="Password" aria-required="true"/>
+                                        <h:inputText value="#{userController.current.password}" required="true" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
                                     </div>
+                                    <div class="form-group">
+                                        <label> Confirmar Contraseña</label>
+                                         <h:inputText value="#{userController.current.password}" required="true" p:minlength="5" title="ConfirmarContraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
+                                    </div>
+                                    
                                     <div class="error">
                                     </div>
-                                    <button type="submit" class="btn   btn-primary"><i class="fa fa-user"></i> Crear cuenta</button>
-                                </form>
+                                    <h:commandButton class="btn   btn-primary" type="submit" p:value="Registrate" action="#{LoginViewBean.IniciarSesion}" />
+                            </h:form>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <h2 class="block-title-2"><span>¿Ya esta registrado?</span></h2>
                                 <form role="form" class="logForm">
                                     <div class="form-group">
                                         <label>Dirección de correo</label>
-                                        <input type="email" class="form-control" placeholder="Email"/>
+                                        <h:inputText value="" title="Please enter valid email" p:type="email" class="form-control" p:placeholder="Mail" p:required="" p:aria-required="true"/>
+                                       
                                     </div>
                                     <div class="form-group">
                                         <label>Contraseña</label>
-                                        <input type="password" class="form-control" placeholder="Contraseña"/>
+                                         <h:inputText value="" required="" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
+                                        
                                     </div>
 
                                     <div class="form-group">
@@ -77,5 +94,5 @@
 
         </ui:composition>
 
-    </body>
+    </h:body>
 </html>
