@@ -77,24 +77,24 @@
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{bundle.LoginUserUsername}" />
                                 <div class="col-sm-8">
-                                    <h:inputText value="#{userController.current.username}" p:type="email" class="form-control" p:placeholder="Email" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
+                                    <h:inputText value="#{sessionController.current.username}" p:type="email" class="form-control" p:placeholder="Email" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{bundle.LoginUserPassword}" />
                                 <div class="col-sm-8">
-                                   <h:inputSecret value="#{userController.current.password}" class="form-control" p:placeholder="Password" />
+                                   <h:inputSecret value="#{sessionController.current.password}" class="form-control" p:placeholder="Password" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-1 col-sm-10">
-                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="submit" type="submit" action="#{userController.login}" />
+                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="submit" type="submit" action="#{sessionController.login}" />
                                     <br/>
-                                    <h:panelGroup id="two" rendered="#{userController.showLoginResultMessage}">
+                                    <h:panelGroup id="two" rendered="#{sessionController.showLoginResultMessage}">
                                         <div class="alert alert-danger" role="alert">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
-                                         #{userController.loginResultMessage}
+                                         #{sessionController.loginResultMessage}
                                     </div>
                                     </h:panelGroup>
                                     

@@ -7,7 +7,6 @@ package Views;
 
 import Controllers.UserController;
 import Model.User;
-import Session.LoginSessionBean;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,9 +20,7 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class LoginView implements Serializable{
     @ManagedProperty("#{LoginSessionBean}")
-    private LoginSessionBean loginSessionBean;
-     
-    @ManagedProperty("#{User}")
+ 
     private UserController userController;
     
     private String username;
@@ -45,14 +42,7 @@ public class LoginView implements Serializable{
         return "";
     }
     
-    
-    public void setLoginSessionBean(LoginSessionBean loginSessionBean) {
-        this.loginSessionBean = loginSessionBean;
-    }
   
-    /**
-     * @return the username
-     */
     public String getUsername() {
         return username;
     }
@@ -106,12 +96,7 @@ public class LoginView implements Serializable{
         this.showMessage = showMessage;
     }
 
-    /**
-     * @return the loginSessionBean
-     */
-    public LoginSessionBean getLoginSessionBean() {
-        return loginSessionBean;
-    }
+
 
     /**
      * @return the userController

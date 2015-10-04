@@ -15,44 +15,24 @@ import javax.faces.convert.FacesConverter;
 @ManagedBean(name = "userController")
 @SessionScoped
 public class UserController implements Serializable {
-
-    private User current;
-    private boolean showLoginResultMessage;
-    private String loginResultMessage;
     @EJB
     private Session.UserFacade ejbFacade;
-    private int currentUserId;
+    private User current;
 
     public UserController() {
-        showLoginResultMessage = false;
-        loginResultMessage = "";
-        currentUserId = -1;
+        
     }
 
     public UserFacade getFacade() {
         return ejbFacade;
     }
-      public User get() {
+    
+     public User getCurrent() {
         if (current == null) {
             current = new User();
-            currentUserId = -1;
         }
-        currentUserId = current.getUserId();
         return current;
     }
-    
-    public String login(){
-        User checkedUser = getFacade().validateUser(current.getUsername(), current.getPassword());
-        if(checkedUser != null){
-            current = checkedUser;
-            return "/index.xhtml";
-        }
-        current = new User();
-        this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
-        this.setShowLoginResultMessage(true);
-        return null;
-    }
-
 
     public String create() {
         try {
@@ -85,34 +65,6 @@ public class UserController implements Serializable {
         } catch (Exception e) {
            //"PersistenceErrorOccured"));
         }
-    }
-
-    /**
-     * @return the loginResultMessage
-     */
-    public String getLoginResultMessage() {
-        return loginResultMessage;
-    }
-
-    /**
-     * @param loginResultMessage the loginResultMessage to set
-     */
-    public void setLoginResultMessage(String loginResultMessage) {
-        this.loginResultMessage = loginResultMessage;
-    }
-
-    /**
-     * @return the showLoginResultMessage
-     */
-    public boolean isShowLoginResultMessage() {
-        return showLoginResultMessage;
-    }
-
-    /**
-     * @param showLoginResultMessage the showLoginResultMessage to set
-     */
-    public void setShowLoginResultMessage(boolean showLoginResultMessage) {
-        this.showLoginResultMessage = showLoginResultMessage;
     }
 
     @FacesConverter(forClass = User.class)
