@@ -25,6 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class SessionController implements Serializable{
     private User current;
     private boolean showLoginResultMessage;
+    private boolean userLogged;
     private String loginResultMessage;
     @EJB
     private Session.UserFacade ejbFacade;
@@ -32,6 +33,7 @@ public class SessionController implements Serializable{
     
     public SessionController(){
         showLoginResultMessage = false;
+        userLogged = false;
         loginResultMessage = "";
         currentUserId = -1;
     }
@@ -50,10 +52,14 @@ public class SessionController implements Serializable{
     }
     
     public String login(){
+        setUserLogged(false);
+        this.setLoginResultMessage("");
+        this.setShowLoginResultMessage(false);
         User checkedUser = getFacade().validateUser(current.getUsername(), current.getPassword());
         if(checkedUser != null){
             current = checkedUser;
-            return "/index.xhtml";
+            setUserLogged(true);
+            return "/template/index.xhtml";
         }
         current = new User();
         this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
@@ -87,6 +93,20 @@ public class SessionController implements Serializable{
      */
     public void setShowLoginResultMessage(boolean showLoginResultMessage) {
         this.showLoginResultMessage = showLoginResultMessage;
+    }
+
+    /**
+     * @return the userLogged
+     */
+    public boolean isUserLogged() {
+        return userLogged;
+    }
+
+    /**
+     * @param userLogged the userLogged to set
+     */
+    public void setUserLogged(boolean userLogged) {
+        this.userLogged = userLogged;
     }
     
     

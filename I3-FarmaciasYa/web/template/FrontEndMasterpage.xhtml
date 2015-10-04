@@ -47,12 +47,12 @@
                         <div class="modal-body">
                             <div class="form-group login-username">
                                 <div>
-                                    <h:inputText value="#{LoginViewBean.username}" class="form-control input" p:placeholder="Email"/>
+                                    <h:inputText value="#{sessionController.current.username}" class="form-control input" p:placeholder="#{bundle.LoginUserUsername}" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
                                 </div>
                             </div>
                             <div class="form-group login-password">
                                 <div>
-                                    <h:inputSecret value="#{LoginViewBean.password}" class="form-control input" p:placeholder="Contraseña"/>
+                                    <h:inputSecret value="#{sessionController.current.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,21 +60,30 @@
                                     <div class="checkbox login-remember">
                                         <label>
                                             <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                            Recordar usuario </label>
+                                            #{bundle.RememberUser}</label>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h:commandButton value="LOGIN" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{LoginViewBean.IniciarSesion}" />
+                                    <h:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{sessionController.login}" />
+                                    <br/>
+                                    <h:panelGroup rendered="#{sessionController.showLoginResultMessage}">
+                                        <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                         #{sessionController.loginResultMessage}
+                                    </div>
+                                    </h:panelGroup>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <p class="text-center"> ¿No está registrado?
-                                <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup"> Registrarse. </a>
+                            <p class="text-center">
+                                #{bundle.LoginRegisterQuestionMessage}
+                                <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup">#{bundle.LoginRegisterMessage}</a>
                                 <br/>
-                                <a href="forgot-password.html"> ¿Olvidaste la contraseña? </a>
+                                <a href="#">#{bundle.LoginForgotPasswordMessage}</a>
                             </p>
                         </div>
                     </div>
@@ -144,13 +153,18 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
-                            <div class="pull-right">
+                            <h:panelGroup rendered="#{sessionController.userLogged}" class="pull-right">
                                 <ul class="userMenu">
-                                    <li> <a href="account-1.html"><span class="hidden-xs"> Mi cuenta</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a> </li>
-                                    <li> <a href="#" data-toggle="modal" data-target="#ModalLogin"> <span class="hidden-xs">Iniciar sesión</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
-                                    <li class="hidden-xs"> <a href="#" data-toggle="modal" data-target="#ModalSignup"> Crear cuenta </a> </li>
+                                    <li> <a href="account-1.html"><span class="hidden-xs">#{bundle.MyAccountMenu}</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a> </li>
+                                    <li> <a href="#" data-toggle="modal" data-target="#"> <span class="hidden-xs">#{bundle.LogoutMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
                                 </ul>
-                            </div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!sessionController.userLogged}" class="pull-right">
+                                <ul class="userMenu">
+                                    <li> <a href="#" data-toggle="modal" data-target="#ModalLogin"> <span class="hidden-xs">#{bundle.LoginMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
+                                    <li class="hidden-xs"> <a href="#" data-toggle="modal" data-target="#ModalSignup">#{bundle.CreateAccountMenu}</a> </li>
+                                </ul>
+                             </h:panelGroup>
                         </div>
                     </div>
                 </div>
