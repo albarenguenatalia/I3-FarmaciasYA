@@ -6,8 +6,8 @@
 package Views;
 
 import Controllers.UserController;
+import Model.User;
 import Session.LoginSessionBean;
-import Session.UserSessionBean;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,18 +22,29 @@ import javax.faces.bean.ViewScoped;
 public class LoginView implements Serializable{
     @ManagedProperty("#{LoginSessionBean}")
     private LoginSessionBean loginSessionBean;
+     
+    @ManagedProperty("#{User}")
+    private UserController userController;
+    
     private String username;
     private String password;
+    private String errorMessage;
+    private User sessionUser;
+    private boolean showMessage = false;
     
     public String IniciarSesion(){
-        if(UserController.ValidateUserPassword(username, password)){
-            loginSessionBean.Login();
+        System.out.println("LoginView IniciarSesion");
+        /*User returnedUser = UserController.getFacade().validateUser(username, password);
+        if(returnedUser != null){
+            sessionUser = returnedUser;
+            getLoginSessionBean().Login(returnedUser);
             return "/index.xhtml";
         }
+        this.errorMessage = "Nombre de Usuario o Contraseña inválido";
+        this.showMessage = true;*/
         return "";
-            
-        
     }
+    
     
     public void setLoginSessionBean(LoginSessionBean loginSessionBean) {
         this.loginSessionBean = loginSessionBean;
@@ -65,5 +76,54 @@ public class LoginView implements Serializable{
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the errorMessage
+     */
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * @param errorMessage the errorMessage to set
+     */
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    /**
+     * @return the showMessage
+     */
+    public boolean isShowMessage() {
+        return showMessage;
+    }
+
+    /**
+     * @param showMessage the showMessage to set
+     */
+    public void setShowMessage(boolean showMessage) {
+        this.showMessage = showMessage;
+    }
+
+    /**
+     * @return the loginSessionBean
+     */
+    public LoginSessionBean getLoginSessionBean() {
+        return loginSessionBean;
+    }
+
+    /**
+     * @return the userController
+     */
+    public UserController getUserController() {
+        return userController;
+    }
+
+    /**
+     * @param userController the userController to set
+     */
+    public void setUserController(UserController userController) {
+        this.userController = userController;
     }
 }

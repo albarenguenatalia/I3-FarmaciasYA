@@ -29,7 +29,7 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable=false)
     private int user_id;
-    @Column(name = "username", nullable=false)
+    @Column(name = "username", nullable=false, unique=true)
     private String username;
     @Column(name = "password", nullable=false)
     private String password;
@@ -37,7 +37,7 @@ public class User implements Serializable{
     private String name;
     @Column(name = "lastname")
     private String lastname;
-    @Column(name = "email", nullable=false)
+    @Column(name = "email", nullable=false, unique=true)
     private String email;
     @Column(name = "address", nullable=false)
     private String address;
@@ -45,11 +45,11 @@ public class User implements Serializable{
     @Column(name = "created_date")
     private Date created_date;
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserId(int user_id) {
         this.user_id = user_id;
     }
 
@@ -101,11 +101,11 @@ public class User implements Serializable{
         this.address = address;
     }
 
-    public Date getCreated_date() {
+    public Date getCreatedDate() {
         return created_date;
     }
 
-    public void setCreated_date(Date created_date) {
+    public void setCreatedDate(Date created_date) {
         this.created_date = created_date;
     }
     

@@ -75,23 +75,32 @@
                         <div class="panel-heading" align="center" id="panelBienvenido">Bienvenido</div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Correo Electronico</label>
+                                <h:outputLabel class="col-sm-4 control-label" value="#{bundle.LoginUserUsername}" />
                                 <div class="col-sm-8">
-                                    <h:inputText value="#{LoginViewBean.username}" p:type="email" class="form-control" p:placeholder="Email"/>
+                                    <h:inputText value="#{userController.current.username}" p:type="email" class="form-control" p:placeholder="Email" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-4 control-label">Contraseña</label>
+                                <h:outputLabel class="col-sm-4 control-label" value="#{bundle.LoginUserPassword}" />
                                 <div class="col-sm-8">
-                                   <h:inputSecret value="#{LoginViewBean.password}" class="form-control" p:placeholder="Password"/>
+                                   <h:inputSecret value="#{userController.current.password}" class="form-control" p:placeholder="Password" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-1 col-sm-10">
-                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="submit" type="submit" action="#{LoginViewBean.IniciarSesion}" />
-                                       
+                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="submit" type="submit" action="#{userController.login}" />
+                                    <br/>
+                                    <h:panelGroup id="two" rendered="#{userController.showLoginResultMessage}">
+                                        <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                         #{userController.loginResultMessage}
+                                    </div>
+                                    </h:panelGroup>
+                                    
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </h:form>

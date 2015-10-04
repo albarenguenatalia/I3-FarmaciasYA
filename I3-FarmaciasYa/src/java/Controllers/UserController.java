@@ -1,54 +1,158 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Model.User;
-import Session.UserSessionBeanLocal;
-import java.util.List;
+import Session.UserFacade;
+
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
-/**
- *
- * @author albarenguenatalia
- * 
- * This are the Backing Beans
- */
-@ManagedBean(name = "User", eager = true)
-public class UserController {
+@ManagedBean(name = "userController")
+@SessionScoped
+public class UserController implements Serializable {
+
+    private User current;
+    private boolean showLoginResultMessage;
+    private String loginResultMessage;
     @EJB
-    UserSessionBeanLocal userSession;
-    private String lala = "access User Controller";
+    private Session.UserFacade ejbFacade;
+    private int currentUserId;
 
-    public String getLala() {
-        return lala;
+    public UserController() {
+        showLoginResultMessage = false;
+        loginResultMessage = "";
+        currentUserId = -1;
     }
 
-    public void setLala(String lala) {
-        this.lala = lala;
+    public UserFacade getFacade() {
+        return ejbFacade;
     }
-      
-    public List<User> listUsers(){
-        System.out.println("Here on UserController getList");
-        List<User> result = userSession.getAllUsers();
-        System.out.println(result.get(0).getName());
-        return result;
-    }
-    
-    public String getFirstLastname(){
-        System.out.println("Here on UserController getFirstLastname");
-        List<User> result = userSession.getAllUsers();
-        return result.get(0).getName();
+      public User get() {
+        if (current == null) {
+            current = new User();
+            currentUserId = -1;
+        }
+        currentUserId = current.getUserId();
+        return current;
     }
     
-       
-    public static boolean ValidateUserPassword(String user, String password){
-       return user.equals("usuario@user.com") && password.equals("123456");
+    public String login(){
+        User checkedUser = getFacade().validateUser(current.getUsername(), current.getPassword());
+        if(checkedUser != null){
+            current = checkedUser;
+            return "/index.xhtml";
+        }
+        current = new User();
+        this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
+        this.setShowLoginResultMessage(true);
+        return null;
     }
- 
-    
-    
+
+
+    public String create() {
+        try {
+            getFacade().create(current);
+           //"UserCreated"));
+            return "Create";
+        } catch (Exception e) {
+            //"PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+  
+
+    public String update() {
+        try {
+            getFacade().edit(current);
+           //"UserUpdated"));
+            return "View";
+        } catch (Exception e) {
+           //"PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    private void performDestroy() {
+        try {
+            getFacade().remove(current);
+           //"UserDeleted"));
+        } catch (Exception e) {
+           //"PersistenceErrorOccured"));
+        }
+    }
+
+    /**
+     * @return the loginResultMessage
+     */
+    public String getLoginResultMessage() {
+        return loginResultMessage;
+    }
+
+    /**
+     * @param loginResultMessage the loginResultMessage to set
+     */
+    public void setLoginResultMessage(String loginResultMessage) {
+        this.loginResultMessage = loginResultMessage;
+    }
+
+    /**
+     * @return the showLoginResultMessage
+     */
+    public boolean isShowLoginResultMessage() {
+        return showLoginResultMessage;
+    }
+
+    /**
+     * @param showLoginResultMessage the showLoginResultMessage to set
+     */
+    public void setShowLoginResultMessage(boolean showLoginResultMessage) {
+        this.showLoginResultMessage = showLoginResultMessage;
+    }
+
+    @FacesConverter(forClass = User.class)
+    public static class UserControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            UserController controller = (UserController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "userController");
+            return controller.ejbFacade.find(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof User) {
+                User o = (User) object;
+                return String.format("User with id: %d, Username: %s, Address: %s", o.getUserId(), o.getUsername(), o.getAddress());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
+            }
+        }
+
+    }
+
 }

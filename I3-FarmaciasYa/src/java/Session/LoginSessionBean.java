@@ -5,6 +5,7 @@
  */
 package Session;
 
+import Model.User;
 import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
@@ -17,15 +18,14 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="LoginSessionBean", eager=true)
 @SessionScoped
 public class LoginSessionBean implements Serializable{
-    String user;
+    User user;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-     public void Login(){
-        user = "Usuario";
-        System.out.println(user);
+     public void Login(User loggedUser ){
+        user = loggedUser;
    }
     
-    public String GetUser(){
+    public User GetUser(){
         return user;
     }
     
