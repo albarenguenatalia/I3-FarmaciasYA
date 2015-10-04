@@ -27,22 +27,22 @@ import static javax.persistence.TemporalType.DATE;
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable=false)
+    @Column(name = "USER_ID", nullable=false)
     private int user_id;
-    @Column(name = "username", nullable=false, unique=true)
+    @Column(name = "USERNAME", nullable=false, unique=true)
     private String username;
-    @Column(name = "password", nullable=false)
+    @Column(name = "PASSWORD", nullable=false)
     private String password;
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
-    @Column(name = "lastname")
+    @Column(name = "LASTNAME")
     private String lastname;
-    @Column(name = "email", nullable=false, unique=true)
+    @Column(name = "EMAIL", nullable=false, unique=true)
     private String email;
-    @Column(name = "address", nullable=false)
+    @Column(name = "ADDRESS")
     private String address;
     @Temporal(DATE)
-    @Column(name = "created_date")
+    @Column(name = "CREATED_DATE")
     private Date created_date;
 
     public int getUserId() {

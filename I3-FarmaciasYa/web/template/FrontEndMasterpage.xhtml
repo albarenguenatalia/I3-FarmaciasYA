@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pf="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -36,47 +38,50 @@
     </h:head>
 
     <h:body>
-        <h:form>
-            <div class="modal signUpContent fade" id="ModalLogin" tabindex="-1" role="dialog">
+            <div class="modal signUpContent fade" id="ModalLogin" p:tabindex="-1" p:role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                            <h3 class="modal-title-site text-center"> Iniciar sesion</h3>
+                            <h3 class="modal-title-site text-center">#{bundle.LoginMessage}</h3>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group login-username">
-                                <div>
-                                    <h:inputText value="#{sessionController.current.username}" class="form-control input" p:placeholder="#{bundle.LoginUserUsername}" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
-                                </div>
-                            </div>
-                            <div class="form-group login-password">
-                                <div>
-                                    <h:inputSecret value="#{sessionController.current.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <div class="checkbox login-remember">
-                                        <label>
-                                            <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                            #{bundle.RememberUser}</label>
+                            <h:form id="loginfrm">
+                                <div class="form-group login-username">
+                                    <div>
+                                        <h:inputText value="#{sessionController.current.username}" class="form-control input" p:placeholder="#{bundle.LoginUserUsername}" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <h:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{sessionController.login}" />
-                                    <br/>
-                                    <h:panelGroup rendered="#{sessionController.showLoginResultMessage}">
-                                        <div class="alert alert-danger" role="alert">
-                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                        <span class="sr-only">Error:</span>
-                                         #{sessionController.loginResultMessage}
+                                <div class="form-group login-password">
+                                    <div>
+                                        <h:inputSecret value="#{sessionController.current.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
                                     </div>
-                                    </h:panelGroup>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <div>
+                                        <div class="checkbox login-remember">
+                                            <label>
+                                                <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
+                                                #{bundle.RememberUser}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <h:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{sessionController.login}" >
+                                            <f:ajax   render="loginfrm" execute="@all" />
+                                        </h:commandButton>
+                                        <br/>
+                                        <h:panelGroup rendered="#{sessionController.showLoginResultMessage}" id="loginResultpnl">
+                                            <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                             #{sessionController.loginResultMessage}
+                                        </div>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </h:form>
                         </div>
                         <div class="modal-footer">
                             <p class="text-center">
@@ -90,7 +95,6 @@
                 </div>
 
             </div>
-        </h:form>
 
         <div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
             <div class="modal-dialog">
@@ -433,7 +437,7 @@
             </div> 
         </footer>
 
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"/>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/jquery.parallax-1.1.js"></script>
         <script type="text/javascript" src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>

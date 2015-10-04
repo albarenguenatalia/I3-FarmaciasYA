@@ -15,6 +15,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -52,6 +53,8 @@ public class SessionController implements Serializable{
     }
     
     public String login(){
+        System.out.println("LLAMO A SESSION CONTROLLER LOGIN");
+        RequestContext context = RequestContext.getCurrentInstance();
         setUserLogged(false);
         this.setLoginResultMessage("");
         this.setShowLoginResultMessage(false);
@@ -59,12 +62,16 @@ public class SessionController implements Serializable{
         if(checkedUser != null){
             current = checkedUser;
             setUserLogged(true);
-            return "/template/index.xhtml";
+            //context.update("loginResultpnl");
+            System.out.println("Esta todo OK.Actualiza todo");
+            return "template/index.html?faces-redirect=true";
         }
         current = new User();
         this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
         this.setShowLoginResultMessage(true);
-        return null;
+        //context.update("loginResultpnl");
+        System.out.println("Error de login.Actualiza el model");
+        return "";
     }
     
     /**
