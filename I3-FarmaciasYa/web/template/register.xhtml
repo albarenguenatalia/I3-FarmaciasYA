@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./FrontEndMasterpage.xhtml">
+
+            <ui:define name="endHead">               
+            </ui:define>
+
+            <ui:define name="mainContainer">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                        <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Registro / Iniciar sesión</span></h1>
+                        <div class="row userInfo">
+                            <div class="col-xs-12 col-sm-6">
+                                <h2 class="block-title-2"> Crear cuenta </h2>
+                                <form role="form" class="regForm" novalidate="novalidate">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input title="Please enter your username (at least 3 characters)" type="text" class="form-control" placeholder="Nombre" required="" minlength="3" aria-required="true"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dirección de correo</label>
+                                        <input title="Please enter valid email" type="email" class="form-control" placeholder="Mail" required="" aria-required="true"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contraseña</label>
+                                        <input required="" minlength="5" title="Contraseña" type="password" class="form-control" placeholder="Password" aria-required="true"/>
+                                    </div>
+                                    <div class="error">
+                                    </div>
+                                    <button type="submit" class="btn   btn-primary"><i class="fa fa-user"></i> Crear cuenta</button>
+                                </form>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <h2 class="block-title-2"><span>¿Ya esta registrado?</span></h2>
+                                <form role="form" class="logForm">
+                                    <div class="form-group">
+                                        <label>Dirección de correo</label>
+                                        <input type="email" class="form-control" placeholder="Email"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contraseña</label>
+                                        <input type="password" class="form-control" placeholder="Contraseña"/>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label style="display: none;">
+                                            <input type="checkbox" name="checkbox" style="display: none;"/>
+                                                Recordar </label>
+                                        <span class="icr enabled" id="icr-3"><span class="icr__checkbox"></span><span class="icr__text">Recordar</span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <p><a title="Recover your forgotten password" href="forgot-password.html">¿Olvidó su contraseña</a></p>
+                                    </div>
+                                    <a class="btn btn-primary" href="account.html"><i class="fa fa-sign-in"></i> Iniciar sesión</a>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-5"> </div>
+                </div>  
+                <div style="clear:both"></div>
+            </ui:define>
+
+            <ui:define name="endBody">
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
