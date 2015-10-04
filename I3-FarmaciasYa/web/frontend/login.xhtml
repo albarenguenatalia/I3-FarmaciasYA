@@ -88,7 +88,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-1 col-sm-10">
-                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="submit" type="submit" action="#{sessionController.login}" />
+                                    <h:commandButton class="btn btn-lg btn-primary btn-block" value="#{bundle.LoginMessage}" type="submit" action="#{sessionController.login}" />
                                     <br/>
                                     <h:panelGroup id="two" rendered="#{sessionController.showLoginResultMessage}">
                                         <div class="alert alert-danger" role="alert">
@@ -97,6 +97,11 @@
                                          #{sessionController.loginResultMessage}
                                     </div>
                                     </h:panelGroup>
+                                    <div class="form-group">
+                                        <label for="registro" class="col-sm-4 control-label">#{bundle.LoginRegisterQuestionMessage}</label>
+                                        <h:commandButton class="btn btn-primary" value="#{bundle.LoginRegisterMessage}" type="#{bundle.LoginRegisterMessage}" action="#{userController.create}" />        
+                                    </div>
+                                    
                                     
                                 </div>
                             </div>
