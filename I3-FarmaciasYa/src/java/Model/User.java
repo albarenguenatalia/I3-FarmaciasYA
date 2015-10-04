@@ -5,10 +5,16 @@
  */
 package Model;
 
+import Utils.OneWayHash;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.*;
 import static javax.persistence.TemporalType.DATE;
+import java.util.Arrays;
 
 /**
  *
@@ -31,6 +37,7 @@ public class User implements Serializable{
     private int user_id;
     @Column(name = "USERNAME", nullable=false, unique=true)
     private String username;
+    @Lob
     @Column(name = "PASSWORD", nullable=false)
     private String password;
     @Column(name = "NAME")
@@ -66,7 +73,19 @@ public class User implements Serializable{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        try {
+            OneWayHash hash = OneWayHash.getInstance();
+            this.password = Arrays.toString(hash.hashSHA256(password, (getUsername() + password).getBytes()));
+        } catch (NoSuchAlgorithmException ex ) {
+            System.out.println("ERROR AL ENCRIPTAR");
+            ex.printStackTrace();
+           //no edit
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("ERROR AL ENCRIPTAR");
+            ex.printStackTrace();
+            //no edit
+        }
+        
     }
 
     public String getName() {

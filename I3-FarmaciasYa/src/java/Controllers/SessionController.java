@@ -58,15 +58,15 @@ public class SessionController implements Serializable{
         setUserLogged(false);
         this.setLoginResultMessage("");
         this.setShowLoginResultMessage(false);
-        User checkedUser = getFacade().validateUser(current.getUsername(), current.getPassword());
+        User checkedUser = getFacade().validateUser(getCurrent().getUsername(), getCurrent().getPassword());
         if(checkedUser != null){
-            current = checkedUser;
+            setCurrent(checkedUser);
             setUserLogged(true);
             //context.update("loginResultpnl");
             System.out.println("Esta todo OK.Actualiza todo");
             return "template/index.html?faces-redirect=true";
         }
-        current = new User();
+        setCurrent(new User());
         this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
         this.setShowLoginResultMessage(true);
         //context.update("loginResultpnl");
@@ -114,6 +114,13 @@ public class SessionController implements Serializable{
      */
     public void setUserLogged(boolean userLogged) {
         this.userLogged = userLogged;
+    }
+
+    /**
+     * @param current the current to set
+     */
+    public void setCurrent(User current) {
+        this.current = current;
     }
     
     

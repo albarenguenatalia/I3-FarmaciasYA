@@ -54,6 +54,7 @@ public class UserFacade extends AbstractFacade<User> {
     @Override
     public void create(User user){
         user.setCreatedDate(new Date() );
+        user.setEmail(user.getUsername());
         getEntityManager().getTransaction().begin();
         getEntityManager().persist(user);
         getEntityManager().getTransaction().commit();

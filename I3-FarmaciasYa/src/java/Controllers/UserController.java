@@ -2,10 +2,13 @@ package Controllers;
 
 import Model.User;
 import Session.UserFacade;
+import Utils.Mail;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,6 +20,8 @@ import javax.faces.convert.FacesConverter;
 public class UserController implements Serializable {
     @EJB
     private Session.UserFacade ejbFacade;
+    @ManagedProperty("#{sessionController}")
+    private SessionController sessionController;
     private User current;
 
     public UserController() {
@@ -37,8 +42,11 @@ public class UserController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-           //"UserCreated"));
-            return "Create";
+            sessionController.setCurrent(current);
+            Mail.sendMail("FarmaciasYA<martingon4eoz@gmail.com>",
+                    ResourceBundle.getBundle("/Bundle").getString("WelcomeEmailSubject"), 
+                    ResourceBundle.getBundle("/Bundle").getString("WelcomeEmailBody"));
+            return sessionController.login();
         } catch (Exception e) {
             //"PersistenceErrorOccured"));
             return null;
