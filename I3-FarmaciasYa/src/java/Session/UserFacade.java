@@ -32,7 +32,7 @@ public class UserFacade extends AbstractFacade<User> {
     }
      public User validateUser(String username, byte[] password) {
         User userFound = findByUsername(username);
-        if( userFound != null && Arrays.equals(userFound.getPassword(), password)){
+        if (userFound != null && Arrays.equals(userFound.getPassword(), password)) {
             return userFound;
         }
         return null;
@@ -41,19 +41,19 @@ public class UserFacade extends AbstractFacade<User> {
     /*
     *Poner en wiki que el username es el email
     */
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
          List<User> users = getEntityManager().createNamedQuery(
             "User.findByUsername")
                  .setParameter("username", username)
                  .getResultList();
-         if(users.size() == 1){
+         if(users.size() == 1) {
              return users.get(0);
          }
          return null;
     }
     
     @Override
-    public void create(User user){
+    public void create(User user) {
         getEntityManager().persist(user);
     }
     

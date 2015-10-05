@@ -12,12 +12,12 @@ public class Mail {
     private static String USER_NAME = "noreplyobliis3";  
     private static String PASSWORD = "passpasspass";
     
-    public static void sendMail(String recipient, String subject, String body){
-        String[] to = { recipient };
+    public static void sendMail(String recipient, String subject, String body) {
+        String[] to = {recipient};
         sendFromGMail(USER_NAME, PASSWORD, to, subject, body);
     }
     
-    public static void sendMail(String[] recipients, String subject, String body){
+    public static void sendMail(String[] recipients, String subject, String body) {
         sendFromGMail(USER_NAME, PASSWORD, recipients, subject, body);
     }
 

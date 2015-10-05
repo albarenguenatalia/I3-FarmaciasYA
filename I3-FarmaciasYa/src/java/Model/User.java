@@ -77,7 +77,7 @@ public class User implements Serializable {
         try {
             OneWayHash hash = OneWayHash.getInstance();
             this.password = hash.hashSHA256(password, (getUsername() + password).getBytes());
-        } catch (NoSuchAlgorithmException ex ) {
+        } catch (NoSuchAlgorithmException ex) {
             System.out.println("ERROR AL ENCRIPTAR");
             ex.printStackTrace();
            //no edit
