@@ -6,6 +6,7 @@
 package Session;
 
 import Model.User;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,9 +30,9 @@ public class UserFacade extends AbstractFacade<User> {
     public UserFacade() {
         super(User.class);
     }
-     public User validateUser(String username, String password){
+     public User validateUser(String username, byte[] password){
         User userFound = findByUsername(username);
-        if( userFound != null && userFound.getPassword().equals(password)){
+        if( userFound != null && Arrays.equals(userFound.getPassword(), password)){
             return userFound;
         }
         return null;
@@ -53,11 +54,7 @@ public class UserFacade extends AbstractFacade<User> {
     
     @Override
     public void create(User user){
-        user.setCreatedDate(new Date() );
-        user.setEmail(user.getUsername());
-        getEntityManager().getTransaction().begin();
         getEntityManager().persist(user);
-        getEntityManager().getTransaction().commit();
     }
     
     

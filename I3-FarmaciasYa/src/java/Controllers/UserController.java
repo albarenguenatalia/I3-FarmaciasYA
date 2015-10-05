@@ -5,6 +5,7 @@ import Session.UserFacade;
 import Utils.Mail;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -18,14 +19,20 @@ import javax.faces.convert.FacesConverter;
 @ManagedBean(name = "userController")
 @SessionScoped
 public class UserController implements Serializable {
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
     @EJB
     private Session.UserFacade ejbFacade;
-    @ManagedProperty("#{sessionController}")
-    private SessionController sessionController;
     private User current;
+    private String password;
+    private String confirmPassword;
+    private boolean showCreateUserMessage;
+    private String createUserResultMessage;
+
 
     public UserController() {
-        
+        showCreateUserMessage = false;
+        createUserResultMessage = "";
     }
 
     public UserFacade getFacade() {
@@ -40,13 +47,34 @@ public class UserController implements Serializable {
     }
 
     public String create() {
+        setCreateUserResultMessage("");
         try {
-            getFacade().create(current);
-            sessionController.setCurrent(current);
-            Mail.sendMail("FarmaciasYA<martingon4eoz@gmail.com>",
-                    ResourceBundle.getBundle("/Bundle").getString("WelcomeEmailSubject"), 
-                    ResourceBundle.getBundle("/Bundle").getString("WelcomeEmailBody"));
-            return sessionController.login();
+            if(getFacade().findByUsername(current.getUsername()) != null){
+                setCreateUserResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("UserAlreadyExists"));
+                setShowCreateUserMessage(true);
+                return "";
+            }
+            else if(!confirmPassword.equals(password)){
+                setCreateUserResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ConfirmPasswordError"));
+                setShowCreateUserMessage(true);
+                return "";
+            }
+            else{
+                current.setPassword(password);
+                current.setCreatedDate(new Date() );
+                current.setEmail(current.getUsername());
+                getFacade().create(current);
+                getSessionController().setCurrent(current);
+                getSessionController().setPassword(password);
+                Mail.sendMail("FarmaciasYA<martingon4eoz@gmail.com>",
+                ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailSubject"), 
+                ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody"));
+                String result = getSessionController().login();
+                if(result != null && !result.equals("")){
+                    return "index.html";
+                }
+                return "";
+            }        
         } catch (Exception e) {
             //"PersistenceErrorOccured"));
             return null;
@@ -73,6 +101,48 @@ public class UserController implements Serializable {
         } catch (Exception e) {
            //"PersistenceErrorOccured"));
         }
+    }
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * @return the sessionController
+     */
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    /**
+     * @param sessionController the sessionController to set
+     */
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @FacesConverter(forClass = User.class)
@@ -113,6 +183,22 @@ public class UserController implements Serializable {
             }
         }
 
+    }
+    
+    public boolean isShowCreateUserMessage() {
+        return showCreateUserMessage;
+    }
+
+    public void setShowCreateUserMessage(boolean showCreateUserMessage) {
+        this.showCreateUserMessage = showCreateUserMessage;
+    }
+
+    public String getCreateUserResultMessage() {
+        return createUserResultMessage;
+    }
+
+    public void setCreateUserResultMessage(String createUserResultMessage) {
+        this.createUserResultMessage = createUserResultMessage;
     }
 
 }

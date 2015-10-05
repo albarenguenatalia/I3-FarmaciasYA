@@ -18,37 +18,42 @@
                         <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Registro / Iniciar sesión</span></h1>
                         <div class="row userInfo">
                             <div class="col-xs-12 col-sm-6">
-                                <h2 class="block-title-2"> "#{CreateAccountMenu}" </h2>
+                                <h2 class="block-title-2">#{bundle.CreateAccountMenu}</h2>
                                 <h:form role="form" class="regForm" p:novalidate="novalidate">
                                     <div class="form-group">
-                                        <label>Nombre</label>
-                                        <h:inputText value="#{userController.current.name}" title="Please enter your username (at least 3 characters)" p:type="text" class="form-control"  p:placeholder="Nombre" p:required="true" p:minlength="3" p:aria-required="true"/>
+                                        <label>#{bundle.Name}</label>
+                                        <h:inputText value="#{userController.current.name}" title="Please enter your name" p:type="text" class="form-control"  p:placeholder="#{bundle.Name}" p:required="false" p:aria-required="true"/>
                                      </div>
                                     <div class="form-group">
-                                        <label>Apellido</label>
-                                        <h:inputText value="#{userController.current.lastname}" title="Please enter your lastname (at least 3 characters)" p:type="text" class="form-control"  p:placeholder="Apellido" p:required="true" p:minlength="3" p:aria-required="true"/>
+                                        <label>#{bundle.Lastname}</label>
+                                        <h:inputText value="#{userController.current.lastname}" title="Please enter your lastname" p:type="text" class="form-control"  p:placeholder="#{bundle.Lastname}" p:required="false" p:aria-required="true"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Domicilio</label>
-                                         <h:inputText value="#{userController.current.address}" required="" p:minlength="5" title="Domicilio" p:type="text" class="form-control" p:placeholder="Domicilio" p:aria-required="true"/>
+                                        <label>#{bundle.Address}</label>
+                                         <h:inputText value="#{userController.current.address}" required="" p:minlength="5" title="Domicilio" p:type="text" class="form-control" p:placeholder="#{bundle.Address}" p:aria-required="true"/>
                                     </div>
                                     <div class="form-group">
-                                        <label>Dirección de correo</label>
-                                        <h:inputText value="#{userController.current.username}" title="Please enter valid email" p:type="email" class="form-control" p:placeholder="Mail" p:required="true" p:aria-required="true"/>
+                                        <label>#{bundle.RegisterUserEmail}</label>
+                                        <h:inputText value="#{userController.current.username}" title="Please enter a valid email" p:type="email" class="form-control" p:placeholder="#{bundle.LoginUserUsername}" p:required="true" p:aria-required="true"/>
                                    </div>
                                     <div class="form-group">
-                                        <label>Contraseña</label>
-                                        <h:inputText value="#{userController.current.password}" required="true" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
+                                        <label>#{bundle.LoginUserPassword}</label>
+                                        <h:inputText value="#{userController.password}" required="true" p:minlength="8" title="#{bundle.LoginUserPassword}" p:type="password" class="form-control" p:placeholder="#{bundle.LoginUserPassword}" p:aria-required="true"/>
                                     </div>
                                     <div class="form-group">
-                                        <label> Confirmar Contraseña</label>
-                                         <h:inputText value="#{userController.current.password}" required="true" p:minlength="5" title="ConfirmarContraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
-                                    </div>
-                                    
-                                    <div class="error">
-                                    </div>
-                                    <h:commandButton class="btn   btn-primary" type="submit" p:value="Registrate" action="#{LoginViewBean.IniciarSesion}" />
-                            </h:form>
+                                        <label>#{bundle.ConfirmPassword}</label>
+                                         <h:inputText value="#{userController.confirmPassword}" required="true" p:minlength="8" title="Confirmar Contraseña" p:type="password" class="form-control" p:placeholder="#{bundle.ConfirmPassword}" p:aria-required="true"/>
+                                    </div>                                  
+                                    <h:commandButton class="btn   btn-primary" type="submit" p:value="#{bundle.RegisterMessage}" action="#{userController.create}" />
+                                     <br/>
+                                        <h:panelGroup rendered="#{userController.showCreateUserMessage}" id="loginResultpnl">
+                                            <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                             #{userController.createUserResultMessage}
+                                        </div>
+                                        </h:panelGroup>
+                                </h:form>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <h2 class="block-title-2"><span>¿Ya esta registrado?</span></h2>

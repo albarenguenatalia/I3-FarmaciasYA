@@ -7,7 +7,9 @@ package Controllers;
 
 import Model.User;
 import Session.UserFacade;
+import Utils.OneWayHash;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,26 +25,28 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "sessionController")
 @SessionScoped
-public class SessionController implements Serializable{
+public class SessionController implements Serializable {
+
     private User current;
+    private String password;
     private boolean showLoginResultMessage;
     private boolean userLogged;
     private String loginResultMessage;
     @EJB
     private Session.UserFacade ejbFacade;
     private int currentUserId;
-    
-    public SessionController(){
+
+    public SessionController() {
         showLoginResultMessage = false;
         userLogged = false;
         loginResultMessage = "";
         currentUserId = -1;
     }
-    
+
     public UserFacade getFacade() {
         return ejbFacade;
     }
-    
+
     public User getCurrent() {
         if (current == null) {
             current = new User();
@@ -51,29 +55,41 @@ public class SessionController implements Serializable{
         currentUserId = current.getUserId();
         return current;
     }
-    
-    public String login(){
-        System.out.println("LLAMO A SESSION CONTROLLER LOGIN");
-        RequestContext context = RequestContext.getCurrentInstance();
-        setUserLogged(false);
-        this.setLoginResultMessage("");
-        this.setShowLoginResultMessage(false);
-        User checkedUser = getFacade().validateUser(getCurrent().getUsername(), getCurrent().getPassword());
-        if(checkedUser != null){
-            setCurrent(checkedUser);
-            setUserLogged(true);
-            //context.update("loginResultpnl");
-            System.out.println("Esta todo OK.Actualiza todo");
-            return "template/index.html?faces-redirect=true";
+
+    public String login() {
+        try{
+            System.out.println("LLAMO A SESSION CONTROLLER LOGIN");
+            RequestContext context = RequestContext.getCurrentInstance();
+            setUserLogged(false);
+            this.setLoginResultMessage("");
+            this.setShowLoginResultMessage(false);
+            OneWayHash hash = OneWayHash.getInstance();
+            byte[] passenc = hash.hashSHA256(password, (current.getUsername() + password).getBytes());
+            User checkedUser = getFacade().validateUser(current.getUsername(), passenc);
+            if (checkedUser != null) {
+                setCurrent(checkedUser);
+                setUserLogged(true);
+                System.out.println("Esta todo OK.Actualiza todo");
+                return "index.html";
+            }else{
+                setCurrent(new User());
+                this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
+                this.setShowLoginResultMessage(true);
+                System.out.println("Error de login.Actualiza el model");
+                return "";
+            }
         }
-        setCurrent(new User());
-        this.setLoginResultMessage("Nombre de Usuario o Contraseña inválido");
-        this.setShowLoginResultMessage(true);
-        //context.update("loginResultpnl");
-        System.out.println("Error de login.Actualiza el model");
-        return "";
+        catch(Exception e){
+            setCurrent(new User());
+            this.setLoginResultMessage("Error hasheando pass");
+            //this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
+            this.setShowLoginResultMessage(true);
+            System.out.println("Error de login.Actualiza el model");
+            return "";
+        }
+        
     }
-    
+
     /**
      * @return the loginResultMessage
      */
@@ -87,8 +103,8 @@ public class SessionController implements Serializable{
     public void setLoginResultMessage(String loginResultMessage) {
         this.loginResultMessage = loginResultMessage;
     }
-    
-      /**
+
+    /**
      * @return the showLoginResultMessage
      */
     public boolean isShowLoginResultMessage() {
@@ -122,8 +138,21 @@ public class SessionController implements Serializable{
     public void setCurrent(User current) {
         this.current = current;
     }
-    
-    
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @FacesConverter(forClass = User.class)
     public static class UserControllerConverter implements Converter {
 

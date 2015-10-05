@@ -9,6 +9,7 @@ import Utils.OneWayHash;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class User implements Serializable{
     private String username;
     @Lob
     @Column(name = "PASSWORD", nullable=false)
-    private String password;
+    private byte[] password;
     @Column(name = "NAME")
     private String name;
     @Column(name = "LASTNAME")
@@ -48,7 +49,7 @@ public class User implements Serializable{
     private String email;
     @Column(name = "ADDRESS")
     private String address;
-    @Temporal(DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED_DATE")
     private Date created_date;
 
@@ -68,14 +69,14 @@ public class User implements Serializable{
         this.username = username;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         try {
             OneWayHash hash = OneWayHash.getInstance();
-            this.password = Arrays.toString(hash.hashSHA256(password, (getUsername() + password).getBytes()));
+            this.password = hash.hashSHA256(password, (getUsername() + password).getBytes());
         } catch (NoSuchAlgorithmException ex ) {
             System.out.println("ERROR AL ENCRIPTAR");
             ex.printStackTrace();

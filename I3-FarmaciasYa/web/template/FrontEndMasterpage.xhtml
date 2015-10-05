@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group login-password">
                                     <div>
-                                        <h:inputSecret value="#{sessionController.current.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
+                                        <h:inputSecret value="#{sessionController.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -69,7 +69,7 @@
                                 <div>
                                     <div>
                                         <h:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{sessionController.login}" >
-                                            <f:ajax   render="loginfrm" execute="@all" />
+                                           <!-- <f:ajax   render="loginfrm" execute="@all" />-->
                                         </h:commandButton>
                                         <br/>
                                         <h:panelGroup rendered="#{sessionController.showLoginResultMessage}" id="loginResultpnl">
