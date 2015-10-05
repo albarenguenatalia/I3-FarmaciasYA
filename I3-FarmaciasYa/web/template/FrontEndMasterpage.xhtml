@@ -38,6 +38,7 @@
     </h:head>
 
     <h:body>
+        <h:form id="loginfrm">
             <div class="modal signUpContent fade" id="ModalLogin" p:tabindex="-1" p:role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -46,42 +47,45 @@
                             <h3 class="modal-title-site text-center">#{bundle.LoginMessage}</h3>
                         </div>
                         <div class="modal-body">
-                            <h:form id="loginfrm">
-                                <div class="form-group login-username">
-                                    <div>
-                                        <h:inputText value="#{sessionController.current.username}" class="form-control input" p:placeholder="#{bundle.LoginUserUsername}" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group login-password">
-                                    <div>
-                                        <h:inputSecret value="#{sessionController.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div>
-                                        <div class="checkbox login-remember">
-                                            <label>
-                                                <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                                #{bundle.RememberUser}</label>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            <div class="form-group login-username">
                                 <div>
-                                    <div>
-                                        <h:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" type="submit" action="#{sessionController.login}" >
-                                           <!-- <f:ajax   render="loginfrm" execute="@all" />-->
-                                        </h:commandButton>
-                                        <br/>
-                                        <h:panelGroup rendered="#{sessionController.showLoginResultMessage}" id="loginResultpnl">
-                                            <div class="alert alert-danger" role="alert">
-                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                            <span class="sr-only">Error:</span>
-                                             #{sessionController.loginResultMessage}
-                                        </div>
-                                        </h:panelGroup>
+                                    <h:inputText value="#{sessionController.current.username}" class="form-control input" p:placeholder="#{bundle.LoginUserUsername}" required="true" requiredMessage="#{bundle.LoginUserUsernameRequiredMessage}"/>
+                                </div>
+                            </div>
+                            <div class="form-group login-password">
+                                <div>
+                                    <h:inputSecret value="#{sessionController.password}" class="form-control input" p:placeholder="#{bundle.LoginUserPassword}" required="true" requiredMessage="#{bundle.LoginUserPasswordRequiredMessage}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <div class="checkbox login-remember">
+                                        <label>
+                                            <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
+                                            #{bundle.RememberUser}</label>
                                     </div>
                                 </div>
-                            </h:form>
+                            </div>
+                            <div>
+                                <div>
+                                    <pf:commandButton value="#{bundle.LoginMessage}" class="btn  btn-block btn-lg btn-primary" process="loginfrm" update="loginResultpnl,loginfrm:formNavBar:divLoginRegister" action="#{sessionController.login}" >
+                                    </pf:commandButton>
+                                    <br/>
+                                    <h:panelGroup id="loginResultpnl">
+                                        <h:panelGroup rendered="#{sessionController.showLoginResultMessage}">
+
+                                            <div class="alert alert-danger" role="alert">
+                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                <span class="sr-only">Error:</span>
+                                                #{sessionController.loginResultMessage}
+                                            </div>
+                                        </h:panelGroup>
+
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <p class="text-center">
@@ -93,241 +97,243 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-        <div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                        <h3 class="modal-title-site text-center"> Registrarse </h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group reg-username">
-                            <div>
-                                <input name="login" class="form-control input" size="20" placeholder="Nombre" type="text"/>
-                            </div>
+            <div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                            <h3 class="modal-title-site text-center"> Registrarse </h3>
                         </div>
-                        <div class="form-group reg-email">
-                            <div>
-                                <input name="reg" class="form-control input" size="20" placeholder="Email" type="text"/>
+                        <div class="modal-body">
+                            <div class="form-group reg-username">
+                                <div>
+                                    <input name="login" class="form-control input" size="20" placeholder="Nombre" type="text"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group reg-password">
-                            <div>
-                                <input name="password" class="form-control input" size="20" placeholder="Contraseña" type="password"/>
+                            <div class="form-group reg-email">
+                                <div>
+                                    <input name="reg" class="form-control input" size="20" placeholder="Email" type="text"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
+                            <div class="form-group reg-password">
+                                <div>
+                                    <input name="password" class="form-control input" size="20" placeholder="Contraseña" type="password"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <div class="checkbox login-remember">
+                                        <label>
+                                            <input name="rememberme" id="rememberme" value="forever" checked="checked" type="checkbox"/>
+                                            Recordar usuario </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
-                                <div class="checkbox login-remember">
-                                    <label>
-                                        <input name="rememberme" id="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                        Recordar usuario </label>
+                                <div>
+                                    <input name="submit" class="btn  btn-block btn-lg btn-primary" value="Registrarse ahora" type="submit"/>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="Registrarse ahora" type="submit"/>
-                            </div>
+                        <div class="modal-footer">
+                            <p class="text-center"> ¿Ya estás registrado? 
+                                <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin"> Iniciar sesión </a> 
+                            </p>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <p class="text-center"> ¿Ya estás registrado? 
-                            <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin"> Iniciar sesión </a> 
-                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
-            <div class="navbar-top">
+            <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
+                <div class="navbar-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
+                                <div class="pull-left ">
+                                    <ul class="userMenu ">
+                                        <li> <a href="#"> <span class="hidden-xs">Ayuda</span><i class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a> </li>
+                                        <li class="phone-number"> <a href="callto:+0900 1711"> <span> <i class="glyphicon glyphicon-phone-alt "></i></span> 
+                                                <span class="hidden-xs" style="margin-left:5px"> +0900 1711 </span> </a> </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h:form id="formNavBar">
+                                <h:panelGroup id="divLoginRegister" class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
+                                    <h:panelGroup rendered="#{sessionController.userLogged}" class="pull-right">
+                                        <ul class="userMenu">
+                                            <li> <a href="account-1.html"><span class="hidden-xs">#{bundle.MyAccountMenu}</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a> </li>
+                                            <li> <a href="#" data-toggle="modal" data-target="#"> <span class="hidden-xs">#{bundle.LogoutMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
+                                        </ul>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!sessionController.userLogged}" class="pull-right">
+                                        <ul class="userMenu">
+                                            <li> <a href="#" data-toggle="modal" data-target="#ModalLogin"> <span class="hidden-xs">#{bundle.LoginMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
+                                            <li class="hidden-xs"> <a href="#" data-toggle="modal" data-target="#ModalSignup">#{bundle.CreateAccountMenu}</a> </li>
+                                        </ul>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
-                            <div class="pull-left ">
-                                <ul class="userMenu ">
-                                    <li> <a href="#"> <span class="hidden-xs">Ayuda</span><i class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a> </li>
-                                    <li class="phone-number"> <a href="callto:+0900 1711"> <span> <i class="glyphicon glyphicon-phone-alt "></i></span> 
-                                            <span class="hidden-xs" style="margin-left:5px"> +0900 1711 </span> </a> </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
-                            <h:panelGroup rendered="#{sessionController.userLogged}" class="pull-right">
-                                <ul class="userMenu">
-                                    <li> <a href="account-1.html"><span class="hidden-xs">#{bundle.MyAccountMenu}</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a> </li>
-                                    <li> <a href="#" data-toggle="modal" data-target="#"> <span class="hidden-xs">#{bundle.LogoutMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
-                                </ul>
-                            </h:panelGroup>
-                            <h:panelGroup rendered="#{!sessionController.userLogged}" class="pull-right">
-                                <ul class="userMenu">
-                                    <li> <a href="#" data-toggle="modal" data-target="#ModalLogin"> <span class="hidden-xs">#{bundle.LoginMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
-                                    <li class="hidden-xs"> <a href="#" data-toggle="modal" data-target="#ModalSignup">#{bundle.CreateAccountMenu}</a> </li>
-                                </ul>
-                             </h:panelGroup>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span>
+                            <span class="icon-bar"> </span> <span class="icon-bar"> </span> 
+                        </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> 
+                            <i class="fa fa-shopping-cart colorWhite"> </i> 
+                            <span class="cartRespons colorWhite"> Carrito ($0.00) </span> 
+                        </button>
+                        <a class="navbar-brand " href="index.xhtml"> <img src="images/logo.png" alt="TSHOP"/> </a>
 
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span>
-                        <span class="icon-bar"> </span> <span class="icon-bar"> </span> 
-                    </button>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> 
-                        <i class="fa fa-shopping-cart colorWhite"> </i> 
-                        <span class="cartRespons colorWhite"> Carrito ($0.00) </span> 
-                    </button>
-                    <a class="navbar-brand " href="index.xhtml"> <img src="images/logo.png" alt="TSHOP"/> </a>
-
-                    <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
-                        <div class="input-group">
-                            <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="navbar-cart  collapse">
-                    <div class="cartMenu  col-lg-4 col-xs-12 col-md-4 ">
-                        <div class="w100 miniCartTable scroll-pane">
-                            <table>
-                                <tbody>
-                                    <tr class="miniCartProduct hidden">
-                                        <td p:style="20%" class="miniCartProductThumb"><div>
-                                                <a href="product-details.html"> 
-                                                    <img src="images/product/3.jpg" alt="img"/> 
-                                                </a> </div></td>
-                                        <td p:style="40%"><div class="miniCartDescription">
-                                                <h4> <a href="product-details.html"> TSHOP T shirt Black </a> </h4>
-                                                <span class="size"> 12 x 1.5 L </span>
-                                                <div class="price"> <span> $8.80 </span> </div>
-                                            </div></td>
-                                        <td p:style="10%" class="miniCartQuantity"><a> X 1 </a></td>
-                                        <td p:style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
-                                        <td p:style="5%" class="delete"><a> x </a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="miniCartFooter  miniCartFooterInMobile text-right">
-                            <h3 class="text-right subtotal"> Subtotal: $0.00 </h3>
-                            <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart">
-                                </i> Ver carrito </a> 
-                            <a class="btn btn-sm btn-primary"> 
-                                Finalizar compra
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"> <a href="index.xhtml"> Home </a> </li>
-                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                Productos<b class="caret"> </b> </a>
-                            <ul class="dropdown-menu">
-                                <li class="megamenu-content ">
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
-                                        <li> <a href="category.html"> Todos los productos </a> </li>
-                                        <li> <a href="category.html"> Cosméticos </a> </li>
-                                        <li> <a href="category.html"> Perfumería </a> </li>
-                                        <li> <a href="category.html"> Óptica </a> </li>
-                                        <li> <a href="category.html"> Suplementos </a> </li>
-                                        <li> <a href="category.html"> Medicamentos </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html">
-                                                <img class="img-responsive" src="images/categories/lentes.jpg" alt="product"/> 
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
-                                                    Lentes </span> </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="images/categories/perfumes.jpg" alt="product"/>
-
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
-                                                    Perfumes
-                                                </span> </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html">
-                                                <img class="img-responsive" src="images/categories/suplementos.jpg" alt="product"/>
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
-                                                    Suplementos</span> </a> </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <div class="nav navbar-nav navbar-right hidden-xs">
-                        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Compras ($0.00) </span> <b class="caret"> </b> </a>
-                            <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
-                                <div class="w100 miniCartTable scroll-pane">
-                                    <table>
-                                        <tbody>
-                                            <tr class="miniCartProduct hidden">
-                                                <td style="width:20%" class="miniCartProductThumb"><div>
-                                                        <a href="product-details.html">
-                                                            <img src="images/product/3.jpg" alt="img"/> </a> </div></td>
-                                                <td style="width:40%"><div class="miniCartDescription">
-                                                        <h4> <a href="product-details.html"> TSHOP Tshirt DO9 </a>
-                                                        </h4>
-                                                        <span class="size"> 12 x 1.5 L </span>
-                                                        <div class="price"> <span> $22 </span> </div>
-                                                    </div></td>
-                                                <td style="width:10%" class="miniCartQuantity"><a> X 1 </a></td>
-                                                <td style="width:15%" class="miniCartSubtotal"><span> $33 </span></td>
-                                                <td style="width:5%" class="delete"><a> x </a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="miniCartFooter text-right">
-                                    <h3 class="text-right subtotal"> Subtotal: $0.00 </h3>
-                                    <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart"> </i> Ver compras </a> 
-                                    <a class="btn btn-sm btn-primary"> Finalizar </a> </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="search-box">
+                        <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
                             <div class="input-group">
                                 <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
                             </div>
 
                         </div>
+                    </div>
+
+                    <div class="navbar-cart  collapse">
+                        <div class="cartMenu  col-lg-4 col-xs-12 col-md-4 ">
+                            <div class="w100 miniCartTable scroll-pane">
+                                <table>
+                                    <tbody>
+                                        <tr class="miniCartProduct hidden">
+                                            <td p:style="20%" class="miniCartProductThumb"><div>
+                                                    <a href="product-details.html"> 
+                                                        <img src="images/product/3.jpg" alt="img"/> 
+                                                    </a> </div></td>
+                                            <td p:style="40%"><div class="miniCartDescription">
+                                                    <h4> <a href="product-details.html"> TSHOP T shirt Black </a> </h4>
+                                                    <span class="size"> 12 x 1.5 L </span>
+                                                    <div class="price"> <span> $8.80 </span> </div>
+                                                </div></td>
+                                            <td p:style="10%" class="miniCartQuantity"><a> X 1 </a></td>
+                                            <td p:style="15%" class="miniCartSubtotal"><span> $8.80 </span></td>
+                                            <td p:style="5%" class="delete"><a> x </a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="miniCartFooter  miniCartFooterInMobile text-right">
+                                <h3 class="text-right subtotal"> Subtotal: $0.00 </h3>
+                                <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart">
+                                    </i> Ver carrito </a> 
+                                <a class="btn btn-sm btn-primary"> 
+                                    Finalizar compra
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"> <a href="index.xhtml"> Home </a> </li>
+                            <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    Productos<b class="caret"> </b> </a>
+                                <ul class="dropdown-menu">
+                                    <li class="megamenu-content ">
+                                        <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
+                                            <li> <a href="category.html"> Todos los productos </a> </li>
+                                            <li> <a href="category.html"> Cosméticos </a> </li>
+                                            <li> <a href="category.html"> Perfumería </a> </li>
+                                            <li> <a href="category.html"> Óptica </a> </li>
+                                            <li> <a href="category.html"> Suplementos </a> </li>
+                                            <li> <a href="category.html"> Medicamentos </a> </li>
+                                        </ul>
+                                        <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
+                                            <li> <a class="newProductMenuBlock" href="product-details.html">
+                                                    <img class="img-responsive" src="images/categories/lentes.jpg" alt="product"/> 
+                                                    <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                        Lentes </span> </a> </li>
+                                        </ul>
+                                        <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
+                                            <li> <a class="newProductMenuBlock" href="product-details.html"> 
+                                                    <img class="img-responsive" src="images/categories/perfumes.jpg" alt="product"/>
+
+                                                    <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                        Perfumes
+                                                    </span> </a> </li>
+                                        </ul>
+                                        <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
+                                            <li> <a class="newProductMenuBlock" href="product-details.html">
+                                                    <img class="img-responsive" src="images/categories/suplementos.jpg" alt="product"/>
+                                                    <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> 
+                                                        Suplementos</span> </a> </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <div class="nav navbar-nav navbar-right hidden-xs">
+                            <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Compras ($0.00) </span> <b class="caret"> </b> </a>
+                                <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
+                                    <div class="w100 miniCartTable scroll-pane">
+                                        <table>
+                                            <tbody>
+                                                <tr class="miniCartProduct hidden">
+                                                    <td style="width:20%" class="miniCartProductThumb"><div>
+                                                            <a href="product-details.html">
+                                                                <img src="images/product/3.jpg" alt="img"/> </a> </div></td>
+                                                    <td style="width:40%"><div class="miniCartDescription">
+                                                            <h4> <a href="product-details.html"> TSHOP Tshirt DO9 </a>
+                                                            </h4>
+                                                            <span class="size"> 12 x 1.5 L </span>
+                                                            <div class="price"> <span> $22 </span> </div>
+                                                        </div></td>
+                                                    <td style="width:10%" class="miniCartQuantity"><a> X 1 </a></td>
+                                                    <td style="width:15%" class="miniCartSubtotal"><span> $33 </span></td>
+                                                    <td style="width:5%" class="delete"><a> x </a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="miniCartFooter text-right">
+                                        <h3 class="text-right subtotal"> Subtotal: $0.00 </h3>
+                                        <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart"> </i> Ver compras </a> 
+                                        <a class="btn btn-sm btn-primary"> Finalizar </a> </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="search-box">
+                                <div class="input-group">
+                                    <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+                <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
+                    <div class="searchInputBox pull-right">
+                        <input type="search" data-searchurl="search?=" name="q" placeholder="buscar ..." class="search-input"/>
+                        <button class="btn-nobg search-btn" type="submit">
 
-            <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
-                <div class="searchInputBox pull-right">
-                    <input type="search" data-searchurl="search?=" name="q" placeholder="buscar ..." class="search-input"/>
-                    <button class="btn-nobg search-btn" type="submit">
+                            <i class="fa fa-search"> </i> </button>
+                    </div>
 
-                        <i class="fa fa-search"> </i> </button>
                 </div>
 
             </div>
-
-        </div>
-
+        </h:form>
         <div id="mainContainer" class="container main-container headerOffset">
             <ui:insert name="mainContainer">MAIN CONTAINER</ui:insert>
         </div> 
@@ -347,26 +353,25 @@
                                             <span>
                                                 soporte@farmaciaya.com
                                             </span>
-                                            <script data-cfhash='f9e31' type="text/javascript">
-            /* <![CDATA[ */!function () {
-                try {
-                    var t = "currentScript"in document ? document.currentScript : function () {
-                        for (var t = document.getElementsByTagName("script"), e = t.length; e--; )
-                            if (t[e].getAttribute("data-cfhash"))
-                                return t[e]
-                    }();
-                    if (t && t.previousSibling) {
-                        var e, r, n, i, c = t.previousSibling, a = c.getAttribute("data-cfemail");
-                        if (a) {
-                            for (e = "", r = parseInt(a.substr(0, 2), 16), n = 2; a.length - n; n += 2)
-                                i = parseInt(a.substr(n, 2), 16) ^ r, e += String.fromCharCode(i);
-                            e = document.createTextNode(e), c.parentNode.replaceChild(e, c)
-                        }
-                        t.parentNode.removeChild(t);
-                    }
-                } catch (u) {
-                }
-            }()/* ]]> */</script> </a> </h4>
+                                            <script data-cfhash='f9e31' type="text/javascript">             /* <![CDATA[ */!function () {
+                                        try {
+                                            var t = "currentScript"in document ? document.currentScript : function () {
+                                                for (var t = document.getElementsByTagName("script"), e = t.length; e--; )
+                                                    if (t[e].getAttribute("data-cfhash"))
+                                                        return t[e]
+                                            }();
+                                            if (t && t.previousSibling) {
+                                                var e, r, n, i, c = t.previousSibling, a = c.getAttribute("data-cfemail");
+                                                if (a) {
+                                                    for (e = "", r = parseInt(a.substr(0, 2), 16), n = 2; a.length - n; n += 2)
+                                                        i = parseInt(a.substr(n, 2), 16) ^ r, e += String.fromCharCode(i);
+                                                    e = document.createTextNode(e), c.parentNode.replaceChild(e, c)
+                                                }
+                                                t.parentNode.removeChild(t);
+                                            }
+                                        } catch (u) {
+                                        }
+                                    }()/* ]]> */</script> </a> </h4>
                                 </li>
                             </ul>
                         </div>
@@ -437,7 +442,7 @@
             </div> 
         </footer>
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>-->
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/jquery.parallax-1.1.js"></script>
         <script type="text/javascript" src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
