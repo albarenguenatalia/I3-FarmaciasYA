@@ -26,26 +26,26 @@ import java.util.Arrays;
     @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.user_id = :user_id"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name AND "+
-                                                 " u.lastname = :lastname"),
+    @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name AND " 
+                                                            + " u.lastname = :lastname"),
     @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address")
 })
 @Entity
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID", nullable=false)
+    @Column(name = "USER_ID", nullable = false)
     private int user_id;
-    @Column(name = "USERNAME", nullable=false, unique=true)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
     @Lob
-    @Column(name = "PASSWORD", nullable=false)
+    @Column(name = "PASSWORD", nullable = false)
     private byte[] password;
     @Column(name = "NAME")
     private String name;
     @Column(name = "LASTNAME")
     private String lastname;
-    @Column(name = "EMAIL", nullable=false, unique=true)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
     @Column(name = "ADDRESS")
     private String address;

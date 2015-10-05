@@ -18,18 +18,15 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean(name = "LoginViewBean", eager = true)
 @ViewScoped
-public class LoginView implements Serializable{
-    @ManagedProperty("#{LoginSessionBean}")
- 
-    private UserController userController;
-    
+public class LoginView implements Serializable {
+    @ManagedProperty("#{LoginSessionBean}") 
+    private UserController userController;    
     private String username;
     private String password;
     private String errorMessage;
     private User sessionUser;
-    private boolean showMessage = false;
-    
-    public String IniciarSesion(){
+    private boolean showMessage = false;    
+    public String IniciarSesion() { 
         System.out.println("LoginView IniciarSesion");
         /*User returnedUser = UserController.getFacade().validateUser(username, password);
         if(returnedUser != null){
@@ -110,5 +107,19 @@ public class LoginView implements Serializable{
      */
     public void setUserController(UserController userController) {
         this.userController = userController;
+    }
+
+    /**
+     * @return the sessionUser
+     */
+    public User getSessionUser() {
+        return sessionUser;
+    }
+
+    /**
+     * @param sessionUser the sessionUser to set
+     */
+    public void setSessionUser(User sessionUser) {
+        this.sessionUser = sessionUser;
     }
 }

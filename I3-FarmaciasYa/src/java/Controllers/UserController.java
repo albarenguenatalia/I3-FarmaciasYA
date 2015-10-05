@@ -49,19 +49,19 @@ public class UserController implements Serializable {
     public String create() {
         setCreateUserResultMessage("");
         try {
-            if(getFacade().findByUsername(current.getUsername()) != null){
+            if (getFacade().findByUsername(current.getUsername()) != null) {
                 setCreateUserResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("UserAlreadyExists"));
                 setShowCreateUserMessage(true);
                 return "";
             }
-            else if(!confirmPassword.equals(password)){
+            else if (!confirmPassword.equals(password)) {
                 setCreateUserResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ConfirmPasswordError"));
                 setShowCreateUserMessage(true);
                 return "";
             }
-            else{
+            else {
                 current.setPassword(password);
-                current.setCreatedDate(new Date() );
+                current.setCreatedDate(new Date());
                 current.setEmail(current.getUsername());
                 getFacade().create(current);
                 getSessionController().setCurrent(current);
@@ -70,7 +70,7 @@ public class UserController implements Serializable {
                 ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailSubject"), 
                 ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody"));
                 String result = getSessionController().login();
-                if(result != null && !result.equals("")){
+                if (result != null && !result.equals("")) {
                     return "index.html";
                 }
                 return "";
@@ -99,6 +99,7 @@ public class UserController implements Serializable {
             getFacade().remove(current);
            //"UserDeleted"));
         } catch (Exception e) {
+            e.printStackTrace();
            //"PersistenceErrorOccured"));
         }
     }

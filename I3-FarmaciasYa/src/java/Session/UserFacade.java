@@ -30,7 +30,7 @@ public class UserFacade extends AbstractFacade<User> {
     public UserFacade() {
         super(User.class);
     }
-     public User validateUser(String username, byte[] password){
+     public User validateUser(String username, byte[] password) {
         User userFound = findByUsername(username);
         if( userFound != null && Arrays.equals(userFound.getPassword(), password)){
             return userFound;

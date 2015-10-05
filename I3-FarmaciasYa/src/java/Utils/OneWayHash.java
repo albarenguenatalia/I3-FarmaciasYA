@@ -9,7 +9,7 @@ package Utils;
    private static OneWayHash instance;
    
    public static OneWayHash getInstance() {
-       if(instance == null){
+       if (instance == null){ 
            instance = new OneWayHash();
        }
        return instance;

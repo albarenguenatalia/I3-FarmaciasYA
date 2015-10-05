@@ -50,14 +50,14 @@ public class SessionController implements Serializable {
     public User getCurrent() {
         if (current == null) {
             current = new User();
-            currentUserId = -1;
+            setCurrentUserId(-1);
         }
-        currentUserId = current.getUserId();
+        setCurrentUserId(current.getUserId());
         return current;
     }
 
     public String login() {
-        try{
+        try { 
             System.out.println("LLAMO A SESSION CONTROLLER LOGIN");
             RequestContext context = RequestContext.getCurrentInstance();
             setUserLogged(false);
@@ -71,15 +71,15 @@ public class SessionController implements Serializable {
                 setUserLogged(true);
                 System.out.println("Esta todo OK.Actualiza todo");
                 return "index.html";
-            }else{
+            } else { 
                 setCurrent(new User());
                 this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
                 this.setShowLoginResultMessage(true);
                 System.out.println("Error de login.Actualiza el model");
                 return "";
             }
-        }
-        catch(Exception e){
+        } 
+        catch (Exception e) { 
             setCurrent(new User());
             this.setLoginResultMessage("Error hasheando pass");
             //this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
@@ -87,7 +87,6 @@ public class SessionController implements Serializable {
             System.out.println("Error de login.Actualiza el model");
             return "";
         }
-        
     }
 
     /**
@@ -151,6 +150,20 @@ public class SessionController implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the currentUserId
+     */
+    public int getCurrentUserId() {
+        return currentUserId;
+    }
+
+    /**
+     * @param currentUserId the currentUserId to set
+     */
+    public void setCurrentUserId(int currentUserId) {
+        this.currentUserId = currentUserId;
     }
 
     @FacesConverter(forClass = User.class)

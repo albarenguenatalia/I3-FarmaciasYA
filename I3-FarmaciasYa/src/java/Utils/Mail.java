@@ -39,16 +39,16 @@ public class Mail {
             InternetAddress[] toAddress = new InternetAddress[to.length];
 
             // To get the array of addresses
-            for( int i = 0; i < to.length; i++ ) {
+            for (int i = 0; i < to.length; i++) {
                 toAddress[i] = new InternetAddress(to[i]);
             }
 
-            for( int i = 0; i < toAddress.length; i++) {
+            for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
 
             message.setSubject(subject);
-            message.setText(body,"UTF-8","html");
+            message.setText(body, "UTF-8", "html");
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
