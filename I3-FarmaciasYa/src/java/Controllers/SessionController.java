@@ -58,8 +58,6 @@ public class SessionController implements Serializable {
 
     public String login() {
         try { 
-            System.out.println("LLAMO A SESSION CONTROLLER LOGIN");
-            RequestContext context = RequestContext.getCurrentInstance();
             setUserLogged(false);
             this.setLoginResultMessage("");
             this.setShowLoginResultMessage(false);
@@ -69,8 +67,6 @@ public class SessionController implements Serializable {
             if (checkedUser != null) {
                 setCurrent(checkedUser);
                 setUserLogged(true);
-                System.out.println("Esta todo OK.Actualiza todo");
-                
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                 return "";
             } else { 
@@ -80,8 +76,7 @@ public class SessionController implements Serializable {
                 System.out.println("Error de login.Actualiza el model");
                 return "";
             }
-        } 
-        catch (Exception e) { 
+        } catch (Exception e) { 
             e.printStackTrace();
             setCurrent(new User());
             this.setLoginResultMessage("Error hasheando pass");
