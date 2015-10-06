@@ -70,7 +70,9 @@ public class SessionController implements Serializable {
                 setCurrent(checkedUser);
                 setUserLogged(true);
                 System.out.println("Esta todo OK.Actualiza todo");
-                return "index.html";
+                
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                return "";
             } else { 
                 setCurrent(new User());
                 this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
@@ -80,6 +82,7 @@ public class SessionController implements Serializable {
             }
         } 
         catch (Exception e) { 
+            e.printStackTrace();
             setCurrent(new User());
             this.setLoginResultMessage("Error hasheando pass");
             //this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
