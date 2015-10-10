@@ -21,4 +21,8 @@ package Utils;
        digest.update(salt);
        return digest.digest(password.getBytes("UTF-8"));
    }
+   
+   public byte[] getPasswordHash(String password, String email, String user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+       return hashSHA256(password, (email + user).getBytes());
+   }
  }

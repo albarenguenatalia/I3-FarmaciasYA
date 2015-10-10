@@ -9,9 +9,12 @@ import Model.User;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -30,8 +33,8 @@ public class UserFacade extends AbstractFacade<User> {
     public UserFacade() {
         super(User.class);
     }
-     public User validateUser(String username, byte[] password) {
-        User userFound = findByUsername(username);
+     public User validateUser(String email, byte[] password) {
+        User userFound = findByEmail(email);
         if (userFound != null && Arrays.equals(userFound.getPassword(), password)) {
             return userFound;
         }
@@ -41,10 +44,10 @@ public class UserFacade extends AbstractFacade<User> {
     /*
     *Poner en wiki que el username es el email
     */
-    public User findByUsername(String username) {
+    public User findByEmail(String email) {
          List<User> users = getEntityManager().createNamedQuery(
-            "User.findByUsername")
-                 .setParameter("username", username)
+            "User.findByEmail")
+                 .setParameter("email", email)
                  .getResultList();
          if(users.size() == 1) {
              return users.get(0);
@@ -54,7 +57,27 @@ public class UserFacade extends AbstractFacade<User> {
     
     @Override
     public void create(User user) {
-        getEntityManager().persist(user);
+        try{
+            getEntityManager().persist(user);
+        }
+        catch(ConstraintViolationException ex){
+            Set<ConstraintViolation<?>> errors = ex.getConstraintViolations();
+            for(ConstraintViolation<?> error : errors){
+                System.err.println("#####################");
+                System.err.println(user.getEmail());
+                System.err.println(user.getAddress());
+                System.err.println(user.getCreatedate());
+                System.err.println(user.getIdUser());
+                System.err.println(user.getLastName());
+                System.err.println(user.getPassword());
+                System.err.println(error.getConstraintDescriptor());
+                System.err.println(error.getInvalidValue());
+                System.err.println(error.getMessage());
+                System.err.println("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
+            }
+            throw ex;
+        }
+        
     }
     
     

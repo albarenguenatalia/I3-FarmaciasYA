@@ -3,6 +3,7 @@ package Controllers;
 import Model.User;
 import Session.UserFacade;
 import Utils.Mail;
+import Utils.OneWayHash;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class UserController implements Serializable {
     public String create() {
         setCreateUserResultMessage("");
         try {
-            if (getFacade().findByUsername(current.getUsername()) != null) {
+            if (getFacade().findByEmail(current.getEmail()) != null) {
                 setCreateUserResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("UserAlreadyExists"));
                 setShowCreateUserMessage(true);
                 return "";
@@ -60,9 +61,9 @@ public class UserController implements Serializable {
                 return "";
             }
             else {
-                current.setPassword(password);
-                current.setCreatedDate(new Date());
-                current.setEmail(current.getUsername());
+                current.setPassword(OneWayHash.getInstance().getPasswordHash(password, current.getEmail(), password));
+                current.setCreatedate(new Date());
+                
                 getFacade().create(current);
                 getSessionController().setCurrent(current);
                 getSessionController().setPassword(password);
@@ -178,7 +179,7 @@ public class UserController implements Serializable {
             }
             if (object instanceof User) {
                 User o = (User) object;
-                return String.format("User with id: %d, Username: %s, Address: %s", o.getUserId(), o.getUsername(), o.getAddress());
+                return String.format("User with id: %d, Username: %s, Address: %s", o.getIdUser(), o.getName(), o.getAddress());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
             }

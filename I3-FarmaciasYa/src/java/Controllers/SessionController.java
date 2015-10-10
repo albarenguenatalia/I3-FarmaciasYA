@@ -48,12 +48,14 @@ public class SessionController implements Serializable {
     }
 
     public User getCurrent() {
-        if (current == null) {
+        /*if (current == null) {
             current = new User();
             setCurrentUserId(-1);
         }
-        setCurrentUserId(current.getUserId());
-        return current;
+        System.err.println(current.getIdUser());
+        setCurrentUserId(current.getIdUser());
+        return current;*/
+        return null;
     }
 
     public String login() {
@@ -62,8 +64,8 @@ public class SessionController implements Serializable {
             this.setLoginResultMessage("");
             this.setShowLoginResultMessage(false);
             OneWayHash hash = OneWayHash.getInstance();
-            byte[] passenc = hash.hashSHA256(password, (current.getUsername() + password).getBytes());
-            User checkedUser = getFacade().validateUser(current.getUsername(), passenc);
+            byte[] passenc = hash.hashSHA256(password, (current.getEmail()+ password).getBytes());
+            User checkedUser = getFacade().validateUser(current.getEmail(), passenc);
             if (checkedUser != null) {
                 setCurrent(checkedUser);
                 setUserLogged(true);
@@ -196,7 +198,7 @@ public class SessionController implements Serializable {
             }
             if (object instanceof User) {
                 User o = (User) object;
-                return String.format("User with id: %d, Username: %s, Address: %s", o.getUserId(), o.getUsername(), o.getAddress());
+                return String.format("User with id: %d, Username: %s, Address: %s", o.getIdUser(), o.getEmail(), o.getAddress());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
             }
