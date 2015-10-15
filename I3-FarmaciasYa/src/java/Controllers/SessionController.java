@@ -48,22 +48,20 @@ public class SessionController implements Serializable {
     }
 
     public User getCurrent() {
-        /*if (current == null) {
+        if (current == null) {
             current = new User();
-            setCurrentUserId(-1);
         }
-        System.err.println(current.getIdUser());
-        setCurrentUserId(current.getIdUser());
-        return current;*/
-        return null;
+        return current;
     }
 
     public String login() {
         try { 
+            System.out.println("LOGUEANDO _________________________________________");
             setUserLogged(false);
             this.setLoginResultMessage("");
             this.setShowLoginResultMessage(false);
             OneWayHash hash = OneWayHash.getInstance();
+            System.out.println(current.getEmail()+ password);
             byte[] passenc = hash.hashSHA256(password, (current.getEmail()+ password).getBytes());
             User checkedUser = getFacade().validateUser(current.getEmail(), passenc);
             if (checkedUser != null) {
