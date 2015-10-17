@@ -44,11 +44,14 @@ public class DrugstoreController implements Serializable {
     
     public String findByName() {
         System.err.println("In DRUGSTORE CONTROLLER");
-        Drugstore foundDrugstore = ejbFacade.findByName(this.drugstoreName);
+        List<Drugstore> foundDrugstore = ejbFacade.findByName(this.drugstoreName);
         if(foundDrugstore == null){
             System.out.println("No se encontraron farmacias jaja");
         }else{
-            System.out.println(foundDrugstore.toString() );
+            for(Drugstore d: foundDrugstore){
+                System.out.println(d.getName());
+            }
+            
         }
         
         return "template/register.xhtml";
@@ -102,7 +105,7 @@ public class DrugstoreController implements Serializable {
             }
             if (object instanceof Drugstore) {
                 Drugstore o = (Drugstore) object;
-                return String.format("Drugstore with id: %d, : %s, Address: %s", o.getIdDrugStore(), o.getName(), o.getAddress());
+                return String.format("Drugstore with id: %d, : %s, Name: %s, Address: %s", o.getIdDrugStore(), o.getName(), o.getAddress());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Drugstore.class.getName());
             }

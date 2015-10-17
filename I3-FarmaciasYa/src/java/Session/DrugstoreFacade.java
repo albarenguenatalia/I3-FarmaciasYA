@@ -38,15 +38,12 @@ public class DrugstoreFacade extends AbstractFacade<Drugstore> {
     /*
     *Poner en wiki que el username es el email
     */
-    public Drugstore findByName(String name) {
+    public List<Drugstore> findByName(String name) {
          List<Drugstore> drugs = getEntityManager().createNamedQuery(
             "Drugstore.findByName")
-                 .setParameter("name", name)
+                 .setParameter("name", "%" + name + "%")
                  .getResultList();
-         if(drugs.size() == 1) {
-             return drugs.get(0);
-         }
-         return null;
+         return drugs;
     }
     
     

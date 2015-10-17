@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"    
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pf="http://primefaces.org/ui">
 
     <h:body>
 
@@ -15,81 +16,49 @@
             <ui:define name="mainContainer">
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-7">
-                        <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Registro / Iniciar sesión</span></h1>
+                        <h1 class="section-title-inner"><span><i class="fa fa-flask"></i>      Buscar farmacia </span></h1>
                         <div class="row userInfo">
-                            <div class="col-xs-12 col-sm-6">
-                                <h2 class="block-title-2">#{bundle.CreateAccountMenu}</h2>
-                                <h:form role="form" class="regForm" p:novalidate="novalidate">
-                                    <div class="form-group">
-                                        <label>#{bundle.Name}</label>
-                                        <h:inputText value="#{userController.current.name}" title="Please enter your name" p:type="text" class="form-control"  p:placeholder="#{bundle.Name}" p:required="false" p:aria-required="true"/>
-                                     </div>
-                                    <div class="form-group">
-                                        <label>#{bundle.Lastname}</label>
-                                        <h:inputText value="#{userController.current.lastName}" title="Please enter your lastname" p:type="text" class="form-control"  p:placeholder="#{bundle.Lastname}" p:required="false" p:aria-required="true"/>
+                            <div class="col-lg-12">
+                                <h2 class="block-title-2">Buscar farmacias por nombre</h2>
+                                <div class="search-box pull-right" style="background:#4BB777">
+                                    <div class="input-group">
+                                        <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label>#{bundle.Address}</label>
-                                         <h:inputText value="#{userController.current.address}" required="" p:minlength="5" title="Domicilio" p:type="text" class="form-control" p:placeholder="#{bundle.Address}" p:aria-required="true"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>#{bundle.RegisterUserEmail}</label>
-                                        <h:inputText value="#{userController.current.email}" title="Please enter a valid email" p:type="email" class="form-control" p:placeholder="#{bundle.LoginUserUsername}" p:required="true" p:aria-required="true"/>
-                                   </div>
-                                    <div class="form-group">
-                                        <label>#{bundle.LoginUserPassword}</label>
-                                        <h:inputText value="#{userController.password}" required="true" p:minlength="8" title="#{bundle.LoginUserPassword}" p:type="password" class="form-control" p:placeholder="#{bundle.LoginUserPassword}" p:aria-required="true"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>#{bundle.ConfirmPassword}</label>
-                                         <h:inputText value="#{userController.confirmPassword}" required="true" p:minlength="8" title="Confirmar Contraseña" p:type="password" class="form-control" p:placeholder="#{bundle.ConfirmPassword}" p:aria-required="true"/>
-                                    </div>                                  
-                                    <h:commandButton class="btn   btn-primary" type="submit" p:value="#{bundle.RegisterMessage}" action="#{userController.create}" />
-                                     <br/>
-                                        <h:panelGroup rendered="#{userController.showCreateUserMessage}" id="loginResultpnl">
-                                            <div class="alert alert-danger" role="alert">
-                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                            <span class="sr-only">Error:</span>
-                                             #{userController.createUserResultMessage}
-                                        </div>
-                                        </h:panelGroup>
-                                </h:form>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <h2 class="block-title-2"><span>¿Ya esta registrado?</span></h2>
-                                <form role="form" class="logForm">
-                                    <div class="form-group">
-                                        <label>Dirección de correo</label>
-                                        <h:inputText value="" title="Please enter valid email" p:type="email" class="form-control" p:placeholder="Mail" p:required="" p:aria-required="true"/>
-                                       
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Contraseña</label>
-                                         <h:inputText value="" required="" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
-                                        
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div>
-                                            <div class="checkbox login-remember">
-                                                <label>
-                                                    <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                                        Recordar
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <p><a title="Recover your forgotten password" href="forgot-password.html">¿Olvidó su contraseña</a></p>
-                                    </div>
-                                    <a class="btn btn-primary" href="account.html"><i class="fa fa-sign-in"></i> Iniciar sesión</a>
-                                </form>
+                                </div>
+                                <div class="search-full text-right" id="panelBusqueda"> <a class="pull-right search-close"> <i class=" fa fa-times-circle" > </i> </a>
+                                    <h:panelGroup p:class="searchInputBox pull-right">
+                                    <h:form role="form" id="searchFrm">
+                                        <h:inputText p:placeholder="buscar..." p:class="search-input" value="#{drugstoreController.drugstoreName}" />     
+                                        <pf:commandButton value="Buscar" class="btn-nobg search-btn" process="@form" update="searchFrm" action="#{drugstoreController.findByName}" >
+                                        </pf:commandButton>
+                                      <!--<i class="fa fa-search"> </i>--> 
+                                    </h:form>
+                                    </h:panelGroup>
+                                </div>
+                             </div>
+                            <div class="col-xs-12 col-sm-12">
+                                <table>
+                                    <tbody>
+                                        <tr class="CartProduct">
+                                            <td style="width:10%" class="CartProductThumb">
+                                            <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
+                                            <td style="width:40%"><div class="CartDescription">
+                                            <h4> <a href="product-details.html">Denim T shirt Black </a> </h4>
+                                            <span class="size">12 x 1.5 L</span>
+                                            <div class="price"> <span>$85</span> </div>
+                                            </div></td>
+                                            <td style="width:15%">
+                                            <a class="btn btn-primary">
+                                            <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span>
+                                            </a>
+                                            </td>
+                                            <td style="width:40%" class="delete"><a title="Delete"> <i class="glyphicon glyphicon-trash fa-2x"></i> </a></td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-5"> </div>
+                    </div>       
                 </div>  
                 <div style="clear:both"></div>
             </ui:define>

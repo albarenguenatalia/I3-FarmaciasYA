@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Drugstore.findAll", query = "SELECT d FROM Drugstore d"),
     @NamedQuery(name = "Drugstore.findByIdDrugStore", query = "SELECT d FROM Drugstore d WHERE d.idDrugStore = :idDrugStore"),
-    @NamedQuery(name = "Drugstore.findByName", query = "SELECT d FROM Drugstore d WHERE d.name = :name"),
+    @NamedQuery(name = "Drugstore.findByName", query = "SELECT d FROM Drugstore d WHERE d.name like :name"),
     @NamedQuery(name = "Drugstore.findByAddress", query = "SELECT d FROM Drugstore d WHERE d.address = :address"),
     @NamedQuery(name = "Drugstore.findByTelephone", query = "SELECT d FROM Drugstore d WHERE d.telephone = :telephone"),
     @NamedQuery(name = "Drugstore.findByEmail", query = "SELECT d FROM Drugstore d WHERE d.email = :email"),
