@@ -3,7 +3,13 @@
   <persistence-unit name="I3-FarmaciasYa-PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>farmaciasYA_ds</jta-data-source>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <class>Model.Drugstore</class>
+    <class>Model.Order1</class>
+    <class>Model.OrderDetail</class>
+    <class>Model.Product</class>
+    <class>Model.ProductDrugstore</class>
+    <class>Model.User</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.deploy-on-startup" value="true"/>
     </properties>
