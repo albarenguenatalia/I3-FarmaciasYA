@@ -28,35 +28,41 @@
                                 <div class="search-full text-right" id="panelBusqueda"> <a class="pull-right search-close"> <i class=" fa fa-times-circle" > </i> </a>
                                     <h:panelGroup p:class="searchInputBox pull-right">
                                     <h:form role="form" id="searchFrm">
-                                        <h:inputText p:placeholder="buscar..." p:class="search-input" value="#{drugstoreController.drugstoreName}" />     
-                                        <pf:commandButton value="Buscar" class="btn-nobg search-btn" process="@form" update="searchFrm" action="#{drugstoreController.findByName}" >
-                                        </pf:commandButton>
+                                        <h:inputText p:placeholder="buscar..." p:class="search-input" value="#{drugstoreController.drugstoreName}" /> 
+                                        <h:commandButton value="Buscar" class="btn-nobg search-btn" action="#{drugstoreController.findByName}"/>
                                       <!--<i class="fa fa-search"> </i>--> 
                                     </h:form>
                                     </h:panelGroup>
                                 </div>
                              </div>
-                            <div class="col-xs-12 col-sm-12">
-                                <table>
-                                    <tbody>
-                                        <tr class="CartProduct">
-                                            <td style="width:10%" class="CartProductThumb">
-                                            <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
-                                            <td style="width:40%"><div class="CartDescription">
-                                            <h4> <a href="product-details.html">Denim T shirt Black </a> </h4>
-                                            <span class="size">12 x 1.5 L</span>
-                                            <div class="price"> <span>$85</span> </div>
-                                            </div></td>
-                                            <td style="width:15%">
-                                            <a class="btn btn-primary">
-                                            <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span>
-                                            </a>
-                                            </td>
-                                            <td style="width:40%" class="delete"><a title="Delete"> <i class="glyphicon glyphicon-trash fa-2x"></i> </a></td>
-                                        </tr>
-                                    </tbody>
-                                 </table>
-                            </div>
+                            
+                        <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
+
+                                <h:column>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <table>
+                                            <tbody>
+                                                <tr class="CartProduct">
+                                                    <td style="width:10%" class="CartProductThumb">
+                                                    <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
+                                                    <td style="width:40%"><div class="CartDescription">
+                                                    <h4> <a href="product-details.html">#{d.name}</a> </h4>
+                                                    <span class="size">#{d.telephone}</span>
+                                                    <div class="price"> <span>#{d.address}</span> </div>
+                                                    </div></td>
+                                                    <td style="width:15%">
+                                                    <a class="btn btn-primary">
+                                                    <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span>
+                                                    </a>
+                                                    </td>
+                                                    <td style="width:40%" class="delete"><a title="Delete"> <i class="glyphicon glyphicon-trash fa-2x"></i> </a></td>
+                                                </tr>
+                                            </tbody>
+                                         </table>
+                                    </div>
+                                </h:column>    		
+                        </h:dataTable>
+                            
                         </div>
                     </div>       
                 </div>  

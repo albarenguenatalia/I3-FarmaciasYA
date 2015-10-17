@@ -40,8 +40,8 @@ public class DrugstoreFacade extends AbstractFacade<Drugstore> {
     */
     public List<Drugstore> findByName(String name) {
          List<Drugstore> drugs = getEntityManager().createNamedQuery(
-            "Drugstore.findByName")
-                 .setParameter("name", "%" + name + "%")
+            "Drugstore.findLikeName")
+                 .setParameter("name", "%" +name + "%")
                  .getResultList();
          return drugs;
     }

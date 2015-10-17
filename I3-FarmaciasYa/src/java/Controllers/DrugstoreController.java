@@ -2,29 +2,27 @@ package Controllers;
 
 import Model.Drugstore;
 import Session.DrugstoreFacade;
-import Utils.Mail;
-import Utils.OneWayHash;
+
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @ManagedBean(name = "drugstoreController")
 @SessionScoped
 public class DrugstoreController implements Serializable {
-    @EJB
+    @Inject
     private Session.DrugstoreFacade ejbFacade;
     private boolean showCreateUserMessage;
     private String createUserResultMessage;
     private String drugstoreName;
+    private List<Drugstore> drugstoreList;
    
 
     public DrugstoreController() {
@@ -42,19 +40,9 @@ public class DrugstoreController implements Serializable {
         return null;
     }
     
-    public String findByName() {
+    public void findByName() {
         System.err.println("In DRUGSTORE CONTROLLER");
-        List<Drugstore> foundDrugstore = ejbFacade.findByName(this.drugstoreName);
-        if(foundDrugstore == null){
-            System.out.println("No se encontraron farmacias jaja");
-        }else{
-            for(Drugstore d: foundDrugstore){
-                System.out.println(d.getName());
-            }
-            
-        }
-        
-        return "template/register.xhtml";
+        this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
     }
 
     /**
@@ -69,6 +57,20 @@ public class DrugstoreController implements Serializable {
      */
     public void setDrugstoreName(String drugstoreName) {
         this.drugstoreName = drugstoreName;
+    }
+
+    /**
+     * @return the drugstoreList
+     */
+    public List<Drugstore> getDrugstoreList() {
+        return drugstoreList;
+    }
+
+    /**
+     * @param drugstoreList the drugstoreList to set
+     */
+    public void setDrugstoreList(List<Drugstore> drugstoreList) {
+        this.drugstoreList = drugstoreList;
     }
 
   

@@ -12,7 +12,7 @@
                 <h:form>
                     <label> Ingrese nombre de producto: </label>
                     <h:inputText value="#{productController.productName}"/>
-                    <h:commandButton value="Login" action="#{productController.findByName}"/>
+                    <h:commandButton value="Buscar" action="#{productController.findByName}"/>
                 </h:form>
                 
                 <h:dataTable value="#{productController.productsList}" var="p">
