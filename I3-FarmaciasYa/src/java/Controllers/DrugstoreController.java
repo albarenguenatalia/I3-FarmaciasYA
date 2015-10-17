@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -38,12 +37,21 @@ public class DrugstoreController implements Serializable {
         return ejbFacade;
     }
     
+    public String otherMethod(){
+        System.out.println("IN OTHER METHOD");
+        return null;
+    }
+    
     public String findByName() {
-        String result= "<script>Llego mierda</script>";
-        System.out.println("In DRUGSTORE CONTROLLER");
+        System.err.println("In DRUGSTORE CONTROLLER");
         Drugstore foundDrugstore = ejbFacade.findByName(this.drugstoreName);
-        System.out.println(foundDrugstore.toString() );
-        return result;
+        if(foundDrugstore == null){
+            System.out.println("No se encontraron farmacias jaja");
+        }else{
+            System.out.println(foundDrugstore.toString() );
+        }
+        
+        return "template/register.xhtml";
     }
 
     /**

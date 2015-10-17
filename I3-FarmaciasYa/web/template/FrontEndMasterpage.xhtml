@@ -315,21 +315,19 @@
                                 </div>
 
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
                 <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
-                    <h:form role="form" p:class="searchInputBox pull-right">
-                        <h:inputText p:placeholder="buscar..." p:class="search-input" p:value="#{drugstoreController.drugstoreName}" />     
-                        <h:commandButton p:class="btn-nobg search-btn" type="submit" p:value="Buscar" action="#{drugstoreController.findByName}" /><!--<i class="fa fa-search"> </i>--> 
+                    <h:panelGroup p:class="searchInputBox pull-right">
+                    <h:form role="form" id="searchFrm">
+                        <h:inputText p:placeholder="buscar..." p:class="search-input" value="#{drugstoreController.drugstoreName}" />     
+                        <pf:commandButton value="Buscar" class="btn-nobg search-btn" process="@form" update="searchFrm" action="#{drugstoreController.findByName}" >
+                        </pf:commandButton>
+                      <!--<i class="fa fa-search"> </i>--> 
                     </h:form>
-
+                    </h:panelGroup>
                 </div>
-
             </div>
         </h:form>
         <div id="mainContainer" class="container main-container headerOffset">
