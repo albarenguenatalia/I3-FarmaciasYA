@@ -4,7 +4,6 @@ package Utils;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 /**
  * @author martingonzalez
