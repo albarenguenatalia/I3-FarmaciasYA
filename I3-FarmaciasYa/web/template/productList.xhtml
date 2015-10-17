@@ -16,23 +16,28 @@
                 </h:form>
                 
                 <h:dataTable value="#{productController.productsList}" var="p">
-
-    			<h:column>
-    				<!-- column header -->
-    				<f:facet name="header">Product ID</f:facet>
-    				<!-- row record -->
-    				#{p.idProduct}
-    			</h:column>
-    			
-    			<h:column>
-    				<f:facet name="header">Product Name</f:facet>
-    				#{p.name}
-    			</h:column>
-    			
-    			<h:column>
-    				<f:facet name="header">Description</f:facet>
-    				#{p.description}
-    			</h:column>    		
+                    <h:column>
+                        <div class="col-xs-12 col-sm-12">
+                            <table>
+                                <tbody>
+                                    <tr class="CartProduct">
+                                        <td style="width:10%" class="CartProductThumb">
+                                        <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
+                                        <td style="width:40%"><div class="CartDescription">
+                                        <h4> <a href="product-details.html">#{p.name}</a> </h4>
+                                        <span class="size">#{p.description}</span>
+                                        <div class="price"> <span>19.95</span> </div>
+                                        </div></td>
+                                        <td style="width:15%">
+                                        <a class="btn btn-primary">
+                                        <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Find drugstore </span>
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                             </table>
+                        </div>
+                    </h:column>
     		</h:dataTable>
             </ui:define>
             <ui:define name="endBody"></ui:define>
