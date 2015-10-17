@@ -323,12 +323,10 @@
                 </div>
 
                 <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
-                    <div class="searchInputBox pull-right">
-                        <input type="search" data-searchurl="search?=" name="q" placeholder="buscar ..." class="search-input"/>
-                        <button class="btn-nobg search-btn" type="submit">
-
-                            <i class="fa fa-search"> </i> </button>
-                    </div>
+                    <h:form role="form" p:class="searchInputBox pull-right">
+                        <h:inputText p:placeholder="buscar..." p:class="search-input" p:value="#{drugstoreController.drugstoreName}" />     
+                        <h:commandButton p:class="btn-nobg search-btn" type="submit" p:value="Buscar" action="#{drugstoreController.findByName}" /><!--<i class="fa fa-search"> </i>--> 
+                    </h:form>
 
                 </div>
 
