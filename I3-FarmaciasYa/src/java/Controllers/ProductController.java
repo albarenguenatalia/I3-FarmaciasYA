@@ -28,9 +28,7 @@ public class ProductController {
     }
     
     public void findByName() {
-        String result= "<script>Llego a ProductController</script>";
         productsList = getFacade().findByName(getProductName());
-        System.out.println();
     }
 
     /**
