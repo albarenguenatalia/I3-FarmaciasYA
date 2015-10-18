@@ -58,4 +58,8 @@ public class ProductController {
     public void setProductsList(List<Product> productsList) {
         this.productsList = productsList;
     }  
+    
+    public String getDrugstore(){
+        return "find_drugstore.xhtml?includeViewParams=true";
+    }
 }

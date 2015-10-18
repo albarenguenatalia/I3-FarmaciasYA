@@ -13,32 +13,33 @@
                     <label> Ingrese nombre de producto: </label>
                     <h:inputText value="#{productController.productName}"/>
                     <h:commandButton value="Buscar" action="#{productController.findByName}"/>
-                </h:form>
+
                 
-                <h:dataTable value="#{productController.productsList}" var="p">
-                    <h:column>
-                        <div class="col-xs-12 col-sm-12">
-                            <table>
-                                <tbody>
-                                    <tr class="CartProduct">
-                                        <td style="width:10%" class="CartProductThumb">
-                                        <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
-                                        <td style="width:40%"><div class="CartDescription">
-                                        <h4> <a href="product-details.html">#{p.name}</a> </h4>
-                                        <span class="size">#{p.description}</span>
-                                        <div class="price"> <span>19.95</span> </div>
-                                        </div></td>
-                                        <td style="width:15%">
-                                        <a class="btn btn-primary">
-                                        <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Find drugstore </span>
-                                        </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                             </table>
-                        </div>
-                    </h:column>
-    		</h:dataTable>
+                    <h:dataTable value="#{productController.productsList}" var="p">
+                        <h:column>
+                            <div class="col-xs-12 col-sm-12">
+                                <table>
+                                    <tbody>
+                                        <tr class="CartProduct">
+                                            <td style="width:10%" class="CartProductThumb">
+                                            <div> <a href="product-details.html"><img src="images/drugstoreProducts/Product.jpg" alt="img"/></a> </div></td>
+                                            <td style="width:40%"><div class="CartDescription">
+                                            <h4> <a href="product-details.html">#{p.name}</a> </h4>
+                                            <span class="size">#{p.description}</span>
+                                            <div class="price"> <span>19.95</span> </div>
+                                             </div></td>
+                                            <td style="width:15%">
+                                                    <h:commandLink class="add2cart" action="#{productController.getDrugstore}" value="Find Drugstore">
+                                                        <f:param name="productID" value="5" />
+                                                    </h:commandLink>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
             </ui:define>
             <ui:define name="endBody"></ui:define>
         </ui:composition>
