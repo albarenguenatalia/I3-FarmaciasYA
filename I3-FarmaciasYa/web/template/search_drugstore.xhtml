@@ -16,47 +16,48 @@
             <ui:define name="mainContainer">
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-7">
-                        <h1 class="section-title-inner"><span><i class="fa fa-flask"></i>      Buscar farmacia </span></h1>
+                        <h1 class="section-title-inner"><span><i class="fa fa-flask"></i>#{bundle.SearchDrugstoreTitle}</span></h1>
                         <div class="row userInfo">
+                            <h2 class="block-title-2"></h2><br/><br/><br/>
                             <div class="col-lg-12">
-                                <h2 class="block-title-2">Buscar farmacias por nombre</h2>
-                                <div class="search-box pull-right" style="background:#4BB777">
-                                    <div class="input-group">
-                                        <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
-                                    </div>
+                                <div class="col-sm-12">
+                                    <div class="w100 productFilter clearfix search-full text-right" id="panelBusqueda">  
+                                        <div class="pull-left" style="display: inline-flex;"> 
+                                            <h:inputText p:placeholder="#{bundle.SearchDrugstorePlaceholder}" class="form-control" value="#{drugstoreController.drugstoreName}"/>
+                                            <h:form role="form" id="searchFrm" style="width:20%">
+                                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{drugstoreController.findByName}"/>
+                                            </h:form>
+                                        </div>
+                                         <div class="pull-right ">                      
+                                        </div>
+                                    </div>  
                                 </div>
-                                <div class="search-full text-right" id="panelBusqueda"> <a class="pull-right search-close"> <i class=" fa fa-times-circle" > </i> </a>
-                                    <h:panelGroup p:class="searchInputBox pull-right">
-                                    <h:form role="form" id="searchFrm">
-                                        <h:inputText p:placeholder="buscar..." p:class="search-input" value="#{drugstoreController.drugstoreName}" /> 
-                                        <h:commandButton value="Buscar" class="btn-nobg search-btn" action="#{drugstoreController.findByName}"/>
-                                    </h:form>
-                                    </h:panelGroup>
-                                </div>
-                             </div>
-                            
+                             </div>                
                         <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
-
                                 <h:column>
                                     <div class="col-xs-12 col-sm-12">
                                         <table>
                                             <tbody>
                                                 <tr class="CartProduct">
                                                     <td style="width:10%" class="CartProductThumb">
-                                                        <div> <a href="product-details.html"><img src="images/drugstore/farmacia.jpg" alt="img"/></a> </div>
+                                                        <div> <a href="product-details.html"><img src="images/drugstore/farmacia.jpg" alt="logo de farmacia"/></a> </div>
                                                     </td>
-                                                    <td style="width:40%">
+                                                    <td style="width:100%">
                                                         <div class="CartDescription">
                                                             <h4> <a href="product-details.html">#{d.name}</a> </h4>
                                                             <span class="size">#{d.telephone}</span>
                                                             <div class="price"> <span>#{d.address}</span> </div>
                                                         </div>
-                                                        <td style="width:15%">
+                                                        <td style="width:100%">
                                                             <h:form>
                                                             <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d.idDrugStore)}">
-                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Find drugstore </span>
+                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.GoToDrugstore}</span>
                                                             </h:commandLink>
                                                             </h:form>
+                                                            
+                                                        </td>
+                                                        <td style="width:100%">
+                                                             <div class="pull-right "></div>
                                                         </td>
                                                     </td>                                                   
                                                 </tr>
