@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pf="http://primefaces.org/ui">
 
     <body>
         <ui:composition template="./FrontEndMasterpage.xhtml">
@@ -11,14 +13,37 @@
             <ui:define name="endHead"></ui:define>
 
             <ui:define name="mainContainer">
-                <f:metadata>
-                    <f:viewParam name="productID" value="#" required="true" />
-                </f:metadata>
-                <h:form>
-                    <label> Ingrese su direccion: </label>
-                    <label> Prod: #{findDrugstoreController.idProduct}</label>
-                    <h:inputText value="#{findDrugstoreController.myAddress}"/>
-                    <h:commandButton value="Buscar" action="#{findDrugstoreController.findDrugstores}"/>
+                <h:form class="row">
+                    <!--#############-->
+                    <div class="col-sm-12">
+                        <div class="w100 productFilter clearfix">
+                            <div class="pull-left" style="display: inline-flex;">
+                                <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
+                                <pf:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="Buscar" action="#{findDrugstoreController.findDrugstores}" update="repeaterProducts"/>
+                            </div>
+                            <div class="pull-right ">
+                                <div class="change-order pull-right">
+                                    <select class="form-control" name="orderby">
+                                        <option selected="selected">Default sorting</option>
+                                        <option value="popularity">Sort by popularity</option>
+                                        <option value="rating">Sort by average rating</option>
+                                        <option value="date">Sort by newness</option>
+                                        <option value="price">Sort by price: low to high</option>
+                                        <option value="price-desc">Sort by price: high to low</option>
+                                    </select>
+                                </div>
+                                <div class="change-view pull-right">
+                                    <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a>
+                                    <a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  categoryProduct xsResponse clearfix">
+                            <ui:repeat id="repeaterProducts" value="#{findDrugstoreController.drugstoreList}" var="p" rendered="false">
+                                #{p.name}<br/>
+                            </ui:repeat>
+                        </div>
+                    </div>
                 </h:form>
             </ui:define>
 

@@ -64,14 +64,21 @@
                                             </div>
                                         </div>
                                         <div class="price"> <span>$25</span> </div>
-                                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
+                                        <div class="action-control"> 
+                                            <a class="btn btn-primary" href="find_drugstore.xhtml?idProduct=#{p.idProduct}">
+                                                <span class="add2cart">
+                                                    <i class="glyphicon glyphicon-shopping-cart"> </i> 
+                                                    Add to cart 
+                                                </span> 
+                                            </a>
+                                        </div>
                                     </div>
 
                                 </div>
                             </ui:repeat>
                         </div>
                     </div>
-                </h:form>>
+                </h:form>
             </ui:define>
 
             <ui:define name="endBody">

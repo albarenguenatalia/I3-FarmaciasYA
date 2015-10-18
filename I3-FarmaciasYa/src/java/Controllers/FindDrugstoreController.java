@@ -6,10 +6,12 @@
 package Controllers;
 
 import Model.Drugstore;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  * @author martingonzalez
@@ -19,7 +21,6 @@ import javax.faces.bean.SessionScoped;
 public class FindDrugstoreController {
     private List<Drugstore> drugstoreList;
     private String myAddress;
-    private int idProduct;
     
     public FindDrugstoreController() {
         this.myAddress = "Av. Italia 2020, Montevideo";
@@ -57,17 +58,17 @@ public class FindDrugstoreController {
      * @return the idProduct
      */
     public int getIdProduct() {
-        return idProduct;
-    }
-
-    /**
-     * @param idProduct the idProduct to set
-     */
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+        try{
+            String idProductStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idProduct");
+            return Integer.parseInt(idProductStr);
+        }
+        catch(Exception ex){
+            return 0;
+        }
     }
     
     public void findDrugstores(){
-        System.out.println("BUSCA FARMACIAS"+this.idProduct);
+        int idProduct = getIdProduct();
+        this.drugstoreList = (List<Drugstore>) new ArrayList<Drugstore>();
     }
 }
