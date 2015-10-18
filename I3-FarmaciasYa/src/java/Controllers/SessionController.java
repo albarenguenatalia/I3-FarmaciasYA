@@ -5,6 +5,8 @@
  */
 package Controllers;
 
+import Model.Drugstore;
+import Model.Order1;
 import Model.User;
 import Session.UserFacade;
 import Utils.OneWayHash;
@@ -28,6 +30,7 @@ import org.primefaces.context.RequestContext;
 public class SessionController implements Serializable {
 
     private User current;
+    private Order1 currentOrder;
     private String password;
     private boolean showLoginResultMessage;
     private boolean userLogged;

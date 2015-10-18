@@ -43,12 +43,22 @@
                                             <tbody>
                                                 <tr class="CartProduct">
                                                     <td style="width:10%" class="CartProductThumb">
-                                                    <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
-                                                    <td style="width:40%"><div class="CartDescription">
-                                                    <h4> <a href="product-details.html">#{d.name}</a> </h4>
-                                                    <span class="size">#{d.telephone}</span>
-                                                    <div class="price"> <span>#{d.address}</span> </div>
-                                                    </div></td>
+                                                        <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div>
+                                                    </td>
+                                                    <td style="width:40%">
+                                                        <div class="CartDescription">
+                                                            <h4> <a href="product-details.html">#{d.name}</a> </h4>
+                                                            <span class="size">#{d.telephone}</span>
+                                                            <div class="price"> <span>#{d.address}</span> </div>
+                                                        </div>
+                                                        <td style="width:15%">
+                                                            <h:form>
+                                                            <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d.idDrugStore)}">
+                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Find drugstore </span>
+                                                            </h:commandLink>
+                                                            </h:form>
+                                                        </td>
+                                                    </td>
                                                     
                                                 </tr>
                                             </tbody>

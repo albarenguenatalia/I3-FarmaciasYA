@@ -21,10 +21,8 @@ public class ProductFacade {
      */
     public ProductFacade() {
     }
-        
-    /*
-    *Poner en wiki que el username es el email
-    */
+    
+
     public List<Product> findByName(String name) {
          List<Product> prods = getEntityManager().createNamedQuery(
             "Product.findLikeName")

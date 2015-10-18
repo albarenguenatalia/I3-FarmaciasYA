@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="./FrontEndMasterpage.xhtml">
+            <ui:define name="endHead"></ui:define>
+            <ui:define name="mainContainer">
+                <h:form>
+                    <label> Ingrese nombre de producto: </label>
+                    <h:inputText value="#{productController.productName}"/>
+                    <h:commandButton value="Buscar" action="#{productController.findByName}"/>
+                </h:form>
+                
+                <h:dataTable value="#{drugstoreController.drugstoreProductList}" var="pd">
+                    <h:column>
+                        <div class="col-xs-12 col-sm-12">
+                            <table>
+                                <tbody>
+                                    <tr class="CartProduct">
+                                        <td style="width:10%" class="CartProductThumb">
+                                        <div> <a href="product-details.html"><img src="images/product/9.jpg" alt="img"/></a> </div></td>
+                                        <td style="width:40%"><div class="CartDescription">
+                                        <h4> <a href="product-details.html">#{pd.idProduct.name}</a> </h4>
+                                        <span class="size">#{pd.idProduct.description}</span>
+                                        <div class="price"> <span>#{pd.price}</span> </div>
+                                        </div></td>
+                                        <td style="width:15%">
+                                        <a class="btn btn-primary">
+                                        <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Find drugstore </span>
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                             </table>
+                        </div>
+                    </h:column>
+    		</h:dataTable>
+            </ui:define>
+            <ui:define name="endBody"></ui:define>
+        </ui:composition>
+    </body>
+</html>

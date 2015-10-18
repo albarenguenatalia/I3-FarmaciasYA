@@ -6,7 +6,10 @@
 package Session;
 
 import Model.Drugstore;
+import Model.Product;
+import Model.ProductDrugstore;
 import Model.User;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +44,7 @@ public class DrugstoreFacade extends AbstractFacade<Drugstore> {
     public List<Drugstore> findByName(String name) {
          List<Drugstore> drugs = getEntityManager().createNamedQuery(
             "Drugstore.findLikeName")
-                 .setParameter("name", "%" +name + "%")
+                 .setParameter("name", name)
                  .getResultList();
          return drugs;
     }

@@ -69,7 +69,7 @@ public class UserController implements Serializable {
                 getSessionController().setPassword(password);
                 Mail.sendMail(current.getEmail(),
                 ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailSubject"), 
-                ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody"));
+                ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody").replace("John Doe", current.getName() + " " + current.getLastName()));
                 String result = getSessionController().login();
                 if (result != null && !result.equals("")) {
                     return "index.html";

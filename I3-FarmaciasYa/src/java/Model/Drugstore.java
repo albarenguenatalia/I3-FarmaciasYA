@@ -7,6 +7,7 @@ package Model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,48 +1,64 @@
 package Controllers;
 
 import Model.Drugstore;
+import Model.Product;
+import Model.ProductDrugstore;
 import Session.DrugstoreFacade;
+import java.io.IOException;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean(name = "drugstoreController")
 @SessionScoped
 public class DrugstoreController implements Serializable {
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
     @Inject
     private Session.DrugstoreFacade ejbFacade;
     private boolean showCreateUserMessage;
     private String createUserResultMessage;
     private String drugstoreName;
     private List<Drugstore> drugstoreList;
+    private List<ProductDrugstore> drugstoreProductList;
    
 
     public DrugstoreController() {
         showCreateUserMessage = false;
         createUserResultMessage = "";
-        drugstoreName = "valor inicial";
+        drugstoreName = "";
     }
 
     public DrugstoreFacade getFacade() {
         return ejbFacade;
     }
     
-    public String otherMethod(){
-        System.out.println("IN OTHER METHOD");
-        return null;
+    public void findByName() {
+        this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
     }
     
-    public void findByName() {
-        System.err.println("In DRUGSTORE CONTROLLER");
-        this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
+    public String selectDrugstore(int id){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml?id=" + id);
+        } catch (IOException ex) {
+            Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
 
     /**
@@ -73,6 +89,61 @@ public class DrugstoreController implements Serializable {
         this.drugstoreList = drugstoreList;
     }
 
+    /**
+     * @return the sessionController
+     */
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    /**
+     * @param sessionController the sessionController to set
+     */
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
+    /**
+     * @return the drugstoreProductList
+     */
+    public List<ProductDrugstore> getDrugstoreProductList() {
+        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if(params.get("id") != null)
+        {
+            try
+            {
+                int idDrugstore = Integer.parseInt(params.get("id"));
+                Drugstore currentDrugstore = ejbFacade.find(idDrugstore);
+                Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
+                if (coll instanceof List){
+                     drugstoreProductList = (List)coll;
+                }  
+                else{
+                    drugstoreProductList = new ArrayList<>(coll);
+                }
+                return drugstoreProductList;
+              
+            }
+            catch(NumberFormatException nfe)
+            {
+                drugstoreProductList = null;
+                nfe.printStackTrace();
+                return drugstoreProductList;
+            }
+        }
+        drugstoreProductList = null;
+        return drugstoreProductList;
+       
+    }
+
+    /**
+     * @param drugstoreProductList the drugstoreProductList to set
+     */
+    public void setDrugstoreProductList(List<ProductDrugstore> drugstoreProductList) {
+        this.drugstoreProductList = drugstoreProductList;
+    }
+    
+    
   
 
     @FacesConverter(forClass = Drugstore.class)
