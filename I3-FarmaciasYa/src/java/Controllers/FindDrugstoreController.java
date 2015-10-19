@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  * @author martingonzalez
@@ -19,6 +20,8 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "findDrugstoreController")
 @SessionScoped
 public class FindDrugstoreController {
+    @Inject
+    private Session.FindDrugstoreFacade ejbFacade;
     private List<Drugstore> drugstoreList;
     private String myAddress;
     
@@ -69,6 +72,6 @@ public class FindDrugstoreController {
     
     public void findDrugstores(){
         int idProduct = getIdProduct();
-        this.drugstoreList = (List<Drugstore>) new ArrayList<Drugstore>();
+        this.drugstoreList = this.ejbFacade.findAllByProductId(idProduct);
     }
 }

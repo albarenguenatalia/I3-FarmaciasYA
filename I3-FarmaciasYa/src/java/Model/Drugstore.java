@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -70,6 +71,9 @@ public class Drugstore implements Serializable {
     private String longitud;
     @OneToMany(mappedBy = "idDrugStore")
     private Collection<ProductDrugstore> productDrugstoreCollection;
+    
+    @Transient
+    private int distance;
 
     public Drugstore() {
     }
@@ -81,6 +85,14 @@ public class Drugstore implements Serializable {
     public Drugstore(Integer idDrugStore, String email) {
         this.idDrugStore = idDrugStore;
         this.email = email;
+    }
+    
+    public int getDistance(){
+        return this.distance;
+    }
+    
+    public void setDistance(int distance){
+        this.distance = distance;
     }
 
     public Integer getIdDrugStore() {
