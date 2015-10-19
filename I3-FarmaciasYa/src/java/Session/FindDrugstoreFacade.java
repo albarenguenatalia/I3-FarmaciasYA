@@ -7,7 +7,11 @@ package Session;
 
 import Model.Drugstore;
 import Model.ProductDrugstore;
+import Utils.Coord;
+import Utils.Distance;
+import Utils.Nominatim;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,7 +33,7 @@ public class FindDrugstoreFacade {
     /*
     *Poner en wiki que el username es el email
     */
-    public List<Drugstore> findAllByProductId(int id) {
+    public List<Drugstore> findAllByProductId(int id, String direccion) {
          List<Drugstore> drugstores = getEntityManager().createNamedQuery(
             "Drugstore.findAll")
                  .getResultList();
@@ -41,6 +45,17 @@ public class FindDrugstoreFacade {
                      break;
                  }
          }
+         Nominatim n = new Nominatim();
+         Coord userCoords = n.getCoords(direccion);
+         for (Drugstore d : listaNueva){
+             n = new Nominatim();
+             d.setCoords(n.getCoords(d.getAddress()));
+             d.setDistance(Distance.distance(d.getCoords(), userCoords));
+             System.out.println(d.getCoords().getLatitude());
+             System.out.println(d.getCoords().getLongitude());
+             System.out.println(d.getDistance());
+         }
+         Collections.sort(listaNueva);
          return listaNueva;
     } 
 }

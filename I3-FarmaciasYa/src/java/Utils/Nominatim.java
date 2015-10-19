@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import static javafx.scene.input.KeyCode.R;
 
 /**
  * @author martingonzalez
@@ -50,10 +51,8 @@ public class Nominatim {
     public Coord getCoords(String direccion){
         try {
             String json = this.getJson(direccion);
-            json = json.trim();
-            json = json.substring(1, json.length()-1);
-            Json jsonObject = GetJsonObject(json, Json.class);
-            return new Coord(Double.parseDouble(jsonObject.getLat()), Double.parseDouble(jsonObject.getLon()));
+            Json[] jsonObject = GetJsonObject(json, Json[].class);
+            return new Coord(Double.parseDouble(jsonObject[0].getLat()), Double.parseDouble(jsonObject[0].getLon()));
         } catch (Exception e){
             e.printStackTrace();
         }

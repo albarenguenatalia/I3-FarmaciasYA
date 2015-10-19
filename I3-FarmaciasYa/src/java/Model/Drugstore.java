@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Utils.Coord;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Drugstore.findByEmail", query = "SELECT d FROM Drugstore d WHERE d.email = :email"),
     @NamedQuery(name = "Drugstore.findByLatitud", query = "SELECT d FROM Drugstore d WHERE d.latitud = :latitud"),
     @NamedQuery(name = "Drugstore.findByLongitud", query = "SELECT d FROM Drugstore d WHERE d.longitud = :longitud")})
-public class Drugstore implements Serializable {
+public class Drugstore implements Serializable, Comparable<Drugstore> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +74,10 @@ public class Drugstore implements Serializable {
     private Collection<ProductDrugstore> productDrugstoreCollection;
     
     @Transient
-    private int distance;
+    private double distance;
+    @Transient
+    private Coord coords;
+
 
     public Drugstore() {
     }
@@ -87,11 +91,11 @@ public class Drugstore implements Serializable {
         this.email = email;
     }
     
-    public int getDistance(){
+    public double getDistance(){
         return this.distance;
     }
     
-    public void setDistance(int distance){
+    public void setDistance(double distance){
         this.distance = distance;
     }
 
@@ -184,5 +188,23 @@ public class Drugstore implements Serializable {
     public String toString() {
         return "Model.Drugstore[ idDrugStore=" + idDrugStore + " ]";
     }
-    
+
+    /**
+     * @return the coords
+     */
+    public Coord getCoords() {
+        return coords;
+    }
+
+    /**
+     * @param coords the coords to set
+     */
+    public void setCoords(Coord coords) {
+        this.coords = coords;
+    }
+
+    @Override
+    public int compareTo(Drugstore o) {
+        return (int)(this.distance - o.getDistance());
+    }
 }

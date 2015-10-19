@@ -26,7 +26,7 @@ public class pruebaDistancias {
             
             
             Nominatim n = new Nominatim();
-            Coord c = n.getCoords("Av. Italia 5077, Montevideo");
+            Coord c = n.getCoords("Garibaldi 2345, Montevideo");
             System.out.println(c.getLatitude());
             System.out.println(c.getLongitude());
             System.out.println("---------------------------");

@@ -24,9 +24,10 @@ public class FindDrugstoreController {
     private Session.FindDrugstoreFacade ejbFacade;
     private List<Drugstore> drugstoreList;
     private String myAddress;
+    private int idProduct;
     
     public FindDrugstoreController() {
-        this.myAddress = "Av. Italia 2020, Montevideo";
+        this.myAddress = "Av. Italia 3020, Montevideo";
     }
     
     /**
@@ -61,19 +62,27 @@ public class FindDrugstoreController {
      * @return the idProduct
      */
     public int getIdProduct() {
+        if (this.idProduct != 0 ) return this.idProduct;
         try{
             String idProductStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idProduct");
             System.out.println(idProductStr);
-            return Integer.parseInt(idProductStr);
+            this.idProduct =  Integer.parseInt(idProductStr);
         }
         catch(Exception ex){
-            return 0;
-        }
+            this.idProduct = 0;
+        } 
+        return this.idProduct;
     }
     
     public void findDrugstores(){
-        int idProduct = getIdProduct();
-        this.drugstoreList = this.ejbFacade.findAllByProductId(idProduct);
+        this.drugstoreList = this.ejbFacade.findAllByProductId(this.getIdProduct(),this.getMyAddress());
         System.out.println(idProduct);
+    }
+
+    /**
+     * @param idProduct the idProduct to set
+     */
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
     }
 }
