@@ -84,6 +84,8 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
 
     public Drugstore(Integer idDrugStore) {
         this.idDrugStore = idDrugStore;
+        this.latitud = "";
+        this.longitud = "";
     }
 
     public Drugstore(Integer idDrugStore, String email) {
@@ -193,6 +195,9 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
      * @return the coords
      */
     public Coord getCoords() {
+        if(this.coords == null){
+            this.coords = new Coord(Double.parseDouble(this.latitud), Double.parseDouble(this.longitud));
+        }
         return coords;
     }
 

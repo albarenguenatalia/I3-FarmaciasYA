@@ -9,12 +9,20 @@ INSERT INTO `farmaciasyadb`.`product` (`idProduct`, `Name`, `Description`) VALUE
 INSERT INTO `farmaciasyadb`.`product` (`idProduct`, `Name`, `Description`) VALUES ('9', 'Pantalla Solar', 'para el sol');
 
 INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('1', 'San Roque 1', 'Minas 2124, Montevideo', '4123 0995', 's1@s.com');
-INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('2', 'San Roque 2', 'Av. River 1884, Montevideo', '4123 1234', 's2@s.com');
+INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('2', 'San Roque 2', 'Av. Rivera 1884, Montevideo', '4123 1234', 's2@s.com');
 INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('3', 'San Roque 3', 'Av. Italia 4333, Montevideo', '4123 5454', 's3@s.com');
 INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('4', 'San Roque 5', 'Av 18 de Julio 3333, Montevideo', '4123 9393', 's4@s.com');
 INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('5', 'FarmaShop 1', 'Ruta 8 km 30', '4113 9323', 'f1@f.com');
 INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('6', 'FarmaShop 2', 'Av. 8 de Octubre 3883, Montevideo', '4113 9393', 'f2@f.com');
-INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('7', 'San Nicolas', 'Av. 8 de Octubre esq. Garibaldi, Montevideo', '2435 2314', 'sn@sn.com');
+INSERT INTO `farmaciasyadb`.`drugstore` (`idDrugStore`, `Name`, `Address`, `Telephone`, `Email`) VALUES ('7', 'San Nicolas', 'Garibaldi 2345, Montevideo', '2435 2314', 'sn@sn.com');
+
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.9027683', `Longitud`='-56.1810544' WHERE `idDrugStore`='1';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-31.5696995', `Longitud`='-55.4708263' WHERE `idDrugStore`='2';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.8870531', `Longitud`='-56.1162977' WHERE `idDrugStore`='3';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.873686', `Longitud`='-56.1384051' WHERE `idDrugStore`='4';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.8818052', `Longitud`='-56.1691785' WHERE `idDrugStore`='5';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.9027683', `Longitud`='-55.4708263' WHERE `idDrugStore`='6';
+UPDATE `farmaciasyadb`.`drugstore` SET `Latitud`='-34.8818052', `Longitud`='-55.4708263' WHERE `idDrugStore`='7';
 
 INSERT INTO `farmaciasyadb`.`product_drugstore` (`idProduct_DrugStore`, `idProduct`, `idDrugStore`, `Price`) VALUES ('11', '1', '1', '10');
 INSERT INTO `farmaciasyadb`.`product_drugstore` (`idProduct_DrugStore`, `idProduct`, `idDrugStore`, `Price`) VALUES ('12', '1', '2', '20');

@@ -18,7 +18,7 @@
                     <div class="col-sm-12">
                         <div class="w100 productFilter clearfix">
                             <div class="pull-left" style="display: inline-flex;">
-                                #{findDrugstoreController.idProduct}
+                                <label class="hidden">#{findDrugstoreController.idProduct}</label>
                                 <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
                                 <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="Buscar" action="#{findDrugstoreController.findDrugstores}"/>
                             </div>
@@ -47,7 +47,7 @@
                                     <tbody>
                                         <tr class="CartProduct">
                                             <td style="width:10%" class="CartProductThumb">
-                                            <div> <a href="product-details.html"><img src="images/drugstoreProducts/Product.jpg" alt="img"/></a> </div></td>
+                                                <div> <a href="product-details.html"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div></td>
                                             <td style="width:40%"><div class="CartDescription">
                                             <h4> <a href="product-details.html">#{d.name}</a> </h4>
                                             <span class="size">#{d.telephone} - #{d.email}</span>

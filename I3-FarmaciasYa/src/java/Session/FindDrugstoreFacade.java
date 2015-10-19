@@ -49,7 +49,9 @@ public class FindDrugstoreFacade {
          Coord userCoords = n.getCoords(direccion);
          for (Drugstore d : listaNueva){
              n = new Nominatim();
-             d.setCoords(n.getCoords(d.getAddress()));
+             if (d.getLatitud().equals("") || d.getLongitud().equals("")){
+                 d.setCoords(n.getCoords(d.getAddress()));
+             }
              d.setDistance(Distance.distance(d.getCoords(), userCoords));
              System.out.println(d.getCoords().getLatitude());
              System.out.println(d.getCoords().getLongitude());
