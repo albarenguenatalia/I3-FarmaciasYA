@@ -23,7 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
     @NamedQuery(name = "Order1.findByIdOrder", query = "SELECT o FROM Order1 o WHERE o.idOrder = :idOrder"),
     @NamedQuery(name = "Order1.findByDate", query = "SELECT o FROM Order1 o WHERE o.date = :date"),
-    @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status")})
+    @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status"),
+    @NamedQuery(name = "Order1.findByTotal", query = "SELECT o FROM Order1 o WHERE o.total = :total")})
 public class Order1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,11 +49,15 @@ public class Order1 implements Serializable {
     private Date date;
     @Column(name = "Status")
     private Integer status;
-    @OneToMany(mappedBy = "idOrder")
-    private Collection<OrderDetail> orderDetailCollection;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "Total")
+    private Float total;
     @JoinColumn(name = "idUser", referencedColumnName = "idUser")
     @ManyToOne
-    private User idUser;
+    private User idUser;    
+    @OneToMany(mappedBy = "idOrder")
+    private Collection<OrderDetail> orderDetailCollection;
+
 
     public Order1() {
     }
@@ -86,13 +90,12 @@ public class Order1 implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Collection<OrderDetail> getOrderDetailCollection() {
-        return orderDetailCollection;
+    public Float getTotal() {
+        return total;
     }
 
-    public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
-        this.orderDetailCollection = orderDetailCollection;
+    public void setTotal(Float total) {
+        this.total = total;
     }
 
     public User getIdUser() {
@@ -126,6 +129,20 @@ public class Order1 implements Serializable {
     @Override
     public String toString() {
         return "Model.Order1[ idOrder=" + idOrder + " ]";
+    }
+
+    /**
+     * @return the orderDetailCollection
+     */
+    public Collection<OrderDetail> getOrderDetailCollection() {
+        return orderDetailCollection;
+    }
+
+    /**
+     * @param orderDetailCollection the orderDetailCollection to set
+     */
+    public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
+        this.orderDetailCollection = orderDetailCollection;
     }
     
 }

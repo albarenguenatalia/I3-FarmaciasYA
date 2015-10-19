@@ -7,10 +7,12 @@ package Controllers;
 
 import Model.Drugstore;
 import Model.Order1;
+import Model.OrderDetail;
 import Model.User;
 import Session.UserFacade;
 import Utils.OneWayHash;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -165,6 +167,25 @@ public class SessionController implements Serializable {
      */
     public void setCurrentUserId(int currentUserId) {
         this.currentUserId = currentUserId;
+    }
+
+    /**
+     * @return the currentOrder
+     */
+    public Order1 getCurrentOrder() {
+        
+        if (currentOrder == null) {
+            currentOrder = new Order1();
+            currentOrder.setOrderDetailCollection(new ArrayList <OrderDetail>());
+        }
+        return currentOrder;
+    }
+
+    /**
+     * @param currentOrder the currentOrder to set
+     */
+    public void setCurrentOrder(Order1 currentOrder) {
+        this.currentOrder = currentOrder;
     }
 
     @FacesConverter(forClass = User.class)
