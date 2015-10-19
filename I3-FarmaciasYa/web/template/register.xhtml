@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"    
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pf="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:body>
 
@@ -22,37 +24,66 @@
                                 <h:form role="form" class="regForm" p:novalidate="novalidate">
                                     <div class="form-group">
                                         <label>#{bundle.Name}</label>
-                                        <h:inputText value="#{userController.current.name}" title="Please enter your name" p:type="text" class="form-control"  p:placeholder="#{bundle.Name}" p:required="false" p:aria-required="true"/>
-                                     </div>
+                                        <h:inputText id="txtName" value="#{userController.current.name}" p:placeholder="#{bundle.Name}" p:type="text" class="form-control"  
+                                                     requiredMessage="Nombre requerido"
+                                                     required="true">
+                                        </h:inputText>
+                                        <h:message for="txtName" class="label label-danger" />
+                                    </div>
                                     <div class="form-group">
                                         <label>#{bundle.Lastname}</label>
-                                        <h:inputText value="#{userController.current.lastName}" title="Please enter your lastname" p:type="text" class="form-control"  p:placeholder="#{bundle.Lastname}" p:required="false" p:aria-required="true"/>
+                                        <h:inputText id='txtLastName' value="#{userController.current.lastName}" 
+                                                     requiredMessage="Apellido requerido"
+                                                     p:type="text" class="form-control"  p:placeholder="#{bundle.Lastname}" 
+                                                     required="true"/>
+                                        <h:message for="txtLastName" class="label label-danger" />
                                     </div>
                                     <div class="form-group">
                                         <label>#{bundle.Address}</label>
-                                         <h:inputText value="#{userController.current.address}" required="" p:minlength="5" title="Domicilio" p:type="text" class="form-control" p:placeholder="#{bundle.Address}" p:aria-required="true"/>
+                                        <h:inputText id="txtAddress" value="#{userController.current.address}" required="true"
+                                                     requiredMessage="Dirección requerida"
+                                                     title="Domicilio" p:type="text" class="form-control" 
+                                                     p:placeholder="#{bundle.Address}"/>
+                                        <h:message for="txtAddress" class="label label-danger" />
                                     </div>
                                     <div class="form-group">
                                         <label>#{bundle.RegisterUserEmail}</label>
-                                        <h:inputText value="#{userController.current.email}" title="Please enter a valid email" p:type="email" class="form-control" p:placeholder="#{bundle.LoginUserUsername}" p:required="true" p:aria-required="true"/>
-                                   </div>
+                                        <h:inputText id="txtEmail" value="#{userController.current.email}"
+                                                     required="true"
+                                                     requiredMessage="Email requerido"
+                                                     title="Please enter a valid email" p:type="email" class="form-control" p:placeholder="#{bundle.LoginUserUsername}" p:required="true" p:aria-required="true"/>
+                                        <h:message for="txtEmail" class="label label-danger" />
+                                    </div>
                                     <div class="form-group">
                                         <label>#{bundle.LoginUserPassword}</label>
-                                        <h:inputText value="#{userController.password}" required="true" p:minlength="8" title="#{bundle.LoginUserPassword}" p:type="password" class="form-control" p:placeholder="#{bundle.LoginUserPassword}" p:aria-required="true"/>
+                                        <h:inputText id='txtPassword' value="#{userController.password}" title="#{bundle.LoginUserPassword}" p:type="password" class="form-control" 
+                                                     required="true" 
+                                                     requiredMessage="Contraseña requerida"
+                                                     validatorMessage="Largo mínimo 6 carácteres"
+                                                     p:placeholder="#{bundle.LoginUserPassword}">
+                                            <f:validateLength minimum="6"></f:validateLength>
+                                        </h:inputText>
+                                        <h:message for="txtPassword" class="label label-danger" />
                                     </div>
                                     <div class="form-group">
                                         <label>#{bundle.ConfirmPassword}</label>
-                                         <h:inputText value="#{userController.confirmPassword}" required="true" p:minlength="8" title="Confirmar Contraseña" p:type="password" class="form-control" p:placeholder="#{bundle.ConfirmPassword}" p:aria-required="true"/>
+                                        <h:inputText id="txtConfirmPassword" value="#{userController.confirmPassword}" p:type="password" class="form-control" p:placeholder="#{bundle.ConfirmPassword}"
+                                                     required="true"
+                                                     requiredMessage="Campo requerido"
+                                                     validatorMessage="Largo mínimo 6 carácteres">
+                                            <f:validateLength minimum="6"></f:validateLength>
+                                        </h:inputText>
+                                        <h:message for="txtConfirmPassword" class="label label-danger" />
                                     </div>                                  
                                     <h:commandButton class="btn   btn-primary" type="submit" p:value="#{bundle.RegisterMessage}" action="#{userController.create}" />
-                                     <br/>
-                                        <h:panelGroup rendered="#{userController.showCreateUserMessage}" id="loginResultpnl">
-                                            <div class="alert alert-danger" role="alert">
+                                    <br/>
+                                    <h:panelGroup rendered="#{userController.showCreateUserMessage}" id="loginResultpnl">
+                                        <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
-                                             #{userController.createUserResultMessage}
+                                            #{userController.createUserResultMessage}
                                         </div>
-                                        </h:panelGroup>
+                                    </h:panelGroup>
                                 </h:form>
                             </div>
                             <div class="col-xs-12 col-sm-6">
@@ -61,12 +92,12 @@
                                     <div class="form-group">
                                         <label>Dirección de correo</label>
                                         <h:inputText value="" title="Please enter valid email" p:type="email" class="form-control" p:placeholder="Mail" p:required="" p:aria-required="true"/>
-                                       
+
                                     </div>
                                     <div class="form-group">
                                         <label>Contraseña</label>
-                                         <h:inputText value="" required="" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
-                                        
+                                        <h:inputText value="" required="" p:minlength="5" title="Contraseña" p:type="password" class="form-control" p:placeholder="Password" p:aria-required="true"/>
+
                                     </div>
 
                                     <div class="form-group">
@@ -74,7 +105,7 @@
                                             <div class="checkbox login-remember">
                                                 <label>
                                                     <input name="rememberme" value="forever" checked="checked" type="checkbox"/>
-                                                        Recordar
+                                                    Recordar
                                                 </label>
                                             </div>
                                         </div>
