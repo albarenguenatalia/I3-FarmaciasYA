@@ -46,6 +46,9 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name = "idProdut_DrugStore", referencedColumnName = "idProduct_DrugStore")
     @ManyToOne
     private ProductDrugstore idProdutDrugStore;
+    @Column(name = "Quantity")
+    private Integer quantity;
+    
 
     public OrderDetail() {
     }
@@ -109,6 +112,21 @@ public class OrderDetail implements Serializable {
     @Override
     public String toString() {
         return "Model.OrderDetail[ idOrderDetail=" + idOrderDetail + " ]";
+    }
+
+    /**
+     * @return the quantity
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        this.price = this.getIdProdutDrugStore().getPrice() * this.quantity;
     }
     
 }
