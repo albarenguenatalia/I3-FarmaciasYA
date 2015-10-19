@@ -19,6 +19,7 @@
                         <div class="w100 productFilter clearfix">
                             <div class="pull-left" style="display: inline-flex;">
                                 <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
+                                #{findDrugstoreController.idProduct}
                                 <pf:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="Buscar" action="#{findDrugstoreController.findDrugstores}" update="repeaterProducts"/>
                             </div>
                             <div class="pull-right ">

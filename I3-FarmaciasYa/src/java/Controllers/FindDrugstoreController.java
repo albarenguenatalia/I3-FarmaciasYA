@@ -60,6 +60,7 @@ public class FindDrugstoreController {
     public int getIdProduct() {
         try{
             String idProductStr = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idProduct");
+            System.out.println(idProductStr);
             return Integer.parseInt(idProductStr);
         }
         catch(Exception ex){
@@ -69,6 +70,6 @@ public class FindDrugstoreController {
     
     public void findDrugstores(){
         int idProduct = getIdProduct();
-        this.drugstoreList = (List<Drugstore>) new ArrayList<Drugstore>();
+        System.out.println(idProduct);
     }
 }
