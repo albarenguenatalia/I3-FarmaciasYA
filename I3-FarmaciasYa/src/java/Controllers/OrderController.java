@@ -52,7 +52,7 @@ public class OrderController implements Serializable {
     public List<OrderDetail> getOrderDetailList() {       
       Order1 currentOrder = sessionController.getCurrentOrder();
       Collection<OrderDetail> coll = currentOrder.getOrderDetailCollection();
-        if (coll instanceof List){
+        if (coll instanceof List) {
             orderDetailList = (List)coll;
         }  
         else {
@@ -107,7 +107,7 @@ public class OrderController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-             OrderController controller = ( OrderController) facesContext.getApplication().getELResolver().
+             OrderController controller = ( OrderController)facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "orderController");
             return controller.ejbFacade.find(getKey(value));
         }

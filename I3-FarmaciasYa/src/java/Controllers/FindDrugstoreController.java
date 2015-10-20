@@ -68,7 +68,7 @@ public class FindDrugstoreController {
             System.out.println(idProductStr);
             this.idProduct =  Integer.parseInt(idProductStr);
         }
-        catch(Exception ex){
+        catch (Exception ex){
             this.idProduct = 0;
         } 
         return this.idProduct;
