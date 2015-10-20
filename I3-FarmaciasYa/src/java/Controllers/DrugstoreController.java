@@ -18,9 +18,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.DataModel;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,8 +37,7 @@ public class DrugstoreController implements Serializable {
     private String createUserResultMessage;
     private String drugstoreName;
     private List<Drugstore> drugstoreList;
-    private List<ProductDrugstore> drugstoreProductList;
-   
+    private List<ProductDrugstore> drugstoreProductList; 
 
     public DrugstoreController() {
         showCreateUserMessage = false;
@@ -49,6 +50,8 @@ public class DrugstoreController implements Serializable {
     }
     
     public void findByName() {
+        System.out.println("BUSCANDO " + this.drugstoreName);
+        System.out.println(ejbFacade);
         this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
     }
     
@@ -135,13 +138,27 @@ public class DrugstoreController implements Serializable {
         return drugstoreProductList;
        
     }
+    
+    public void addProductToCart(){
+        ProductDrugstore pd = new ProductDrugstore();
+        System.out.println("DRUGSTORE CONTROLLER addProductToCart ");
+        System.out.println(pd);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/cart.xhtml?drugstoreId=" 
+                    + pd.getIdDrugStore().getIdDrugStore() + "&productId=" + pd.getIdProduct().getIdProduct());
+        } catch (IOException ex) {
+            Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param drugstoreProductList the drugstoreProductList to set
      */
-    public void setDrugstoreProductList(List<ProductDrugstore> drugstoreProductList) {
-        this.drugstoreProductList = drugstoreProductList;
+    public void setDrugstoreProductList(List<ProductDrugstore> list) {
+        this.setDrugstoreProductList(list);
     }
+
+   
     
     
   

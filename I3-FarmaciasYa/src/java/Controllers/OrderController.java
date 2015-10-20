@@ -3,12 +3,14 @@ package Controllers;
 import Model.Drugstore;
 import Model.Order1;
 import Model.OrderDetail;
+import Model.Product;
 import Model.ProductDrugstore;
 import Model.User;
 import Session.OrderFacade;
 import Session.UserFacade;
 import Utils.Mail;
 import Utils.OneWayHash;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -26,15 +31,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.persistence.criteria.Predicate;
 
 @ManagedBean(name = "orderController")
 @SessionScoped
 public class OrderController implements Serializable {
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
+    @ManagedProperty(value = "#{drugstoreController}")
+    private DrugstoreController drugstoreController;
     @Inject
     private Session.OrderFacade ejbFacade;
     private List<OrderDetail> orderDetailList;
+    private ProductDrugstore selectedProductDrugstore;
    
    
     public OrderController() {
@@ -61,8 +70,44 @@ public class OrderController implements Serializable {
          return orderDetailList;
     }      
     
-    public void addProductToCart(){
-    
+    public void addProductToCart(){ 
+        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if(params.get("drugstoreId") != null && params.get("productId") != null)
+        {
+            try
+            {
+                int idDrugstore = Integer.parseInt(params.get("drugstoreId"));
+                int idProduct = Integer.parseInt(params.get("productId"));
+                Drugstore currentDrugstore = getDrugstoreController().getFacade().find(idDrugstore);
+                if(currentDrugstore != null){
+                    Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
+                    List<ProductDrugstore> pdFound = coll.stream()
+                            .filter( pd -> pd.getIdDrugStore().equals(idDrugstore)
+                                    && pd.getIdProduct().equals(idProduct) )
+                            .collect(Collectors.toList());
+
+                    /**
+                     * Add field date and get the last one
+                     */
+                    ProductDrugstore productDrugstore = pdFound.get(0);
+                    OrderDetail od = new OrderDetail();
+                    od.setIdProdutDrugStore(productDrugstore);
+                    od.setIdOrder(sessionController.getCurrentOrder());
+                    od.setQuantity(1);        
+                    sessionController.getCurrentOrder().getOrderDetailCollection().add(od);
+
+                    for(OrderDetail orderD: sessionController.getCurrentOrder().getOrderDetailCollection()){
+                        System.out.println(orderD.getIdProdutDrugStore().getIdProduct().getName());
+                    }
+
+                }
+            }
+            catch(NumberFormatException nfe)
+            {
+                nfe.printStackTrace();
+            }
+        }
+        System.out.println("No me llegaron los id");
     }
        
 
@@ -101,6 +146,21 @@ public class OrderController implements Serializable {
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
+
+    /**
+     * @return the drugstoreController
+     */
+    public DrugstoreController getDrugstoreController() {
+        return drugstoreController;
+    }
+
+    /**
+     * @param drugstoreController the drugstoreController to set
+     */
+    public void setDrugstoreController(DrugstoreController drugstoreController) {
+        this.drugstoreController = drugstoreController;
+    }
+
 
    
     @FacesConverter(forClass = Order1.class)
