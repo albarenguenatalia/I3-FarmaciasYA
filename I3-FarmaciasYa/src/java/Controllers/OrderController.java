@@ -59,7 +59,11 @@ public class OrderController implements Serializable {
                 orderDetailList = new ArrayList<>(coll);
         }
          return orderDetailList;
-    }       
+    }      
+    
+    public void addProductToCart(){
+    
+    }
        
 
     public String update() {

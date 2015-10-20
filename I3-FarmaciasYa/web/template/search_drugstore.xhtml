@@ -23,8 +23,8 @@
                                 <div class="col-sm-12">
                                     <div class="w100 productFilter clearfix search-full text-right" id="panelBusqueda">  
                                         <div class="pull-left" style="display: inline-flex;"> 
-                                            <h:inputText p:placeholder="#{bundle.SearchDrugstorePlaceholder}" class="form-control" value="#{drugstoreController.drugstoreName}"/>
-                                            <h:form role="form" id="searchFrm" style="width:20%">
+                                            <h:form role="form" id="searchFrm" class="pull-left" style="display: inline-flex;">
+                                                <h:inputText p:placeholder="#{bundle.SearchDrugstorePlaceholder}" class="form-control" value="#{drugstoreController.drugstoreName}"/>
                                                 <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{drugstoreController.findByName}"/>
                                             </h:form>
                                         </div>
@@ -40,7 +40,7 @@
                                             <tbody>
                                                 <tr class="CartProduct">
                                                     <td style="width:10%" class="CartProductThumb">
-                                                        <div> <a href="product-details.html"><img src="images/drugstore/farmacia.jpg" alt="logo de farmacia"/></a> </div>
+                                                        <div> <a href="product-details.html"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
                                                     </td>
                                                     <td style="width:100%">
                                                         <div class="CartDescription">

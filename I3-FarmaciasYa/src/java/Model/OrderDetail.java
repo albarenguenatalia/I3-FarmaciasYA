@@ -126,7 +126,7 @@ public class OrderDetail implements Serializable {
      */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.price = this.getIdProdutDrugStore().getPrice() * this.quantity;
+        this.setPrice(this.getIdProdutDrugStore().getPrice() * this.quantity);
     }
     
 }

@@ -91,6 +91,10 @@ public class Order1 implements Serializable {
     }
 
     public Float getTotal() {
+        this.total = (float)0;
+        for(OrderDetail od: this.orderDetailCollection){
+            this.total += od.getPrice();
+        }
         return total;
     }
 
