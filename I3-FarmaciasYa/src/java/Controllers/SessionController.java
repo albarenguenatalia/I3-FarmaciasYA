@@ -66,8 +66,8 @@ public class SessionController implements Serializable {
             this.setLoginResultMessage("");
             this.setShowLoginResultMessage(false);
             OneWayHash hash = OneWayHash.getInstance();
-            System.out.println(current.getEmail()+ password);
-            byte[] passenc = hash.hashSHA256(password, (current.getEmail()+ password).getBytes());
+            System.out.println(current.getEmail() + password);
+            byte[] passenc = hash.hashSHA256(password, (current.getEmail() + password).getBytes());
             User checkedUser = getFacade().validateUser(current.getEmail(), passenc);
             if (checkedUser != null) {
                 setCurrent(checkedUser);
@@ -176,7 +176,7 @@ public class SessionController implements Serializable {
         
         if (currentOrder == null) {
             currentOrder = new Order1();
-            currentOrder.setOrderDetailCollection(new ArrayList <OrderDetail>());
+            currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
         }
         return currentOrder;
     }

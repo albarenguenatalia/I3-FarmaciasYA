@@ -20,18 +20,11 @@
                         <div class="w100 productFilter clearfix">
                             <div class="pull-left" style="display: inline-flex;">
                                 <h:inputText p:placeholder="producto" class="form-control" value="#{productController.productName}"/>
-                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="Buscar" action="#{productController.findByName}"/>
+                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{productController.findByName}"/>
                             </div>
                             <div class="pull-right ">
                                 <div class="change-order pull-right">
-                                    <select class="form-control" name="orderby">
-                                        <option selected="selected">Default sorting</option>
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
+                                    
                                 </div>
                                 <div class="change-view pull-right">
                                     <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a>
@@ -49,7 +42,7 @@
                                         </a>
                                         <div class="image">
                                             <div class="quickview">
-                                                <a title="Quick View" class="btn btn-xs  btn-quickview" data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+                                                <a title="Quick View" class="btn btn-xs  btn-quickview" data-target="#product-details-modal" data-toggle="modal"> #{bundle.QuickView} </a>
                                             </div><a href="product-details.html"><img class="img-responsive" alt="img" src="imagesdb/products/#{p.idProduct}.jpg"/></a>
                                         </div>
                                         <div class="description">
@@ -67,8 +60,8 @@
                                         <div class="action-control"> 
                                             <a class="btn btn-primary" href="find_drugstore.xhtml?idProduct=#{p.idProduct}">
                                                 <span class="add2cart">
-                                                    <i class="glyphicon glyphicon-shopping-cart"> </i> 
-                                                    Find Drugstore 
+                                                    <i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.SearchDrugstoreTitle}
+                                                   
                                                 </span> 
                                             </a>
                                         </div>

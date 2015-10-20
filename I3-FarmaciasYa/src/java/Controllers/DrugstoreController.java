@@ -110,18 +110,18 @@ public class DrugstoreController implements Serializable {
      * @return the drugstoreProductList
      */
     public List<ProductDrugstore> getDrugstoreProductList() {
-        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        if(params.get("id") != null)
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if (params.get("id") != null)
         {
             try
             {
                 int idDrugstore = Integer.parseInt(params.get("id"));
                 Drugstore currentDrugstore = ejbFacade.find(idDrugstore);
                 Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
-                if (coll instanceof List){
+                if (coll instanceof List) {
                      drugstoreProductList = (List)coll;
                 }  
-                else{
+                else {
                     drugstoreProductList = new ArrayList<>(coll);
                 }
                 return drugstoreProductList;

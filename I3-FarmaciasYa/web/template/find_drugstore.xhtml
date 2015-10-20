@@ -20,18 +20,11 @@
                             <div class="pull-left" style="display: inline-flex;">
                                 <label class="hidden">#{findDrugstoreController.idProduct}</label>
                                 <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
-                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="Buscar" action="#{findDrugstoreController.findDrugstores}"/>
+                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="#{bundle.SearchField}" action="#{findDrugstoreController.findDrugstores}"/>
                             </div>
                             <div class="pull-right ">
                                 <div class="change-order pull-right">
-                                    <select class="form-control" name="orderby">
-                                        <option selected="selected">Default sorting</option>
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
+                                    
                                 </div>
                                 <div class="change-view pull-right">
                                     <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a>
