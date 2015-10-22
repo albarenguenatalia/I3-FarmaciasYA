@@ -70,7 +70,8 @@ public class OrderController implements Serializable {
          return orderDetailList;
     }      
     
-    public void addProductToCart(){ 
+    public String addProductToCart(){ 
+        System.out.println("aca esta");
         Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         if(params.get("drugstoreId") != null && params.get("productId") != null)
         {
@@ -108,6 +109,7 @@ public class OrderController implements Serializable {
             }
         }
         System.out.println("No me llegaron los id");
+        return "";
     }
        
 

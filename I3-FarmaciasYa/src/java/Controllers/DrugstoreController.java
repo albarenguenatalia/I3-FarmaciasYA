@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -38,6 +39,7 @@ public class DrugstoreController implements Serializable {
     private String drugstoreName;
     private List<Drugstore> drugstoreList;
     private List<ProductDrugstore> drugstoreProductList; 
+    private int drugstoreId = 5;
 
     public DrugstoreController() {
         showCreateUserMessage = false;
@@ -53,6 +55,11 @@ public class DrugstoreController implements Serializable {
         System.out.println("BUSCANDO " + this.drugstoreName);
         System.out.println(ejbFacade);
         this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
+    }
+    
+    public String testing(){
+        System.out.println("Llego a testing");
+        return "cart.xhtml";
     }
     
     public String selectDrugstore(int id){
@@ -111,11 +118,17 @@ public class DrugstoreController implements Serializable {
      */
     public List<ProductDrugstore> getDrugstoreProductList() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        if (params.get("id") != null)
-        {
+        //if (params.get("id") != null)
+        //{
             try
             {
-                int idDrugstore = Integer.parseInt(params.get("id"));
+                int idDrugstore;
+                if (params.get("id") != null){
+                     idDrugstore = Integer.parseInt(params.get("id"));
+                }else{
+                    idDrugstore = this.drugstoreId;
+                }
+                
                 Drugstore currentDrugstore = ejbFacade.find(idDrugstore);
                 Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
                 if (coll instanceof List) {
@@ -133,23 +146,31 @@ public class DrugstoreController implements Serializable {
                 nfe.printStackTrace();
                 return drugstoreProductList;
             }
-        }
-        drugstoreProductList = null;
-        return drugstoreProductList;
+        //}
+        //drugstoreProductList = null;
+        //return drugstoreProductList;
        
     }
     
-    public void addProductToCart(){
-        ProductDrugstore pd = new ProductDrugstore();
+    public String addProductToCart(ProductDrugstore pd){
         System.out.println("DRUGSTORE CONTROLLER addProductToCart ");
         System.out.println(pd);
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/cart.xhtml?drugstoreId=" 
+            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml?drugstoreId=" 
                     + pd.getIdDrugStore().getIdDrugStore() + "&productId=" + pd.getIdProduct().getIdProduct());
         } catch (IOException ex) {
             Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "";
     }
+    
+    public String save(String rowid) {
+        System.out.println("here " + rowid);
+        return "";
+        //String jsParam = Util.getJsParam("repeat:" + rowid + ":x");
+        //System.out.println("jsParam: " + jsParam); //persist...
+    }
+    
 
     /**
      * @param drugstoreProductList the drugstoreProductList to set
