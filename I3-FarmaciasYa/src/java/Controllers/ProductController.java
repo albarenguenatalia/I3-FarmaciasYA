@@ -20,7 +20,7 @@ public class ProductController {
     List<Product> productsList;
     
     public ProductController(){
-        this.productName = "prod";
+        this.productName = "";
     }
     
     public ProductFacade getFacade() {

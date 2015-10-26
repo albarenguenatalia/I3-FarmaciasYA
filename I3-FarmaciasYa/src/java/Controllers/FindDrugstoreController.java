@@ -6,8 +6,13 @@
 package Controllers;
 
 import Model.Drugstore;
+import Model.ProductDrugstore;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -22,6 +27,10 @@ import javax.inject.Inject;
 public class FindDrugstoreController {
     @Inject
     private Session.FindDrugstoreFacade ejbFacade;
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+     @ManagedProperty(value = "#{orderController}")
+    private OrderController orderController;
     private List<Drugstore> drugstoreList;
     private String myAddress;
     private int idProduct;
@@ -84,5 +93,55 @@ public class FindDrugstoreController {
      */
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
+    }
+    
+    public String selectProductDrugstore(Drugstore d){
+        sessionController.setSelectedDrugstore(d);
+        System.out.println("This is the product selected " + this.getIdProduct());
+        Collection<ProductDrugstore> collection = d.getProductDrugstoreCollection();
+        for(ProductDrugstore pd: collection){
+            System.out.println( pd.getIdProduct().getName() + " id: " 
+                    + pd.getIdProduct().getIdProduct()+"\n$" + pd.getPrice() );
+        }
+        ProductDrugstore pdFound = collection.stream().filter(pd -> 
+        {
+            return pd.getIdProduct().getIdProduct() == this.getIdProduct();
+        }).findFirst().get();
+        
+        orderController.addProductToCart(pdFound);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+
+    /**
+     * @return the sessionController
+     */
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    /**
+     * @param sessionController the sessionController to set
+     */
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
+    /**
+     * @return the orderController
+     */
+    public OrderController getOrderController() {
+        return orderController;
+    }
+
+    /**
+     * @param orderController the orderController to set
+     */
+    public void setOrderController(OrderController orderController) {
+        this.orderController = orderController;
     }
 }

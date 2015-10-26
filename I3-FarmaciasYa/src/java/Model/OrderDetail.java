@@ -16,7 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,7 +41,7 @@ public class OrderDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "idOrder_Detail")
     private Integer idOrderDetail;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation  
     @Column(name = "Price")
     private Float price;
     @JoinColumn(name = "idOrder", referencedColumnName = "idOrder")
@@ -51,6 +55,8 @@ public class OrderDetail implements Serializable {
     
 
     public OrderDetail() {
+        this.quantity = 0;
+        this.price = (float)0;
     }
 
     public OrderDetail(Integer idOrderDetail) {
@@ -126,7 +132,28 @@ public class OrderDetail implements Serializable {
      */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.setPrice(this.getIdProdutDrugStore().getPrice() * this.quantity);
+        System.out.println("Now quantity is: " + this.quantity);
+        calculatePrice();
+        idOrder.calculateTotal();
+    }
+    
+    public void decrementQnty(){
+        if(getQuantity() > 1){
+            setQuantity(getQuantity() - 1);
+        }
+    }
+    
+    public void incrementQnty(){
+        setQuantity(getQuantity() + 1);
+    }
+    
+    
+    public void calculatePrice() {
+        System.out.println("Updating price of order detail");
+        System.out.println("Price is " + this.getIdProdutDrugStore().getPrice() + "*" + this.quantity);
+        this.price = this.getIdProdutDrugStore().getPrice() * this.quantity;
+          System.out.println("Updating price of order detail to " + this.price);
+        
     }
     
 }

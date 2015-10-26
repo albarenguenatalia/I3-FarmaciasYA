@@ -19,9 +19,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -89,12 +93,30 @@ public class Order1 implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
-    public Float getTotal() {
+    
+    public void addOrderDetail(OrderDetail od){
+        this.orderDetailCollection.add(od);
+         this.total += od.getPrice();
+    }
+    
+    public void removeOrderDetail(OrderDetail od){
+        float aux = od.getPrice();
+        this.orderDetailCollection.remove(od);
+        this.total -= aux;
+    }
+       
+    @PostLoad @PostPersist @PostUpdate void calculateTotal(){
+        System.out.println("Recalculating total Order1");
+        System.out.println("I have " + this.orderDetailCollection.size() + " order detail in my order");
         this.total = (float)0;
         for(OrderDetail od: this.orderDetailCollection){
+            System.out.println("This od has price " + od.getPrice());
             this.total += od.getPrice();
         }
+        System.out.println("Now the total of the order is " + this.total);
+    }
+
+    public Float getTotal() {
         return total;
     }
 
@@ -147,6 +169,7 @@ public class Order1 implements Serializable {
      */
     public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
         this.orderDetailCollection = orderDetailCollection;
+        calculateTotal();    
     }
     
 }

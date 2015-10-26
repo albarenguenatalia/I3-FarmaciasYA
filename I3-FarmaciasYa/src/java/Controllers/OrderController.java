@@ -26,6 +26,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -38,11 +39,8 @@ import javax.persistence.criteria.Predicate;
 public class OrderController implements Serializable {
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
-    @ManagedProperty(value = "#{drugstoreController}")
-    private DrugstoreController drugstoreController;
     @Inject
     private Session.OrderFacade ejbFacade;
-    private List<OrderDetail> orderDetailList;
     private ProductDrugstore selectedProductDrugstore;
    
    
@@ -56,59 +54,34 @@ public class OrderController implements Serializable {
     
     public String create() {
        return "";
-    }
-
-    public List<OrderDetail> getOrderDetailList() {       
-      Order1 currentOrder = sessionController.getCurrentOrder();
-      Collection<OrderDetail> coll = currentOrder.getOrderDetailCollection();
-        if (coll instanceof List) {
-            orderDetailList = (List)coll;
-        }  
-        else {
-                orderDetailList = new ArrayList<>(coll);
-        }
-         return orderDetailList;
-    }      
+    }    
     
-    public String addProductToCart(){ 
-        System.out.println("aca esta");
-        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        if(params.get("drugstoreId") != null && params.get("productId") != null)
-        {
-            try
-            {
-                int idDrugstore = Integer.parseInt(params.get("drugstoreId"));
-                int idProduct = Integer.parseInt(params.get("productId"));
-                Drugstore currentDrugstore = getDrugstoreController().getFacade().find(idDrugstore);
-                if(currentDrugstore != null){
-                    Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
-                    List<ProductDrugstore> pdFound = coll.stream()
-                            .filter( pd -> pd.getIdDrugStore().equals(idDrugstore)
-                                    && pd.getIdProduct().equals(idProduct) )
-                            .collect(Collectors.toList());
-
-                    /**
-                     * Add field date and get the last one
-                     */
-                    ProductDrugstore productDrugstore = pdFound.get(0);
-                    OrderDetail od = new OrderDetail();
-                    od.setIdProdutDrugStore(productDrugstore);
-                    od.setIdOrder(sessionController.getCurrentOrder());
-                    od.setQuantity(1);        
-                    sessionController.getCurrentOrder().getOrderDetailCollection().add(od);
-
-                    for(OrderDetail orderD: sessionController.getCurrentOrder().getOrderDetailCollection()){
-                        System.out.println(orderD.getIdProdutDrugStore().getIdProduct().getName());
-                    }
-
-                }
-            }
-            catch(NumberFormatException nfe)
-            {
-                nfe.printStackTrace();
-            }
+    public String addProductToCart(ProductDrugstore pd){ 
+        System.out.println("Agregando al carrito ordercontroller");
+        OrderDetail od = new OrderDetail();
+        od.setIdProdutDrugStore(pd);
+        od.setIdOrder(sessionController.getCurrentOrder());
+        od.setQuantity(1);     
+        sessionController.getCurrentOrder().addOrderDetail(od);
+        for(OrderDetail orderD: sessionController.getCurrentOrder().getOrderDetailCollection()){
+            System.out.println(orderD.getIdProdutDrugStore().getIdProduct().getName());
         }
-        System.out.println("No me llegaron los id");
+        return "";
+    }
+    
+    public String setOrderDetailQuantity(OrderDetail od){
+        System.out.println("Update quantity of product " + od.getIdProdutDrugStore().getIdProduct().getName() + " to " +
+                od.getQuantity());
+        return "";
+    }
+    
+    public String decrementQnty(OrderDetail od){
+        od.decrementQnty();
+        return "";
+    }
+    
+    public String incrementQnty(OrderDetail od){
+        od.incrementQnty();
         return "";
     }
        
@@ -133,6 +106,11 @@ public class OrderController implements Serializable {
            //"PersistenceErrorOccured"));
         }
     }
+    
+    public String removeOrderDetail(OrderDetail d){
+        sessionController.getCurrentOrder().removeOrderDetail(d);
+        return "";
+    }
 
     
     /**
@@ -148,21 +126,6 @@ public class OrderController implements Serializable {
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
-
-    /**
-     * @return the drugstoreController
-     */
-    public DrugstoreController getDrugstoreController() {
-        return drugstoreController;
-    }
-
-    /**
-     * @param drugstoreController the drugstoreController to set
-     */
-    public void setDrugstoreController(DrugstoreController drugstoreController) {
-        this.drugstoreController = drugstoreController;
-    }
-
 
    
     @FacesConverter(forClass = Order1.class)
@@ -204,5 +167,6 @@ public class OrderController implements Serializable {
         }
 
     }
+    
     
    }

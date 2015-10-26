@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 public class DrugstoreController implements Serializable {
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
+    @ManagedProperty(value = "#{orderController}")
+    private OrderController orderController;
     @Inject
     private Session.DrugstoreFacade ejbFacade;
     private boolean showCreateUserMessage;
@@ -39,7 +41,6 @@ public class DrugstoreController implements Serializable {
     private String drugstoreName;
     private List<Drugstore> drugstoreList;
     private List<ProductDrugstore> drugstoreProductList; 
-    private int drugstoreId = 5;
 
     public DrugstoreController() {
         showCreateUserMessage = false;
@@ -52,8 +53,6 @@ public class DrugstoreController implements Serializable {
     }
     
     public void findByName() {
-        System.out.println("BUSCANDO " + this.drugstoreName);
-        System.out.println(ejbFacade);
         this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
     }
     
@@ -62,9 +61,17 @@ public class DrugstoreController implements Serializable {
         return "cart.xhtml";
     }
     
-    public String selectDrugstore(int id){
+    public String selectDrugstore(Drugstore drugstore){
+        sessionController.setSelectedDrugstore(drugstore);
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml?id=" + id);
+             Collection<ProductDrugstore> coll =  sessionController.getSelectedDrugstore().getProductDrugstoreCollection();
+                if (coll instanceof List) {
+                     drugstoreProductList = (List)coll;
+                }  
+                else {
+                    drugstoreProductList = new ArrayList<>(coll);
+                }
+                FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,47 +124,13 @@ public class DrugstoreController implements Serializable {
      * @return the drugstoreProductList
      */
     public List<ProductDrugstore> getDrugstoreProductList() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        //if (params.get("id") != null)
-        //{
-            try
-            {
-                int idDrugstore;
-                if (params.get("id") != null){
-                     idDrugstore = Integer.parseInt(params.get("id"));
-                }else{
-                    idDrugstore = this.drugstoreId;
-                }
-                
-                Drugstore currentDrugstore = ejbFacade.find(idDrugstore);
-                Collection<ProductDrugstore> coll = currentDrugstore.getProductDrugstoreCollection();
-                if (coll instanceof List) {
-                     drugstoreProductList = (List)coll;
-                }  
-                else {
-                    drugstoreProductList = new ArrayList<>(coll);
-                }
-                return drugstoreProductList;
-              
-            }
-            catch(NumberFormatException nfe)
-            {
-                drugstoreProductList = null;
-                nfe.printStackTrace();
-                return drugstoreProductList;
-            }
-        //}
-        //drugstoreProductList = null;
-        //return drugstoreProductList;
-       
+        return drugstoreProductList;
     }
     
-    public String addProductToCart(ProductDrugstore pd){
-        System.out.println("DRUGSTORE CONTROLLER addProductToCart ");
-        System.out.println(pd);
+    public String selectProductDrugstore(ProductDrugstore pd){
+        orderController.addProductToCart(pd);
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml?drugstoreId=" 
-                    + pd.getIdDrugStore().getIdDrugStore() + "&productId=" + pd.getIdProduct().getIdProduct());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,6 +150,20 @@ public class DrugstoreController implements Serializable {
      */
     public void setDrugstoreProductList(List<ProductDrugstore> list) {
         this.setDrugstoreProductList(list);
+    }
+
+    /**
+     * @return the orderController
+     */
+    public OrderController getOrderController() {
+        return orderController;
+    }
+
+    /**
+     * @param orderController the orderController to set
+     */
+    public void setOrderController(OrderController orderController) {
+        this.orderController = orderController;
     }
 
    

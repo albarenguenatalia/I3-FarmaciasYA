@@ -11,9 +11,13 @@ import Model.OrderDetail;
 import Model.User;
 import Session.UserFacade;
 import Utils.OneWayHash;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,6 +44,7 @@ public class SessionController implements Serializable {
     @EJB
     private Session.UserFacade ejbFacade;
     private int currentUserId;
+    private Drugstore selectedDrugstore;
 
     public SessionController() {
         showLoginResultMessage = false;
@@ -173,9 +178,11 @@ public class SessionController implements Serializable {
      * @return the currentOrder
      */
     public Order1 getCurrentOrder() {
-        
         if (currentOrder == null) {
+            System.out.println("Creating a new order");
             currentOrder = new Order1();
+            currentOrder.setIdUser(current);
+            currentOrder.setTotal((float)0);
             currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
         }
         return currentOrder;
@@ -186,6 +193,20 @@ public class SessionController implements Serializable {
      */
     public void setCurrentOrder(Order1 currentOrder) {
         this.currentOrder = currentOrder;
+    }
+
+    /**
+     * @return the selectedDrugstore
+     */
+    public Drugstore getSelectedDrugstore() {
+        return selectedDrugstore;
+    }
+
+    /**
+     * @param selectedDrugstore the selectedDrugstore to set
+     */
+    public void setSelectedDrugstore(Drugstore selectedDrugstore) {
+        this.selectedDrugstore = selectedDrugstore;
     }
 
     @FacesConverter(forClass = User.class)

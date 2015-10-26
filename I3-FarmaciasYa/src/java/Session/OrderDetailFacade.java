@@ -5,25 +5,18 @@
  */
 package Session;
 
-import Model.Order1;
-import Model.User;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import Model.OrderDetail;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 /**
  *
  * @author albarenguenatalia
  */
 @Stateless
-public class OrderFacade extends AbstractFacade<Order1> {
-    @PersistenceContext(unitName = "I3-FarmaciasYa-PU")
+public class OrderDetailFacade extends AbstractFacade<OrderDetail>{
+      @PersistenceContext(unitName = "I3-FarmaciasYa-PU")
     private EntityManager em;
 
     @Override
@@ -31,10 +24,8 @@ public class OrderFacade extends AbstractFacade<Order1> {
         return em;
     }
 
-    public OrderFacade() {
-        super(Order1.class);
+    public OrderDetailFacade() {
+        super(OrderDetail.class);
     }
-
-     
-        
+   
 }

@@ -15,7 +15,8 @@
             <ui:define name="mainContainer">
                 <h:form class="row">
                     <!--#############-->
-                    <div class="col-sm-12">
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                    <div class="row userInfo">
                         <div class="w100 productFilter clearfix">
                             <div class="pull-left" style="display: inline-flex;">
                                 <label class="hidden">#{findDrugstoreController.idProduct}</label>
@@ -27,35 +28,43 @@
                                     
                                 </div>
                                 <div class="change-view pull-right">
-                                    <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a>
-                                    <a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row  categoryProduct xsResponse clearfix">
+                       
                             <h:dataTable value="#{findDrugstoreController.drugstoreList}" var="d">
-                        <h:column>
-                            <div class="col-xs-12 col-sm-12">
-                                <table>
-                                    <tbody>
-                                        <tr class="CartProduct">
-                                            <td style="width:10%" class="CartProductThumb">
-                                                <div> <a href="product-details.html"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div></td>
-                                            <td style="width:40%"><div class="CartDescription">
-                                            <h4> <a href="product-details.html">#{d.name}</a> </h4>
-                                            <span class="size">#{d.telephone} - #{d.address} </span>
-                                            <div class="price"> <span>#{d.distance} Kms</span> </div>
-                                             </div></td>
-                                            <td style="width:15%">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                 </table>
-                            </div>
-                        </h:column>
+                                <h:column>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <table>
+                                            <tbody>
+                                                <tr class="CartProduct">
+                                                     <td style="width:10%" class="CartProductThumb">
+                                                        <div> <a href="#"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
+                                                    </td>
+                                                    <td style="width:100%">
+                                                        <div class="CartDescription">
+                                                            <h4 class="price"> <a href="#">#{d.name}</a> </h4>
+                                                            <span class="price">#{d.telephone}</span>
+                                                            <div class="size"> <span>#{d.address}</span> </div>
+                                                             <div class="size"> <span>#{d.distance} Kms</span> </div>
+                                                        </div>
+                                                        <td style="width:100%">
+                                                            <h:commandLink class="btn btn-primary" action="#{findDrugstoreController.selectProductDrugstore(d)}">
+                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.AddToCart}</span>
+                                                            </h:commandLink>
+                                                        </td>
+                                                        <td style="width:100%">
+                                                             <div class="pull-right "></div>
+                                                        </td>
+                                                    </td>                                                   
+                                                </tr>
+                                            </tbody>
+                                         </table>
+                                    </div>
+                                </h:column>    		
                     </h:dataTable>
-                        </div>
                     </div>
+                   </div>
                 </h:form>
             </ui:define>
 

@@ -40,17 +40,17 @@
                                             <tbody>
                                                 <tr class="CartProduct">
                                                     <td style="width:10%" class="CartProductThumb">
-                                                        <div> <a href="product-details.html"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
+                                                        <div> <a href="#"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
                                                     </td>
                                                     <td style="width:100%">
                                                         <div class="CartDescription">
-                                                            <h4> <a href="product-details.html">#{d.name}</a> </h4>
+                                                            <h4> <a href="#">#{d.name}</a> </h4>
                                                             <span class="size">#{d.telephone}</span>
                                                             <div class="price"> <span>#{d.address}</span> </div>
                                                         </div>
                                                         <td style="width:100%">
                                                             <h:form>
-                                                            <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d.idDrugStore)}">
+                                                            <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d)}">
                                                                 <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.GoToDrugstore}</span>
                                                             </h:commandLink>
                                                             </h:form>
