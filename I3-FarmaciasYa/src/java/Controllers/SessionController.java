@@ -213,6 +213,13 @@ public class SessionController implements Serializable {
         }
     }
 
+    public String confirmOrder(){
+        System.out.println("Confirmando orden...");
+        MailsController.SendEMail(currentOrder, current);
+        System.out.println("Orden confirmada");
+        return "succes";
+    }
+    
     @FacesConverter(forClass = User.class)
     public static class UserControllerConverter implements Converter {
 
