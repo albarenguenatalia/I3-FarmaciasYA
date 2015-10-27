@@ -207,6 +207,10 @@ public class SessionController implements Serializable {
      */
     public void setSelectedDrugstore(Drugstore selectedDrugstore) {
         this.selectedDrugstore = selectedDrugstore;
+        /*Simplification: all products come from the same drugstore*/
+        if(this.currentOrder != null && this.currentOrder.getOrderDetailCollection().size() > 0){
+            this.currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
+        }
     }
 
     @FacesConverter(forClass = User.class)

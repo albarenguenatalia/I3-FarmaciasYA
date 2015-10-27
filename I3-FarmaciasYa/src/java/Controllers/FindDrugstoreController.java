@@ -13,6 +13,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -97,17 +100,13 @@ public class FindDrugstoreController {
     
     public String selectProductDrugstore(Drugstore d){
         sessionController.setSelectedDrugstore(d);
-        System.out.println("This is the product selected " + this.getIdProduct());
         Collection<ProductDrugstore> collection = d.getProductDrugstoreCollection();
+        ProductDrugstore pdFound = null;
         for(ProductDrugstore pd: collection){
-            System.out.println( pd.getIdProduct().getName() + " id: " 
-                    + pd.getIdProduct().getIdProduct()+"\n$" + pd.getPrice() );
+            if(pd.getIdProduct().getIdProduct() == this.getIdProduct()){
+                pdFound = pd;
+            }
         }
-        ProductDrugstore pdFound = collection.stream().filter(pd -> 
-        {
-            return pd.getIdProduct().getIdProduct() == this.getIdProduct();
-        }).findFirst().get();
-        
         orderController.addProductToCart(pdFound);
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
