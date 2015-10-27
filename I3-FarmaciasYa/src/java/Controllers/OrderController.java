@@ -41,6 +41,8 @@ public class OrderController implements Serializable {
     private SessionController sessionController;
     @Inject
     private Session.OrderFacade ejbFacade;
+    @Inject
+    private Session.OrderDetailFacade odFacade;
     private ProductDrugstore selectedProductDrugstore;
    
    
@@ -125,6 +127,36 @@ public class OrderController implements Serializable {
      */
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
+    }
+    
+    public String checkOut(){
+        sessionController.getCurrentOrder().setDate(new Date());
+        sessionController.getCurrentOrder().setStatus(1);
+        System.out.println("Order total " + sessionController.getCurrentOrder().getTotal());
+        System.out.println("Order status " + sessionController.getCurrentOrder().getStatus());
+         System.out.println("Order date " + sessionController.getCurrentOrder().getDate());
+         System.out.println("Order user id " + sessionController.getCurrentOrder().getIdUser().getIdUser());
+        Collection<OrderDetail> odCollection = sessionController.getCurrentOrder().getOrderDetailCollection();
+
+        this.ejbFacade.create(sessionController.getCurrentOrder());
+        Mail.sendMail(sessionController.getCurrent().getEmail(),
+        ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailSubject"), 
+        ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody").replace("John Doe", sessionController.getCurrent().getName() + " " + sessionController.getCurrent().getLastName()));
+        return "";
+    }
+
+    /**
+     * @return the odFacade
+     */
+    public Session.OrderDetailFacade getOdFacade() {
+        return odFacade;
+    }
+
+    /**
+     * @param odFacade the odFacade to set
+     */
+    public void setOdFacade(Session.OrderDetailFacade odFacade) {
+        this.odFacade = odFacade;
     }
 
    

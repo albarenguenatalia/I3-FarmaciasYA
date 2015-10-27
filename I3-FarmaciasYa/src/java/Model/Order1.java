@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Cynthia
  */
 @Entity
-@Table(name = "order")
+@Table(name = "order", schema="farmaciasyadb")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
@@ -44,8 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Order1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idOrder")
     private Integer idOrder;
     @Column(name = "Date")
@@ -59,7 +59,7 @@ public class Order1 implements Serializable {
     @JoinColumn(name = "idUser", referencedColumnName = "idUser")
     @ManyToOne
     private User idUser;    
-    @OneToMany(mappedBy = "idOrder")
+    @OneToMany(mappedBy = "idOrder", cascade=CascadeType.ALL)
     private Collection<OrderDetail> orderDetailCollection;
 
 
@@ -95,8 +95,9 @@ public class Order1 implements Serializable {
     }
     
     public void addOrderDetail(OrderDetail od){
+        od.setIdOrder(this);
         this.orderDetailCollection.add(od);
-         this.total += od.getPrice();
+        this.total += od.getPrice();
     }
     
     public void removeOrderDetail(OrderDetail od){
@@ -106,14 +107,10 @@ public class Order1 implements Serializable {
     }
        
     @PostLoad @PostPersist @PostUpdate void calculateTotal(){
-        System.out.println("Recalculating total Order1");
-        System.out.println("I have " + this.orderDetailCollection.size() + " order detail in my order");
         this.total = (float)0;
         for(OrderDetail od: this.orderDetailCollection){
-            System.out.println("This od has price " + od.getPrice());
             this.total += od.getPrice();
         }
-        System.out.println("Now the total of the order is " + this.total);
     }
 
     public Float getTotal() {

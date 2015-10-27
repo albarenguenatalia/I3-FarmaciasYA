@@ -149,11 +149,7 @@ public class OrderDetail implements Serializable {
     
     
     public void calculatePrice() {
-        System.out.println("Updating price of order detail");
-        System.out.println("Price is " + this.getIdProdutDrugStore().getPrice() + "*" + this.quantity);
         this.price = this.getIdProdutDrugStore().getPrice() * this.quantity;
-          System.out.println("Updating price of order detail to " + this.price);
-        
     }
     
 }

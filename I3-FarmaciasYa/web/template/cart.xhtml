@@ -103,7 +103,11 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <div class="input-append couponForm">
-                                                            <button class="btn-block btn btn-success" type="button">Confirmar compra</button>
+                                                            <h:form class="input-append couponForm">
+                                                                <h:commandLink action="#{orderController.checkOut}" class="btn-block btn btn-success" p:type="button">
+                                                                Confirmar compra
+                                                                </h:commandLink>
+                                                            </h:form>
                                                         </div>
                                                     </td>
                                                 </tr>
