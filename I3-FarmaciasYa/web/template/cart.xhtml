@@ -40,37 +40,37 @@
                                             </tr>
                                             <h:form>
                                                 <ui:repeat value="#{sessionController.currentOrder.orderDetailCollection}" var="d">
-                                                <tr class="CartProduct">
-                                                    
-                                                    <td class="CartProductThumb"><div> <a href="#"><img src="imagesdb/products/#{d.idProdutDrugStore.idProduct.idProduct}.jpg" alt="img"/></a> </div></td>
-                                                    <td>
-                                                        <div class="CartDescription">
-                                                            <h4> <a href="#">#{d.idProdutDrugStore.idProduct.name} </a> </h4>
-                                                            <span class="size">#{d.idProdutDrugStore.idProduct.description}</span>
-                                                            <div class="price"> <span>$#{d.idProdutDrugStore.price}</span></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="delete">
-                                                        <h:commandLink title="Delete" action="#{orderController.removeOrderDetail(d)}"> 
-                                                            <i class="glyphicon glyphicon-trash fa-2x"></i>
-                                                        </h:commandLink></td>
-                                                    <td>
-                                                        <h:commandLink value="-  " action="#{orderController.decrementQnty(d)}"/>
-                                                        <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}">
-                                                            <f:ajax listener="#{orderController.setOrderDetailQuantity(d)}" render="od-quantity order-detail-price total-price-bt total-price-at" />
-                                                        </h:inputText>
-                                                        <h:commandLink value="  +" action="#{orderController.incrementQnty(d)}"/>
-                                                    </td>
-                                                    <td id="order-detail-price" class="price">$#{d.price}</td>
-                                                    
-                                                </tr>  
-                                            </ui:repeat>
-                                                </h:form>
-                                            
+                                                    <tr class="CartProduct">
+
+                                                        <td class="CartProductThumb"><div> <a href="#"><img src="imagesdb/products/#{d.idProdutDrugStore.idProduct.idProduct}.jpg" alt="img"/></a> </div></td>
+                                                        <td>
+                                                            <div class="CartDescription">
+                                                                <h4> <a href="#">#{d.idProdutDrugStore.idProduct.name} </a> </h4>
+                                                                <span class="size">#{d.idProdutDrugStore.idProduct.description}</span>
+                                                                <div class="price"> <span>$#{d.idProdutDrugStore.price}</span></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="delete">
+                                                            <h:commandLink title="Delete" action="#{orderController.removeOrderDetail(d)}"> 
+                                                                <i class="glyphicon glyphicon-trash fa-2x"></i>
+                                                            </h:commandLink></td>
+                                                        <td>
+                                                            <h:commandLink value="-  " action="#{orderController.decrementQnty(d)}"/>
+                                                            <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}">
+                                                                <f:ajax listener="#{orderController.setOrderDetailQuantity(d)}" render="od-quantity order-detail-price total-price-bt total-price-at" />
+                                                            </h:inputText>
+                                                            <h:commandLink value="  +" action="#{orderController.incrementQnty(d)}"/>
+                                                        </td>
+                                                        <td id="order-detail-price" class="price">$#{d.price}</td>
+
+                                                    </tr>  
+                                                </ui:repeat>
+                                            </h:form>
+
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                                 <div class="cartFooter w100">
                                     <div class="box-footer">
                                         <div class="pull-left"> <a href="product_drugstore_list.xhtml" class="btn btn-default"> <i classindex="fa fa-arrow-left"></i> &nbsp; #{bundle.ContinueShopping}</a> </div>
@@ -102,8 +102,15 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2">
+<<<<<<< HEAD
                                                         <div class="input-append couponForm">
                                                             <button class="btn-block btn btn-success" type="button">#{bundle.ConfirmPurchase} </button>
+=======
+                                                        <div class="input-append couponForm">    
+                                                            <h:form>
+                                                                <h:commandButton class="btn-block btn btn-success" value="Confirmar compra" action="#{sessionController.confirmOrder}"></h:commandButton>
+                                                            </h:form>
+>>>>>>> origin/master
                                                         </div>
                                                     </td>
                                                 </tr>
