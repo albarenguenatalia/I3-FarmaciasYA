@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Drugstore.findByLatitud", query = "SELECT d FROM Drugstore d WHERE d.latitud = :latitud"),
     @NamedQuery(name = "Drugstore.findByLongitud", query = "SELECT d FROM Drugstore d WHERE d.longitud = :longitud")})
 public class Drugstore implements Serializable, Comparable<Drugstore> {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDrugStore")
+    private Collection<OrderRate> orderRateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -221,5 +224,14 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
                 "<i class=\"fa fa-star yellow\"></i>" + 
                 "<i class=\"fa fa-star grey\"></i>";
                 
+    }
+
+    @XmlTransient
+    public Collection<OrderRate> getOrderRateCollection() {
+        return orderRateCollection;
+    }
+
+    public void setOrderRateCollection(Collection<OrderRate> orderRateCollection) {
+        this.orderRateCollection = orderRateCollection;
     }
 }
