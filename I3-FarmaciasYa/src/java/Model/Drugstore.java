@@ -212,4 +212,14 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
     public int compareTo(Drugstore o) {
         return (int)(this.distance - o.getDistance());
     }
+    
+    
+    public String getStarsHtml(){
+        return "<i class=\"fa fa-star yellow\"></i>" + 
+                "<i class=\"fa fa-star yellow\"></i>" + 
+                "<i class=\"fa fa-star yellow\"></i>" + 
+                "<i class=\"fa fa-star yellow\"></i>" + 
+                "<i class=\"fa fa-star grey\"></i>";
+                
+    }
 }

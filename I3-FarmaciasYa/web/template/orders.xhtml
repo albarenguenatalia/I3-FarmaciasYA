@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <ui:composition template="./FrontEndMasterpage.xhtml">
+            <ui:define name="endHead"></ui:define>
+
+            <ui:define name="mainContainer">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                        <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> #{bundle.Orders} </span></h1>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
+                        <h4 class="caps"><a href="product_drugstore_list.xhtml"><i class="fa fa-chevron-left"></i> #{bundle.Back}</a></h4>
+                    </div>
+                </div> 
+                <div class="row">   
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                        <div class="row userInfo">
+                            <div class="col-xs-12 col-sm-12">
+                                <div class="cartContent w100">
+                                    <table class="cartTable table-responsive" style="width:100%">
+                                        <tbody>
+                                            <tr class="CartProduct cartTableHeader">
+                                                <td style="width:10%"> #{bundle.Orders} </td>
+                                                <td style="width:10%">#{bundle.Farmacia}</td>
+                                                <td style="width:10%">#{bundle.Date}</td>
+                                                <td style="width:10%">#{bundle.Total}</td>
+                                                <td style="width:40%" >&nbsp;</td>
+                                                <td style="width:10%">#{bundle.Qualification}</td>
+                                                <td style="width:10%">#{bundle.Qualify}</td>
+                                            </tr>
+                                            <h:form>
+                                                <ui:repeat value="#{sessionController.currentOrder.orderDetailCollection}" var="d">
+                                                    <tr class="CartProduct">
+                                                        <td class="CartProductThumb">#<label>00000</label></td>
+                                                        <td class="CartProductThumb"><label>Farmashop</label></td>
+                                                        <td class="CartProductThumb"><label>12/12/2015</label></td>
+                                                        <td class="CartProductThumb"><label>$#{d.idProdutDrugStore.price}</label></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <input type="number" class="form-control" min="1" max="5"/>
+                                                        </td>
+                                                        <td><a class="btn btn-primary">Calificar</a></td>
+                                                    </tr>  
+                                                </ui:repeat>
+                                            </h:form>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>    
+            </ui:define>
+            
+            <ui:define name="endBody"></ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

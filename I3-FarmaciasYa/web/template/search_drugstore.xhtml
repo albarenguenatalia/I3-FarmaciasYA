@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:pf="http://primefaces.org/ui">
-
+    
     <h:body>
 
         <ui:composition template="./FrontEndMasterpage.xhtml">
@@ -28,12 +28,12 @@
                                                 <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{drugstoreController.findByName}"/>
                                             </h:form>
                                         </div>
-                                         <div class="pull-right ">                      
+                                        <div class="pull-right ">                      
                                         </div>
                                     </div>  
                                 </div>
-                             </div>                
-                        <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
+                            </div>                
+                            <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
                                 <h:column>
                                     <div class="col-xs-12 col-sm-12">
                                         <table>
@@ -42,31 +42,38 @@
                                                     <td style="width:10%" class="CartProductThumb">
                                                         <div> <a href="#"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
                                                     </td>
-                                                    <td style="width:100%">
+                                                    <td style="width:60%">
                                                         <div class="CartDescription">
-                                                            <h4> <a href="#">#{d.name}</a> </h4>
+                                                            <h4 style="padding-bottom: 0px;"> <a href="#">#{d.name}</a> </h4>
+                                                            <div>
+                                                               
+                                                                <h:outputText escape="false" value="#{d.getStarsHtml()}"></h:outputText>
+<!--                                                                <i class="fa fa-star yellow"></i>
+                                                                <i class="fa fa-star yellow"></i>
+                                                                <i class="fa fa-star yellow"></i>
+                                                                <i class="fa fa-star grey"></i>
+                                                                <i class="fa fa-star grey"></i> -->
+                                                            </div>
                                                             <span class="size">#{d.telephone}</span>
                                                             <div class="price"> <span>#{d.address}</span> </div>
                                                         </div>
-                                                        <td style="width:100%">
-                                                            <h:form>
+                                                    </td>    
+                                                    
+                                                    <td style="width:30%">
+                                                        <h:form>
                                                             <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d)}">
                                                                 <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.GoToDrugstore}</span>
                                                             </h:commandLink>
-                                                            </h:form>
-                                                            
-                                                        </td>
-                                                        <td style="width:100%">
-                                                             <div class="pull-right "></div>
-                                                        </td>
-                                                    </td>                                                   
+                                                        </h:form>
+
+                                                    </td>
                                                 </tr>
                                             </tbody>
-                                         </table>
+                                        </table>
                                     </div>
                                 </h:column>    		
-                        </h:dataTable>
-                            
+                            </h:dataTable>
+
                         </div>
                     </div>       
                 </div>  
