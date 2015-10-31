@@ -16,55 +16,54 @@
                 <h:form class="row">
                     <!--#############-->
                     <div class="col-lg-9 col-md-9 col-sm-7">
-                    <div class="row userInfo">
-                        <div class="w100 productFilter clearfix">
-                            <div class="pull-left" style="display: inline-flex;">
-                                <label class="hidden">#{findDrugstoreController.idProduct}</label>
-                                <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
-                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="#{bundle.SearchField}" action="#{findDrugstoreController.findDrugstores}"/>
-                            </div>
-                            <div class="pull-right ">
-                                <div class="change-order pull-right">
-                                    
+                        <div class="row userInfo">
+                            <div class="w100 productFilter clearfix">
+                                <div class="pull-left" style="display: inline-flex;">
+                                    <label class="hidden">#{findDrugstoreController.idProduct}</label>
+                                    <h:inputText p:placeholder="Dirección" class="form-control" value="#{findDrugstoreController.myAddress}"/>
+                                    <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px;height: 35px;" value="#{bundle.SearchField}" action="#{findDrugstoreController.findDrugstores}"/>
                                 </div>
-                                <div class="change-view pull-right">
+                                <div class="pull-right ">
+                                    <div class="change-order pull-right">
+
+                                    </div>
+                                    <div class="change-view pull-right">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                       
+
                             <h:dataTable value="#{findDrugstoreController.drugstoreList}" var="d">
                                 <h:column>
                                     <div class="col-xs-12 col-sm-12">
                                         <table>
                                             <tbody>
                                                 <tr class="CartProduct">
-                                                     <td style="width:10%" class="CartProductThumb">
+                                                    <td style="width:10%" class="CartProductThumb">
                                                         <div> <a href="#"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
                                                     </td>
-                                                    <td style="width:100%">
+                                                    <td style="width:50%">
                                                         <div class="CartDescription">
                                                             <h4 class="price"> <a href="#">#{d.name}</a> </h4>
                                                             <span class="price">#{d.telephone}</span>
                                                             <div class="size"> <span>#{d.address}</span> </div>
-                                                             <div class="size"> <span>#{d.distance} Kms</span> </div>
+                                                            <div class="size"> <span>#{d.distance} Kms</span> </div>
                                                         </div>
-                                                        <td style="width:100%">
-                                                            <h:commandLink class="btn btn-primary" action="#{findDrugstoreController.selectProductDrugstore(d)}">
-                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.AddToCart}</span>
-                                                            </h:commandLink>
-                                                        </td>
-                                                        <td style="width:100%">
-                                                             <div class="pull-right "></div>
-                                                        </td>
-                                                    </td>                                                   
+
+                                                    </td>   
+
+                                                    <td style="width:40%">
+                                                        <h:commandLink class="btn btn-primary" action="#{findDrugstoreController.selectProductDrugstore(d)}">
+                                                            <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.AddToCart}</span>
+                                                        </h:commandLink>
+                                                    </td>
                                                 </tr>
                                             </tbody>
-                                         </table>
+                                        </table>
                                     </div>
                                 </h:column>    		
-                    </h:dataTable>
+                            </h:dataTable>
+                        </div>
                     </div>
-                   </div>
                 </h:form>
             </ui:define>
 
