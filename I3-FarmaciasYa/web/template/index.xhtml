@@ -1,16 +1,71 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"    
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pf="http://primefaces.org/ui">
+    
+    <h:body>
 
-    <body>
         <ui:composition template="./FrontEndMasterpage.xhtml">
 
-            <ui:define name="endHead"></ui:define>
+            <ui:define name="endHead">               
+            </ui:define>
 
-            <ui:define name="mainContainer">mainContainer</ui:define>
+            <ui:define name="mainContainer">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                        <h1 class="section-title-inner"><span><i class="fa fa-flask"></i>#{bundle.Farmacias}</span></h1>
+                        <div class="row userInfo">
+                            <h2 class="block-title-2"></h2><br/><br/><br/>
+                                      
+                            <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
+                                <h:column>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <table>
+                                            <tbody>
+                                                <tr class="CartProduct">
+                                                    <td style="width:10%" class="CartProductThumb">
+                                                        <div> <a href="#"><img src="imagesdb/drugstores/#{d.idDrugStore}.jpg" alt="img"/></a> </div>
+                                                    </td>
+                                                    <td style="width:60%">
+                                                        <div class="CartDescription">
+                                                            <h4 style="padding-bottom: 0px;"> <a href="#">#{d.name}</a> </h4>
+                                                            <div>                                                     
+                                                                <h:outputText escape="false" value="#{d.getStarsHtml()}"></h:outputText>
+                                                            </div>
+                                                            <span class="size">#{d.telephone}</span>
+                                                            <div class="price"> <span>#{d.address}</span> </div>
+                                                        </div>
+                                                    </td>    
+                                                    
+                                                    <td style="width:30%">
+                                                        <h:form>
+                                                            <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d)}">
+                                                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i>#{bundle.GoToDrugstore}</span>
+                                                            </h:commandLink>
+                                                        </h:form>
 
-            <ui:define name="endBody"></ui:define>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </h:column>    		
+                            </h:dataTable>
+
+                        </div>
+                    </div>       
+                </div>  
+                <div style="clear:both"></div>
+            </ui:define>
+
+            <ui:define name="endBody">
+            </ui:define>
+
         </ui:composition>
-    </body>
+
+    </h:body>
 </html>
+
