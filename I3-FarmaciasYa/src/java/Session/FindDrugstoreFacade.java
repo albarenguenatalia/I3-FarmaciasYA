@@ -53,9 +53,6 @@ public class FindDrugstoreFacade {
                  d.setCoords(n.getCoords(d.getAddress()));
              }
              d.setDistance(Distance.distance(d.getCoords(), userCoords));
-             System.out.println(d.getCoords().getLatitude());
-             System.out.println(d.getCoords().getLongitude());
-             System.out.println(d.getDistance());
          }
          Collections.sort(listaNueva);
          return listaNueva;

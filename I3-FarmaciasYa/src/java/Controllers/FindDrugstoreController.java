@@ -100,18 +100,20 @@ public class FindDrugstoreController {
     
     public String selectProductDrugstore(Drugstore d){
         sessionController.setSelectedDrugstore(d);
-        Collection<ProductDrugstore> collection = d.getProductDrugstoreCollection();
-        ProductDrugstore pdFound = null;
-        for(ProductDrugstore pd: collection){
-            if(pd.getIdProduct().getIdProduct() == this.getIdProduct()){
-                pdFound = pd;
+        if(sessionController.getCurrent().getIdUser() != null){
+            Collection<ProductDrugstore> collection = d.getProductDrugstoreCollection();
+            ProductDrugstore pdFound = null;
+            for(ProductDrugstore pd: collection){
+                if(pd.getIdProduct().getIdProduct() == this.getIdProduct()){
+                    pdFound = pd;
+                }
             }
-        }
-        orderController.addProductToCart(pdFound);
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+            orderController.addProductToCart(pdFound);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return "";
     }

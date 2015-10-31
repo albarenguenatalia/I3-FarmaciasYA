@@ -1,7 +1,6 @@
 package Controllers;
 
 import Model.Drugstore;
-import Model.Product;
 import Model.ProductDrugstore;
 import Session.DrugstoreFacade;
 import java.io.IOException;
@@ -11,21 +10,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean(name = "drugstoreController")
 @SessionScoped
@@ -39,6 +33,7 @@ public class DrugstoreController implements Serializable {
     private boolean showCreateUserMessage;
     private String createUserResultMessage;
     private String drugstoreName;
+    private String productDrugstoreName;
     private List<Drugstore> drugstoreList;
     private List<ProductDrugstore> drugstoreProductList; 
 
@@ -56,24 +51,22 @@ public class DrugstoreController implements Serializable {
         this.drugstoreList = ejbFacade.findByName(this.drugstoreName);
     }
     
-    public String testing(){
-        System.out.println("Llego a testing");
-        return "cart.xhtml";
-    }
-    
     public String selectDrugstore(Drugstore drugstore){
+
         sessionController.setSelectedDrugstore(drugstore);
-        try {
-             Collection<ProductDrugstore> coll =  sessionController.getSelectedDrugstore().getProductDrugstoreCollection();
-                if (coll instanceof List) {
-                     drugstoreProductList = (List)coll;
-                }  
-                else {
-                    drugstoreProductList = new ArrayList<>(coll);
-                }
-                FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+        if(sessionController.getCurrent().getIdUser() != null){
+            try {
+                 Collection<ProductDrugstore> coll =  sessionController.getSelectedDrugstore().getProductDrugstoreCollection();
+                    if (coll instanceof List) {
+                         drugstoreProductList = (List)coll;
+                    }  
+                    else {
+                        drugstoreProductList = new ArrayList<>(coll);
+                    }
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return "";
     }
@@ -97,6 +90,45 @@ public class DrugstoreController implements Serializable {
      */
     public List<Drugstore> getDrugstoreList() {
         return drugstoreList;
+    }
+    
+    public void findProductByName(){
+        this.selectDrugstore(sessionController.getSelectedDrugstore());
+        if(drugstoreProductList != null){
+            if(productDrugstoreName.length() > 0){
+                List<ProductDrugstore> productsFound = new ArrayList<ProductDrugstore>();
+                for(ProductDrugstore pd: this.drugstoreProductList){
+                    String productName = pd.getIdProduct().getName().toLowerCase().trim();
+                    if(productName.contains(this.productDrugstoreName.toLowerCase().trim())){
+                        productsFound.add(pd);
+                    }
+                }
+                drugstoreProductList = productsFound;
+            }else{
+                Collection<ProductDrugstore> coll =  sessionController.getSelectedDrugstore().getProductDrugstoreCollection();
+                if (coll instanceof List) {
+                     drugstoreProductList = (List)coll;
+                }  
+                else {
+                    drugstoreProductList = new ArrayList<>(coll);
+                }
+            }
+        }
+        this.productDrugstoreName = "";
+    }
+
+    /**
+     * @return the productDrugstoreName
+     */
+    public String getProductDrugstoreName() {
+        return productDrugstoreName;
+    }
+
+    /**
+     * @param productDrugstoreName the productDrugstoreName to set
+     */
+    public void setProductDrugstoreName(String productDrugstoreName) {
+        this.productDrugstoreName = productDrugstoreName;
     }
 
     /**
@@ -130,20 +162,21 @@ public class DrugstoreController implements Serializable {
     public String selectProductDrugstore(ProductDrugstore pd){
         orderController.addProductToCart(pd);
         try {
+            this.setDrugstoreName("");
+            this.setProductDrugstoreName("");
+            Collection<ProductDrugstore> coll =  sessionController.getSelectedDrugstore().getProductDrugstoreCollection();
+            if (coll instanceof List) {
+                 drugstoreProductList = (List)coll;
+            }  
+            else {
+                drugstoreProductList = new ArrayList<>(coll);
+            }
             FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
-    
-    public String save(String rowid) {
-        System.out.println("here " + rowid);
-        return "";
-        //String jsParam = Util.getJsParam("repeat:" + rowid + ":x");
-        //System.out.println("jsParam: " + jsParam); //persist...
-    }
-    
 
     /**
      * @param drugstoreProductList the drugstoreProductList to set
@@ -165,11 +198,6 @@ public class DrugstoreController implements Serializable {
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
     }
-
-   
-    
-    
-  
 
     @FacesConverter(forClass = Drugstore.class)
     public static class DrugstoreControllerConverter implements Converter {

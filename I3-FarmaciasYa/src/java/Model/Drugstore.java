@@ -8,7 +8,6 @@ package Model;
 import Utils.Coord;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

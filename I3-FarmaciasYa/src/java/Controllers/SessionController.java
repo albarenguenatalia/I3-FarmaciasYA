@@ -8,13 +8,13 @@ package Controllers;
 import Model.Drugstore;
 import Model.Order1;
 import Model.OrderDetail;
+import Model.ProductDrugstore;
 import Model.User;
 import Session.UserFacade;
 import Utils.OneWayHash;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +25,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -179,11 +178,18 @@ public class SessionController implements Serializable {
      */
     public Order1 getCurrentOrder() {
         if (currentOrder == null) {
-            System.out.println("Creating a new order");
-            currentOrder = new Order1();
-            currentOrder.setIdUser(current);
-            currentOrder.setTotal((float)0);
-            currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
+            if(this.current.getIdUser() == null){
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                } catch (IOException ex) {
+                    Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                currentOrder = new Order1();
+                currentOrder.setIdUser(current);
+                currentOrder.setTotal((float)0);
+                currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
+            }         
         }
         return currentOrder;
     }
@@ -206,18 +212,27 @@ public class SessionController implements Serializable {
      * @param selectedDrugstore the selectedDrugstore to set
      */
     public void setSelectedDrugstore(Drugstore selectedDrugstore) {
-        this.selectedDrugstore = selectedDrugstore;
         /*Simplification: all products come from the same drugstore*/
-        if(this.currentOrder != null && this.currentOrder.getOrderDetailCollection().size() > 0){
-            this.currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
-        }
-    }
+        if(this.current.getIdUser() == null){
+            selectedDrugstore = null;
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");              
+            } catch (IOException ex) {
+                Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }else{
+            if(this.currentOrder != null && 
+                this.currentOrder.getOrderDetailCollection().size() > 0){
 
-    public String confirmOrder(){
-        System.out.println("Confirmando orden...");
-        MailsController.SendEMail(currentOrder, current);
-        System.out.println("Orden confirmada");
-        return "succes";
+                ProductDrugstore pd = ((OrderDetail)this.currentOrder.getOrderDetailCollection().toArray()[0]).getIdProdutDrugStore();
+                if(!pd.getIdDrugStore().equals(selectedDrugstore)){
+                    this.currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
+                }
+            }
+            this.selectedDrugstore = selectedDrugstore;  
+        }
+        
     }
     
     @FacesConverter(forClass = User.class)

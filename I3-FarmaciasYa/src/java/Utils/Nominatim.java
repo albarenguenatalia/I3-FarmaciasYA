@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import static javafx.scene.input.KeyCode.R;
 
 /**
  * @author martingonzalez
@@ -26,8 +25,6 @@ public class Nominatim {
         con.setRequestMethod("GET");
 
         int responseCode = con.getResponseCode();
-        System.out.println("\n "+responseCode+" - 'GET' : " + url);
-
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;

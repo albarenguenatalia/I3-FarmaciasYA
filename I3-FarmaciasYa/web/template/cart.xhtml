@@ -38,7 +38,7 @@
                                                 <td style="width:10%"></td>
                                                 <td style="width:15%">#{bundle.Total}</td>
                                             </tr>
-                                            <h:form>
+                                            <h:form id="listOrderDetail">
                                                 <ui:repeat value="#{sessionController.currentOrder.orderDetailCollection}" var="d">
                                                     <tr class="CartProduct">
 
@@ -56,13 +56,12 @@
                                                             </h:commandLink></td>
                                                         <td>
                                                             <h:commandLink value="-  " action="#{orderController.decrementQnty(d)}"/>
-                                                            <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}">
-                                                                <f:ajax listener="#{orderController.setOrderDetailQuantity(d)}" render="od-quantity order-detail-price total-price-bt total-price-at" />
+                                                            <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}" >
+                                                                <f:ajax listener="#{orderController.setOrderDetailQuantity(d)}" render="listOrderDetail" />
                                                             </h:inputText>
                                                             <h:commandLink value="  +" action="#{orderController.incrementQnty(d)}"/>
                                                         </td>
                                                         <td id="order-detail-price" class="price">$#{d.price}</td>
-
                                                     </tr>  
                                                 </ui:repeat>
                                             </h:form>

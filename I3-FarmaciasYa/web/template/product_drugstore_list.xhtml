@@ -15,8 +15,10 @@
                     <div class="col-sm-12">
                         <div class="w100 productFilter clearfix">
                             <div class="pull-left" style="display: inline-flex;">
-                                <h:inputText p:placeholder="#{bundle.Product}" class="form-control" value="#{productController.productName}"/>
-                                <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{productController.findByName}"/>
+                                <h:form class="pull-left" style="display: inline-flex;">
+                                    <h:inputText p:placeholder="#{bundle.Product}" class="form-control" value="#{drugstoreController.productDrugstoreName}"/>
+                                    <h:commandButton class="btn btn-primary" style="margin-bottom: 10px;margin-left:5px" value="#{bundle.SearchField}" action="#{drugstoreController.findProductByName}"/>
+                                </h:form>
                             </div>
                             <div class="pull-right ">
 				<div class="change-view pull-right">

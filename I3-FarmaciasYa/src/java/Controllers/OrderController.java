@@ -1,38 +1,20 @@
 package Controllers;
 
-import Model.Drugstore;
 import Model.Order1;
 import Model.OrderDetail;
-import Model.Product;
 import Model.ProductDrugstore;
 import Model.User;
 import Session.OrderFacade;
-import Session.UserFacade;
-import Utils.Mail;
-import Utils.OneWayHash;
-import java.io.IOException;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import javax.persistence.criteria.Predicate;
 
 @ManagedBean(name = "orderController")
 @SessionScoped
@@ -41,10 +23,6 @@ public class OrderController implements Serializable {
     private SessionController sessionController;
     @Inject
     private Session.OrderFacade ejbFacade;
-    @Inject
-    private Session.OrderDetailFacade odFacade;
-    private ProductDrugstore selectedProductDrugstore;
-   
    
     public OrderController() {
             }
@@ -59,19 +37,16 @@ public class OrderController implements Serializable {
     }    
     
     public String addProductToCart(ProductDrugstore pd){ 
-        System.out.println("Agregando al carrito ordercontroller");
         OrderDetail od = new OrderDetail();
         od.setIdProdutDrugStore(pd);
         od.setIdOrder(sessionController.getCurrentOrder());
         od.setQuantity(1);     
         sessionController.getCurrentOrder().addOrderDetail(od);
-        for(OrderDetail orderD: sessionController.getCurrentOrder().getOrderDetailCollection()){
-            System.out.println(orderD.getIdProdutDrugStore().getIdProduct().getName());
-        }
         return "";
     }
     
     public String setOrderDetailQuantity(OrderDetail od){
+        od.setQuantity(od.getQuantity());
         System.out.println("Update quantity of product " + od.getIdProdutDrugStore().getIdProduct().getName() + " to " +
                 od.getQuantity());
         return "";
@@ -132,34 +107,12 @@ public class OrderController implements Serializable {
     public String checkOut(){
         sessionController.getCurrentOrder().setDate(new Date());
         sessionController.getCurrentOrder().setStatus(1);
-        System.out.println("Order total " + sessionController.getCurrentOrder().getTotal());
-        System.out.println("Order status " + sessionController.getCurrentOrder().getStatus());
-         System.out.println("Order date " + sessionController.getCurrentOrder().getDate());
-         System.out.println("Order user id " + sessionController.getCurrentOrder().getIdUser().getIdUser());
-        Collection<OrderDetail> odCollection = sessionController.getCurrentOrder().getOrderDetailCollection();
 
         this.ejbFacade.create(sessionController.getCurrentOrder());
-        Mail.sendMail(sessionController.getCurrent().getEmail(),
-        ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailSubject"), 
-        ResourceBundle.getBundle("/Utils.Bundle").getString("WelcomeEmailBody").replace("John Doe", sessionController.getCurrent().getName() + " " + sessionController.getCurrent().getLastName()));
+        MailsController.SendEMail(sessionController.getCurrentOrder(), sessionController.getCurrent());
         return "";
     }
 
-    /**
-     * @return the odFacade
-     */
-    public Session.OrderDetailFacade getOdFacade() {
-        return odFacade;
-    }
-
-    /**
-     * @param odFacade the odFacade to set
-     */
-    public void setOdFacade(Session.OrderDetailFacade odFacade) {
-        this.odFacade = odFacade;
-    }
-
-   
     @FacesConverter(forClass = Order1.class)
     public static class  OrderControllerConverter implements Converter {
 
