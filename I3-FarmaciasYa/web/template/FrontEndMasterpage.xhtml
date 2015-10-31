@@ -234,7 +234,7 @@
                             <div class="miniCartFooter  miniCartFooterInMobile text-right">
                                 <h3 class="text-right subtotal"> Subtotal: $0.00 </h3>
                                 <a class="btn btn-sm btn-danger"> <i class="fa fa-shopping-cart">
-                                    </i> Ver carrito </a> 
+                                    </i> #{bundle.ShowCart} </a> 
                                 <a class="btn btn-sm btn-primary"> 
                                     Finalizar compra
                                 </a>
@@ -246,19 +246,19 @@
 
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li> <a href="index.xhtml"> Home </a> </li>
-                            <li> <a href="products.xhtml"> Productos </a> </li>
-                            <li> <a href="orders.xhtml"> Ver pedidos </a> </li>
+                            <li> <a href="index.xhtml">#{bundle.Home} </a> </li>
+                            <li> <a href="products.xhtml"> #{bundle.Products} </a> </li>
+                            <li> <a href="orders.xhtml"> #{bundle.ShowOrders} </a> </li>
                             <li class="dropdown megamenu-fullwidth"> 
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                    Farmacias
+                                    #{bundle.Drugstores}
                                     <b class="caret"> </b> 
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="megamenu-content ">
                                         <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
-                                            <li><a href="search_drugstore.xhtml"> Todas las farmacias </a></li>
-                                            <li><a href="find_drugstore.xhtml"> Ver farmacia más cercana </a></li>
+                                            <li><a href="search_drugstore.xhtml"> #{bundle.AllDrugstores}</a></li>
+                                            <li><a href="find_drugstore.xhtml"> #{bundle.NearestDrugstore} </a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -269,7 +269,7 @@
                         <div class="nav navbar-nav navbar-right hidden-xs">
                             <div class="cartMenu "> 
                                 <a href="cart.xhtml" class="dropdown-toggle" > <i class="fa fa-shopping-cart"> </i> 
-                                    <span class="cartRespons"> Compras </span> 
+                                    <span class="cartRespons"> #{bundle.Shops} </span> 
                                 </a>
                             </div>
                         </div>
