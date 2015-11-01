@@ -28,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status"),
     @NamedQuery(name = "Order1.findByTotal", query = "SELECT o FROM Order1 o WHERE o.total = :total")})
 public class Order1 implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrder")
+    private Collection<OrderRate> orderRateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -167,6 +170,15 @@ public class Order1 implements Serializable {
     public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
         this.orderDetailCollection = orderDetailCollection;
         calculateTotal();    
+    }
+
+    @XmlTransient
+    public Collection<OrderRate> getOrderRateCollection() {
+        return orderRateCollection;
+    }
+
+    public void setOrderRateCollection(Collection<OrderRate> orderRateCollection) {
+        this.orderRateCollection = orderRateCollection;
     }
     
 }

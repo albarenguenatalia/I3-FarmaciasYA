@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address"),
     @NamedQuery(name = "User.findByCreatedate", query = "SELECT u FROM User u WHERE u.createdate = :createdate")})
 public class User implements Serializable {
+    @Lob
+    @Column(name = "Password")
+    private byte[] password;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,9 +69,6 @@ public class User implements Serializable {
     @Column(name = "Create_date")
     @Temporal(TemporalType.DATE)
     private Date createdate;
-    @Lob
-    @Column(name = "Password")
-    private byte[] password;
     @OneToMany(mappedBy = "idUser")
     private Collection<Order1> order1Collection;
 
@@ -132,13 +132,6 @@ public class User implements Serializable {
         this.createdate = createdate;
     }
 
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
 
     @XmlTransient
     public Collection<Order1> getOrder1Collection() {
@@ -172,6 +165,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "Model.User[ idUser=" + idUser + " ]";
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
     }
     
 }
