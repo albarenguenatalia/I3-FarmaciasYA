@@ -5,8 +5,12 @@ import Model.OrderDetail;
 import Model.ProductDrugstore;
 import Model.User;
 import Session.OrderFacade;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -23,9 +27,10 @@ public class OrderController implements Serializable {
     private SessionController sessionController;
     @Inject
     private Session.OrderFacade ejbFacade;
+    private List<Order1> userHistory;
    
     public OrderController() {
-            }
+    }
 
     public OrderFacade getFacade() {
         return ejbFacade;
@@ -35,6 +40,15 @@ public class OrderController implements Serializable {
     public String create() {
        return "";
     }    
+    
+    public boolean updateUserHistory(){
+        System.out.println("in updateUserHistory");
+        if(sessionController.getCurrent().getIdUser() != null){
+            userHistory = ejbFacade.findUserOrders(sessionController.getCurrent());
+            return true;
+        }
+        return false;
+    }
     
     public String addProductToCart(ProductDrugstore pd){ 
         OrderDetail od = new OrderDetail();
@@ -111,6 +125,21 @@ public class OrderController implements Serializable {
         this.ejbFacade.create(sessionController.getCurrentOrder());
         MailsController.SendEMail(sessionController.getCurrentOrder(), sessionController.getCurrent());
         return "";
+    }
+
+    /**
+     * @return the userHistory
+     */
+    public List<Order1> getUserHistory() {
+        updateUserHistory();
+        return userHistory;
+    }
+
+    /**
+     * @param userHistory the userHistory to set
+     */
+    public void setUserHistory(List<Order1> userHistory) {
+        this.userHistory = userHistory;
     }
 
     @FacesConverter(forClass = Order1.class)

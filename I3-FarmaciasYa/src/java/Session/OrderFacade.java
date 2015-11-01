@@ -7,6 +7,8 @@ package Session;
 
 import Model.Order1;
 import Model.OrderDetail;
+import Model.User;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -28,6 +30,14 @@ public class OrderFacade extends AbstractFacade<Order1> {
 
     public OrderFacade() {
         super(Order1.class);
+    }
+    
+    public List<Order1> findUserOrders(User user){
+         List<Order1> orders = getEntityManager().createNamedQuery(
+            "Order1.findByUserId")
+                 .setParameter("idUser", user)
+                 .getResultList();
+         return orders;
     }
     
      

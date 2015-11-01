@@ -27,21 +27,21 @@
                                     <table class="cartTable table-responsive" style="width:100%">
                                         <tbody>
                                             <tr class="CartProduct cartTableHeader">
-                                                <td style="width:10%"> #{bundle.Orders} </td>
-                                                <td style="width:10%">#{bundle.Farmacia}</td>
-                                                <td style="width:10%">#{bundle.Date}</td>
+                                                <td style="width:10%"> #{bundle.IDOrder} </td>
+                                                <td style="width:20%">#{bundle.Drugstore}</td>
+                                                <td style="width:30%">#{bundle.Date}</td>
                                                 <td style="width:10%">#{bundle.Total}</td>
-                                                <td style="width:40%" >&nbsp;</td>
+                                                <td style="width:10%" >&nbsp;</td>
                                                 <td style="width:10%">#{bundle.Qualification}</td>
                                                 <td style="width:10%">#{bundle.Qualify}</td>
                                             </tr>
                                             <h:form>
-                                                <ui:repeat value="#{sessionController.currentOrder.orderDetailCollection}" var="d">
+                                                <ui:repeat value="#{orderController.userHistory}" var="o">
                                                     <tr class="CartProduct">
-                                                        <td class="CartProductThumb">#<label>00000</label></td>
-                                                        <td class="CartProductThumb"><label>Farmashop</label></td>
-                                                        <td class="CartProductThumb"><label>12/12/2015</label></td>
-                                                        <td class="CartProductThumb"><label>$#{d.idProdutDrugStore.price}</label></td>
+                                                        <td class="CartProductThumb"><label>#{o.idOrder}</label></td>
+                                                        <td class="CartProductThumb"><label>#{o.orderDrugstore.name}</label></td>
+                                                        <td class="CartProductThumb"><label>#{o.prettyDate}</label></td>
+                                                        <td class="CartProductThumb"><label>$#{o.total}</label></td>
                                                         <td></td>
                                                         <td>
                                                             <input type="number" class="form-control" min="1" max="5"/>

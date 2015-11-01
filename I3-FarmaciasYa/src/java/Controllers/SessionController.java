@@ -225,8 +225,7 @@ public class SessionController implements Serializable {
             if(this.currentOrder != null && 
                 this.currentOrder.getOrderDetailCollection().size() > 0){
 
-                ProductDrugstore pd = ((OrderDetail)this.currentOrder.getOrderDetailCollection().toArray()[0]).getIdProdutDrugStore();
-                if(!pd.getIdDrugStore().equals(selectedDrugstore)){
+                if(!this.currentOrder.getOrderDrugstore().equals(selectedDrugstore)){
                     this.currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
                 }
             }

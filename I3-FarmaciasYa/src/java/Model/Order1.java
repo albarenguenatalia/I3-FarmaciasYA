@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByIdOrder", query = "SELECT o FROM Order1 o WHERE o.idOrder = :idOrder"),
     @NamedQuery(name = "Order1.findByDate", query = "SELECT o FROM Order1 o WHERE o.date = :date"),
     @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status"),
-    @NamedQuery(name = "Order1.findByTotal", query = "SELECT o FROM Order1 o WHERE o.total = :total")})
+    @NamedQuery(name = "Order1.findByTotal", query = "SELECT o FROM Order1 o WHERE o.total = :total"),
+    @NamedQuery(name = "Order1.findByUserId", query = "SELECT o FROM Order1 o WHERE o.idUser = :idUser")})
+
 public class Order1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,6 +58,10 @@ public class Order1 implements Serializable {
     private User idUser;    
     @OneToMany(mappedBy = "idOrder", cascade=CascadeType.ALL)
     private Collection<OrderDetail> orderDetailCollection;
+    @Transient
+    private Drugstore orderDrugstore;
+    @Transient
+    private String prettyDate;
 
 
     public Order1() {
@@ -98,7 +99,7 @@ public class Order1 implements Serializable {
         od.setIdOrder(this);
         this.orderDetailCollection.add(od);
         this.total += od.getPrice();
-    }
+}
     
     public void removeOrderDetail(OrderDetail od){
         float aux = od.getPrice();
@@ -168,5 +169,28 @@ public class Order1 implements Serializable {
         this.orderDetailCollection = orderDetailCollection;
         calculateTotal();    
     }
+
+    public Drugstore getOrderDrugstore() {
+        this.orderDrugstore = ((OrderDetail)this.orderDetailCollection.toArray()[0]).getIdProdutDrugStore().getIdDrugStore();
+        return orderDrugstore;
+    }
     
+    public void setOrderDrugstore(Drugstore drugstore){
+        this.orderDrugstore = drugstore;
+    }
+
+    /**
+     * @return the prettyDate
+     */
+    public String getPrettyDate() {
+        prettyDate = new SimpleDateFormat("dd/MM/yyyy hh:mm").format(date);
+        return prettyDate;
+    }
+
+    /**
+     * @param prettyDate the prettyDate to set
+     */
+    public void setPrettyDate(String prettyDate) {
+        this.prettyDate = prettyDate;
+    }
 }
