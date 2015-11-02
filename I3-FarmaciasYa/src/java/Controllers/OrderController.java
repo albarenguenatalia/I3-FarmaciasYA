@@ -121,9 +121,9 @@ public class OrderController implements Serializable {
     public String checkOut(){
         sessionController.getCurrentOrder().setDate(new Date());
         sessionController.getCurrentOrder().setStatus(1);
-
         this.ejbFacade.create(sessionController.getCurrentOrder());
         MailsController.SendEMail(sessionController.getCurrentOrder(), sessionController.getCurrent());
+        sessionController.resetOrder();
         return "";
     }
 

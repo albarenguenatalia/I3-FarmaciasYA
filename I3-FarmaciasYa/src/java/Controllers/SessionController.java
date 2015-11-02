@@ -172,6 +172,26 @@ public class SessionController implements Serializable {
     public void setCurrentUserId(int currentUserId) {
         this.currentUserId = currentUserId;
     }
+    
+    public void resetOrder(){
+        if(this.current.getIdUser() == null){
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                } catch (IOException ex) {
+                    Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }else{
+            currentOrder = new Order1();
+            currentOrder.setIdUser(current);
+            currentOrder.setTotal((float)0);
+            currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }         
+    }
 
     /**
      * @return the currentOrder
