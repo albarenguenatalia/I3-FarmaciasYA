@@ -8,14 +8,10 @@ package Controllers;
 import Model.Drugstore;
 import Model.ProductDrugstore;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toList;
-import java.util.stream.Stream;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -35,6 +31,7 @@ public class FindDrugstoreController {
      @ManagedProperty(value = "#{orderController}")
     private OrderController orderController;
     private List<Drugstore> drugstoreList;
+    private List<Drugstore> drugstoreListRated;
     private String myAddress;
     private int idProduct;
     
@@ -144,5 +141,23 @@ public class FindDrugstoreController {
      */
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
+    }
+    
+    public void init(){
+        this.drugstoreListRated = this.ejbFacade.getDrugstoreListWithRate();
+    }
+
+    /**
+     * @return the drugstoreListRated
+     */
+    public List<Drugstore> getDrugstoreListRated() {
+        return drugstoreListRated;
+    }
+
+    /**
+     * @param drugstoreListRated the drugstoreListRated to set
+     */
+    public void setDrugstoreListRated(List<Drugstore> drugstoreListRated) {
+        this.drugstoreListRated = drugstoreListRated;
     }
 }

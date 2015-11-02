@@ -76,6 +76,8 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
     private double distance;
     @Transient
     private Coord coords;
+    @Transient
+    private double rate;
 
 
     public Drugstore() {
@@ -213,11 +215,11 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
     
     
     public String getStarsHtml(){
-        return "<i class=\"fa fa-star yellow\"></i>" + 
-                "<i class=\"fa fa-star yellow\"></i>" + 
-                "<i class=\"fa fa-star yellow\"></i>" + 
-                "<i class=\"fa fa-star yellow\"></i>" + 
-                "<i class=\"fa fa-star grey\"></i>";
+        return  "<i class=\"fa fa-star "+ (this.rate >= 0.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (this.rate >= 1.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (this.rate >= 2.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (this.rate >= 3.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (this.rate >= 4.5 ? "yellow" : "grey") +"\"></i>";
                 
     }
 
@@ -227,5 +229,19 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
 
     public void setOrderRateCollection(Collection<OrderRate> orderRateCollection) {
         this.orderRateCollection = orderRateCollection;
+    }
+
+    /**
+     * @return the rate
+     */
+    public double getRate() {
+        return rate;
+    }
+
+    /**
+     * @param rate the rate to set
+     */
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

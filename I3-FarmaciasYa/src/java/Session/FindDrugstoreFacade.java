@@ -6,12 +6,15 @@
 package Session;
 
 import Model.Drugstore;
+import Model.OrderRate;
 import Model.ProductDrugstore;
 import Utils.Coord;
 import Utils.Distance;
 import Utils.Nominatim;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -57,4 +60,34 @@ public class FindDrugstoreFacade {
          Collections.sort(listaNueva);
          return listaNueva;
     } 
+    
+    public List<Drugstore> getDrugstoreListWithRate(){
+        List<Drugstore> drugstores = getEntityManager().createNamedQuery(
+        "Drugstore.findAll")
+            .getResultList();
+        
+        for (Drugstore d : drugstores){
+            Collection<OrderRate> orderRateCollection = d.getOrderRateCollection();
+            double c = 0;
+            double avg = 0;
+            for (OrderRate o : orderRateCollection){
+                avg+=o.getRate();
+                c++;
+            }
+            double rate = c>=1 ? avg / c : 0;
+            d.setRate(rate);
+        }
+        Collections.sort(drugstores, new RateComparator());
+        return drugstores;
+    }
+    
+    class RateComparator implements Comparator<Drugstore>
+    {
+        @Override
+        public int compare(Drugstore o1, Drugstore o2) {
+            double dif = o2.getRate()- o1.getRate();
+            //Al revez para que ordene de mayor a menor
+            return dif < 0 ? -1 : dif > 0 ? 1 : 0;
+        }
+    }
 }

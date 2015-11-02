@@ -19,8 +19,8 @@
                         <h1 class="section-title-inner"><span><i class="fa fa-flask"></i>#{bundle.Drugstore}</span></h1>
                         <div class="row userInfo">
                             <h2 class="block-title-2"></h2><br/><br/><br/>
-                                      
-                            <h:dataTable value="#{drugstoreController.drugstoreList}" var="d">
+                             #{findDrugstoreController.init()} 
+                            <h:dataTable value="#{findDrugstoreController.drugstoreListRated}" var="d">
                                 <h:column>
                                     <div class="col-xs-12 col-sm-12">
                                         <table>
@@ -34,12 +34,13 @@
                                                             <h4 style="padding-bottom: 0px;"> <a href="#">#{d.name}</a> </h4>
                                                             <div>                                                     
                                                                 <h:outputText escape="false" value="#{d.getStarsHtml()}"></h:outputText>
+                                                                #{d.rate}
                                                             </div>
                                                             <span class="size">#{d.telephone}</span>
                                                             <div class="price"> <span>#{d.address}</span> </div>
+                                    
                                                         </div>
                                                     </td>    
-                                                    
                                                     <td style="width:30%">
                                                         <h:form>
                                                             <h:commandLink class="btn btn-primary" action="#{drugstoreController.selectDrugstore(d)}">
@@ -59,6 +60,7 @@
                     </div>       
                 </div>  
                 <div style="clear:both"></div>
+                
             </ui:define>
 
             <ui:define name="endBody">
