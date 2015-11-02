@@ -59,15 +59,15 @@ public class User implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Email")
     private String email;
+    @Lob
+    @Column(name = "Password")
+    private byte[] password;
     @Size(max = 45)
     @Column(name = "Address")
     private String address;
     @Column(name = "Create_date")
     @Temporal(TemporalType.DATE)
     private Date createdate;
-    @Lob
-    @Column(name = "Password")
-    private byte[] password;
     @OneToMany(mappedBy = "idUser")
     private Collection<Order1> order1Collection;
 
@@ -131,13 +131,6 @@ public class User implements Serializable {
         this.createdate = createdate;
     }
 
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
 
     public Collection<Order1> getOrder1Collection() {
         return order1Collection;
@@ -170,6 +163,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "Model.User[ idUser=" + idUser + " ]";
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
     }
     
 }

@@ -58,6 +58,8 @@ public class Order1 implements Serializable {
     private User idUser;    
     @OneToMany(mappedBy = "idOrder", cascade=CascadeType.ALL)
     private Collection<OrderDetail> orderDetailCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrder")
+    private Collection<OrderRate> orderRateCollection;
     @Transient
     private Drugstore orderDrugstore;
     @Transient
@@ -173,6 +175,14 @@ public class Order1 implements Serializable {
     public Drugstore getOrderDrugstore() {
         this.orderDrugstore = ((OrderDetail)this.orderDetailCollection.toArray()[0]).getIdProdutDrugStore().getIdDrugStore();
         return orderDrugstore;
+    }
+
+    public Collection<OrderRate> getOrderRateCollection() {
+        return orderRateCollection;
+    }
+
+    public void setOrderRateCollection(Collection<OrderRate> orderRateCollection) {
+        this.orderRateCollection = orderRateCollection;
     }
     
     public void setOrderDrugstore(Drugstore drugstore){

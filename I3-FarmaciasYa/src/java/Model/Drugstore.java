@@ -41,8 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Drugstore.findByLatitud", query = "SELECT d FROM Drugstore d WHERE d.latitud = :latitud"),
     @NamedQuery(name = "Drugstore.findByLongitud", query = "SELECT d FROM Drugstore d WHERE d.longitud = :longitud")})
 public class Drugstore implements Serializable, Comparable<Drugstore> {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDrugStore")
-    private Collection<OrderRate> orderRateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,7 +70,8 @@ public class Drugstore implements Serializable, Comparable<Drugstore> {
     private String longitud;
     @OneToMany(mappedBy = "idDrugStore")
     private Collection<ProductDrugstore> productDrugstoreCollection;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDrugStore")
+    private Collection<OrderRate> orderRateCollection;
     @Transient
     private double distance;
     @Transient
