@@ -134,5 +134,16 @@ UPDATE `farmaciasyadb`.`order` SET `idUser`='1' WHERE `idOrder`='7';
 UPDATE `farmaciasyadb`.`order` SET `idUser`='1' WHERE `idOrder`='8';
 UPDATE `farmaciasyadb`.`order` SET `idUser`='1' WHERE `idOrder`='9';
 
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('1', '10', '1', '1', '11');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('2', '20', '1', '2', '12');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('3', '30', '1', '3', '13');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('4', '40', '1', '4', '14');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('5', '50', '1', '5', '15');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('6', '60', '1', '6', '16');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('7', '70', '1', '7', '17');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('8', '10', '1', '8', '21');
+INSERT INTO `farmaciasyadb`.`order_detail` (`idOrder_Detail`, `Price`, `Quantity`, `idOrder`, `idProdut_DrugStore`) VALUES ('9', '20', '1', '9', '22');
+
+
 
 SET FOREIGN_KEY_CHECKS=1;
