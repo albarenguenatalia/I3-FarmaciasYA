@@ -56,7 +56,7 @@
                                                             </h:commandLink></td>
                                                         <td>
                                                             <h:commandLink value="-  " action="#{orderController.decrementQnty(d)}"/>
-                                                            <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}" >
+                                                            <h:inputText id="od-quantity" class="quanitySniper" value="#{d.quantity}" p:disabled="disabled">
                                                                 <f:ajax listener="#{orderController.setOrderDetailQuantity(d)}" render="listOrderDetail" />
                                                             </h:inputText>
                                                             <h:commandLink value="  +" action="#{orderController.incrementQnty(d)}"/>
