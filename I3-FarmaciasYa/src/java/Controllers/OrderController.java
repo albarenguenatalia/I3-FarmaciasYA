@@ -2,15 +2,13 @@ package Controllers;
 
 import Model.Order1;
 import Model.OrderDetail;
+import Model.OrderRate;
 import Model.ProductDrugstore;
 import Model.User;
 import Session.OrderFacade;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -28,6 +26,7 @@ public class OrderController implements Serializable {
     @Inject
     private Session.OrderFacade ejbFacade;
     private List<Order1> userHistory;
+    private OrderRate rateOrder;
    
     public OrderController() {
     }
@@ -140,6 +139,35 @@ public class OrderController implements Serializable {
      */
     public void setUserHistory(List<Order1> userHistory) {
         this.userHistory = userHistory;
+    }
+
+    /**
+     * @return the rateOrder
+     */
+    public OrderRate getRateOrder() {
+         if (this.rateOrder == null) {
+            rateOrder = new OrderRate();
+            rateOrder.setRate(1);
+        }
+        return rateOrder;
+    }
+
+    /**
+     * @param rateOrder the rateOrder to set
+     */
+    public void setRateOrder(OrderRate rateOrder) {
+        this.rateOrder = rateOrder;
+    }
+    
+    public void createRateOrder(Order1 order){
+        this.rateOrder.setIdOrder(order);
+        this.rateOrder.setIdDrugStore(order.getOrderDrugstore());
+        order.getOrderRateCollection().add(rateOrder);
+        order.getOrderDrugstore().getOrderRateCollection().add(rateOrder);
+        this.ejbFacade.edit(order);
+        this.rateOrder = new OrderRate();
+        this.rateOrder.setRate(1);
+        
     }
 
     @FacesConverter(forClass = Order1.class)

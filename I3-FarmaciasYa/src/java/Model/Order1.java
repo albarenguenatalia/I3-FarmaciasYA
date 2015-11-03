@@ -64,6 +64,8 @@ public class Order1 implements Serializable {
     private Drugstore orderDrugstore;
     @Transient
     private String prettyDate;
+    @Transient
+    private boolean hasBeenRate;
 
 
     public Order1() {
@@ -173,7 +175,11 @@ public class Order1 implements Serializable {
     }
 
     public Drugstore getOrderDrugstore() {
-        this.orderDrugstore = ((OrderDetail)this.orderDetailCollection.toArray()[0]).getIdProdutDrugStore().getIdDrugStore();
+        if(this.orderDetailCollection != null && this.orderDetailCollection.size() > 0){
+            this.orderDrugstore = ((OrderDetail)this.orderDetailCollection.toArray()[0]).getIdProdutDrugStore().getIdDrugStore();
+        }else{
+            this.orderDrugstore = null;
+        }
         return orderDrugstore;
     }
 
@@ -196,11 +202,46 @@ public class Order1 implements Serializable {
         prettyDate = new SimpleDateFormat("dd/MM/yyyy hh:mm").format(date);
         return prettyDate;
     }
+    
+     public String getStarsHtml(){
+        if(this.orderRateCollection != null 
+                && this.orderDetailCollection.size() > 0 && this.orderDetailCollection.size() == 1){
+            
+            OrderRate myRate = (OrderRate) orderRateCollection.toArray()[0];
+            return  "<i class=\"fa fa-star "+ (myRate.getRate() >= 0.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (myRate.getRate() >= 1.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (myRate.getRate() >= 2.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (myRate.getRate() >= 3.5 ? "yellow" : "grey") +"\"></i>" + 
+                "<i class=\"fa fa-star "+ (myRate.getRate() >= 4.5 ? "yellow" : "grey") +"\"></i>";
+        }else{
+            return "No hay order rate";
+        }           
+    }
 
     /**
      * @param prettyDate the prettyDate to set
      */
     public void setPrettyDate(String prettyDate) {
         this.prettyDate = prettyDate;
+    }
+
+    /**
+     * @return the hasBeenRate
+     */
+    public boolean getHasBeenRate() {
+        if(this.orderRateCollection != null 
+                && this.orderRateCollection.size() > 0 && this.orderRateCollection.size() == 1){
+            this.hasBeenRate = true;
+        }else{
+            this.hasBeenRate = false;
+        }       
+        return this.hasBeenRate;
+    }
+
+    /**
+     * @param hasBeenRate the hasBeenRate to set
+     */
+    public void setHasBeenRate(boolean hasBeenRate) {
+        this.hasBeenRate = hasBeenRate;
     }
 }
