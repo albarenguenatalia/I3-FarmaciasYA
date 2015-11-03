@@ -180,7 +180,16 @@
                                     <h:panelGroup rendered="#{sessionController.userLogged}" class="pull-right">
                                         <ul class="userMenu">
                                             <li> <a href="#"><span class="hidden-xs">#{bundle.MyAccountMenu}</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a> </li>
-                                            <li> <a href="#" data-toggle="modal" data-target="#"> <span class="hidden-xs">#{bundle.LogoutMessage}</span> <i class="glyphicon glyphicon-log-in hide visible-xs "></i> </a> </li>
+                                            <li> 
+                                                <h:form>
+
+
+                                                    <h:commandLink p:data-toggle="modal" p:data-target="#" action="#{sessionController.logout}">
+                                                        <span class="hidden-xs">#{bundle.LogoutMessage}</span> 
+                                                        <i class="glyphicon glyphicon-log-in hide visible-xs "></i> 
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </li>
                                         </ul>
                                     </h:panelGroup>
                                     <h:panelGroup rendered="#{!sessionController.userLogged}" class="pull-right">

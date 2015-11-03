@@ -64,7 +64,7 @@ public class SessionController implements Serializable {
     }
 
     public String login() {
-        try { 
+        try {
             System.out.println("LOGUEANDO _________________________________________");
             setUserLogged(false);
             this.setLoginResultMessage("");
@@ -76,16 +76,16 @@ public class SessionController implements Serializable {
             if (checkedUser != null) {
                 setCurrent(checkedUser);
                 setUserLogged(true);
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/I3-FarmaciasYa/template/index.xhtml");
                 return "";
-            } else { 
+            } else {
                 setCurrent(new User());
                 this.setLoginResultMessage(ResourceBundle.getBundle("/Utils.Bundle").getString("ErrorLoginMessage"));
                 this.setShowLoginResultMessage(true);
                 System.out.println("Error de login.Actualiza el model");
                 return "";
             }
-        } catch (Exception e) { 
+        } catch (Exception e) {
             e.printStackTrace();
             setCurrent(new User());
             this.setLoginResultMessage("Error hasheando pass");
@@ -94,6 +94,17 @@ public class SessionController implements Serializable {
             System.out.println("Error de login.Actualiza el model");
             return "";
         }
+    }
+
+    public String logout() {
+        System.out.println("Logout...");
+        setCurrent(null);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/I3-FarmaciasYa/template/index.xhtml");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return "/I3-FarmaciasYa/template/index.xhtml";
     }
 
     /**
@@ -172,25 +183,25 @@ public class SessionController implements Serializable {
     public void setCurrentUserId(int currentUserId) {
         this.currentUserId = currentUserId;
     }
-    
-    public void resetOrder(){
-        if(this.current.getIdUser() == null){
-                try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-                } catch (IOException ex) {
-                    Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        }else{
+
+    public void resetOrder() {
+        if (this.current.getIdUser() == null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             currentOrder = new Order1();
             currentOrder.setIdUser(current);
-            currentOrder.setTotal((float)0);
+            currentOrder.setTotal((float) 0);
             currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }         
+        }
     }
 
     /**
@@ -198,18 +209,18 @@ public class SessionController implements Serializable {
      */
     public Order1 getCurrentOrder() {
         if (currentOrder == null) {
-            if(this.current.getIdUser() == null){
+            if (this.current.getIdUser() == null) {
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
+            } else {
                 currentOrder = new Order1();
                 currentOrder.setIdUser(current);
-                currentOrder.setTotal((float)0);
+                currentOrder.setTotal((float) 0);
                 currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
-            }         
+            }
         }
         return currentOrder;
     }
@@ -233,27 +244,27 @@ public class SessionController implements Serializable {
      */
     public void setSelectedDrugstore(Drugstore selectedDrugstore) {
         /*Simplification: all products come from the same drugstore*/
-        if(this.current.getIdUser() == null){
+        if (this.current.getIdUser() == null) {
             selectedDrugstore = null;
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");              
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(SessionController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }else{
-            if(this.currentOrder != null && 
-                this.currentOrder.getOrderDetailCollection().size() > 0){
 
-                if(!this.currentOrder.getOrderDrugstore().equals(selectedDrugstore)){
+        } else {
+            if (this.currentOrder != null
+                    && this.currentOrder.getOrderDetailCollection().size() > 0) {
+
+                if (!this.currentOrder.getOrderDrugstore().equals(selectedDrugstore)) {
                     this.currentOrder.setOrderDetailCollection(new ArrayList<OrderDetail>());
                 }
             }
-            this.selectedDrugstore = selectedDrugstore;  
+            this.selectedDrugstore = selectedDrugstore;
         }
-        
+
     }
-    
+
     @FacesConverter(forClass = User.class)
     public static class UserControllerConverter implements Converter {
 

@@ -57,13 +57,13 @@
                                                                     <f:validateLength minimum="1" maximum="5" ></f:validateLength>
                                                                 </h:inputText>
 
-                                                                
+
                                                             </h:panelGroup>
 
                                                         </td>
                                                         <td>
                                                             <h:panelGroup rendered ="#{!o.hasBeenRate}">
-                                                            <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
+                                                                <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
                                                                     #{bundle.RateOrder}
                                                                 </h:commandLink>
                                                             </h:panelGroup>
