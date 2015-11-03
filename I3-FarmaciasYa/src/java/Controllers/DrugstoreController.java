@@ -70,6 +70,18 @@ public class DrugstoreController implements Serializable {
         }
         return "";
     }
+    
+     public String goToDrugstore(Drugstore drugstore){
+        sessionController.setSelectedDrugstore(drugstore);
+        if(sessionController.getCurrent().getIdUser() != null){
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("product_drugstore_list.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(DrugstoreController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "";
+     }
 
     /**
      * @return the drugstoreName
