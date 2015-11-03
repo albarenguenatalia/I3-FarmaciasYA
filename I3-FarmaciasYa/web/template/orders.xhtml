@@ -33,7 +33,8 @@
                                                 <td style="width:10%">#{bundle.Date}</td>
                                                 <td style="width:10%">#{bundle.Total}</td>
                                                 <td style="width:30%">#{bundle.Qualification}</td>
-                                                <td style="width:20%">#{bundle.Qualify}</td>
+                                                <td style="width:10%">#{bundle.Qualify}</td>
+                                                <td style="width:10%"></td>
                                             </tr>
                                             <h:form>
                                                 <ui:repeat value="#{orderController.userHistory}" var="o">
@@ -56,11 +57,16 @@
                                                                     <f:validateLength minimum="1" maximum="5" ></f:validateLength>
                                                                 </h:inputText>
 
-                                                                <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
+                                                                
+                                                            </h:panelGroup>
+
+                                                        </td>
+                                                        <td>
+                                                            <h:panelGroup rendered ="#{!o.hasBeenRate}">
+                                                            <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
                                                                     #{bundle.RateOrder}
                                                                 </h:commandLink>
                                                             </h:panelGroup>
-
                                                         </td>
                                                     </tr>  
                                                 </ui:repeat>
