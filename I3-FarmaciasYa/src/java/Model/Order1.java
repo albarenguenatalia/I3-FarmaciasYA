@@ -205,7 +205,7 @@ public class Order1 implements Serializable {
     
      public String getStarsHtml(){
         if(this.orderRateCollection != null 
-                && this.orderDetailCollection.size() > 0 && this.orderDetailCollection.size() == 1){
+                && this.orderRateCollection.size() > 0 && this.orderRateCollection.size() == 1){
             
             OrderRate myRate = (OrderRate) orderRateCollection.toArray()[0];
             return  "<i class=\"fa fa-star "+ (myRate.getRate() >= 0.5 ? "yellow" : "grey") +"\"></i>" + 

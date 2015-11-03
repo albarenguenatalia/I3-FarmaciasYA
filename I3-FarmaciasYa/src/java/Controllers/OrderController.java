@@ -167,7 +167,7 @@ public class OrderController implements Serializable {
         this.ejbFacade.edit(order);
         this.rateOrder = new OrderRate();
         this.rateOrder.setRate(1);
-        
+        updateUserHistory();
     }
 
     @FacesConverter(forClass = Order1.class)
