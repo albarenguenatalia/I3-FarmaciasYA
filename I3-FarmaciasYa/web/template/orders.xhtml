@@ -30,9 +30,9 @@
                                             <tr class="CartProduct cartTableHeader">
                                                 <td style="width:10%"> #{bundle.IDOrder} </td>
                                                 <td style="width:20%">#{bundle.Drugstore}</td>
-                                                <td style="width:30%">#{bundle.Date}</td>
+                                                <td style="width:10%">#{bundle.Date}</td>
                                                 <td style="width:10%">#{bundle.Total}</td>
-                                                <td style="width:10%" >&nbsp;</td>
+                                                <td style="width:30%"></td>
                                                 <td style="width:10%">#{bundle.Qualification}</td>
                                                 <td style="width:10%">#{bundle.Qualify}</td>
                                             </tr>
@@ -47,21 +47,28 @@
                                                             <h:panelGroup rendered ="#{o.hasBeenRate}">
                                                                 <h:outputText escape="false" value="#{o.getStarsHtml()}"></h:outputText>
                                                             </h:panelGroup>
+
+
+                                                        </td>
+                                                        <td>
                                                             <h:panelGroup rendered ="#{!o.hasBeenRate}">
-                                                                <td>
-                                                                    <h:inputText class="form-control" value="#{orderController.rateOrder.rate}" p:min="1" p:max="5" p:type="number" 
-                                                                        requiredMessage="#{bundle.RateRequired}"
-                                                                        required="true">
-                                                                       <f:validateLength minimum="1" maximum="5" ></f:validateLength>
-                                                                   </h:inputText>
-                                                                </td>
-                                                                <td>
-                                                                    <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
-                                                                        #{bundle.RateOrder}
-                                                                    </h:commandLink>
-                                                                </td>
+
+                                                                <h:inputText class="form-control" value="#{orderController.rateOrder.rate}" p:min="1" p:max="5" p:type="number" 
+                                                                             requiredMessage="#{bundle.RateRequired}"
+                                                                             required="true">
+                                                                    <f:validateLength minimum="1" maximum="5" ></f:validateLength>
+                                                                </h:inputText>
                                                             </h:panelGroup>
-                                                           
+
+                                                        </td>
+                                                        <td>
+                                                            <h:panelGroup rendered ="#{!o.hasBeenRate}">
+
+                                                                <h:commandLink class="btn btn-primary" action="#{orderController.createRateOrder(o)}">
+                                                                    #{bundle.RateOrder}
+                                                                </h:commandLink>
+
+                                                            </h:panelGroup>
                                                         </td>
                                                     </tr>  
                                                 </ui:repeat>
@@ -72,10 +79,10 @@
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>    
             </ui:define>
-            
+
             <ui:define name="endBody"></ui:define>
         </ui:composition>
 
